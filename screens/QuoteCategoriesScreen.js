@@ -3,8 +3,8 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  ImageBackground,
   Pressable,
+  Image,
 } from "react-native";
 import { supabase } from "../supabase/config";
 import { useState, useEffect } from "react";
@@ -47,14 +47,10 @@ function QuoteCategoriesScreen() {
           renderItem={({ item }) => (
             <Pressable>
               <View style={styles.quoteCategory}>
-                <ImageBackground resizeMode="cover"
-                  source={{ uri: item.category_image }}
-                  style={styles.image}
-                >
+                  <Image style={styles.image} source={{ uri: item.category_image }} />
                   <Text style={styles.CategoryText}>
                     {item.quote_category}
                   </Text>
-                </ImageBackground>
               </View>
             </Pressable>
           )}
@@ -84,11 +80,15 @@ const styles = StyleSheet.create({
     elevation: 4,
     borderRadius: 20,
     width: 165,
+    height: 180,
   },
   image: {
-    flex: 1,
-    justifyContent: "center",
-    padding: 20,
+    width: "100%",
+    height: "70%",
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#e8e8e8",
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
   },
   columnWrapper: {
     justifyContent: "space-between",
