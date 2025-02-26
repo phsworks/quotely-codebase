@@ -34,7 +34,7 @@ function QuoteCard({ item, index }) {
             <Text style={{ fontWeight: 700, fontSize: 18 }}>
               {item.quote_category}
             </Text>
-            <Text style={{ fontStyle: "italic" }}>{item.author_name}</Text>
+            <Text>{item.author_name}</Text>
             <View style={styles.origins}>
               <Text>{item.author_nationality}</Text>
               <Text>{item.author_occupation}</Text>
@@ -42,7 +42,7 @@ function QuoteCard({ item, index }) {
           </View>
         </View>
         <View style={styles.quoteSection}>
-          <Text style={styles.quoteText}>{item.quote}</Text>
+          <Text style={styles.quoteText}>" {item.quote} "</Text>
         </View>
         <View style={styles.cardBottom}>
           <Text>share</Text>
@@ -67,8 +67,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     gap: 50,
     borderRadius: 20,
-    elevation: 4,
     boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+    elevation: 4,
+
+    paddingTop: 10,
   },
   quoteInfo: {
     flexDirection: "column",
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   quoteSection: {
-    width: 300,
+    width: 280,
   },
   quoteText: {
     fontSize: 20,
@@ -86,6 +88,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "black",
     fontWeight: "bold",
+    fontStyle: 'italic'
   },
   image: {
     width: 100,
@@ -98,7 +101,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     flexDirection: "row",
-    gap: 40,
+    gap: 35,
   },
   origins: {
     flexDirection: "row",
