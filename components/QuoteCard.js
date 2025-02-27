@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, Platform } from "react-native";
+import { View, Text, StyleSheet, Image, Platform, Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 function QuoteCard({ item, index }) {
@@ -11,6 +11,8 @@ function QuoteCard({ item, index }) {
       ["#d9a7c73f", "#fffcdc43"],
       ["#ff99663d", "#ff5e6137"],
       ["#d9a7c739", "#fffcdc30"],
+      ["#297fb94d", "#6dd4fa48"],
+      ["#a7ff7854", "#78ffd747"],
     ];
     return gradients[index % gradients.length];
   };
@@ -55,10 +57,8 @@ function QuoteCard({ item, index }) {
 const styles = StyleSheet.create({
   outerContainer: {
     overflow: "hidden",
-    height: 450,
-    width: 350,
-    marginLeft: 3,
-    marginRight: 20,
+    width: 340,
+    height: 460,
   },
   quoteContainer: {
     flex: 1,

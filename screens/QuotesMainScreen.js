@@ -38,20 +38,24 @@ function QuoteScreen() {
 
   return (
     <View style={styles.mainContainer}>
-      <FlatList
-        data={quotes}
-        keyExtractor={(item) => item.id}
-        style={styles.listStyle}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        pagingEnabled
-        snapToAlignment="center"
-        decelerationRate="fast"
-        renderItem={({ item, index }) => (
-          <QuoteCard index={index} item={item} />
-        )}
-        snapToInterval={Dimensions.get("window").width}
-      />
+      <View style={styles.quoteContainer}>
+        <FlatList
+          data={quotes}
+          keyExtractor={(item) => item.id}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled
+          snapToAlignment="center"
+          snapToInterval={Dimensions.get("window").width}
+          decelerationRate="fast"
+          renderItem={({ item, index }) => (
+            <View style={styles.pageContainer}>
+              <QuoteCard index={index} item={item} />
+            </View>
+          )}
+        />
+      </View>
+      <View></View>
     </View>
   );
 }
@@ -61,18 +65,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ffffff",
-    paddingTop: 100,
+  },
+  quoteContainer: {
+    flex: 1,
   },
   listStyle: {
-    paddingHorizontal: 20,
-    gap: 30,
+    alignItems: "center",
   },
   errorText: {
     color: "red",
     fontSize: 18,
     textAlign: "center",
+  },
+  pageContainer: {
+    width: Dimensions.get('window').width,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 });
 

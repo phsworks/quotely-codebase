@@ -33,6 +33,7 @@ function QuoteCategoriesScreen() {
           }, {})
         );
         setQuoteCategories(uniqueCategories);
+
       }
     }
     getQuotes();
@@ -44,6 +45,7 @@ function QuoteCategoriesScreen() {
         <FlatList
           data={quoteCategories}
           keyExtractor={(item) => item.id.toString()}
+          showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <Pressable>
               <View style={styles.quoteCategory}>
@@ -81,6 +83,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: 165,
     height: 180,
+    margin: 10,
   },
   image: {
     width: "100%",
