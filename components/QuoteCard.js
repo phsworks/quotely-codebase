@@ -35,14 +35,14 @@ function QuoteCard({ item, index }) {
         <View style={styles.cardTop}>
           <Image source={{ uri: item.author_imageURL }} style={styles.image} />
           <View style={styles.quoteInfo}>
-            <Text style={{ fontWeight: 700, fontSize: 20 }}>
+            <Text style={{ fontWeight: 700, fontSize: 18 }}>
               {item.quote_category}
             </Text>
-            <Text>{item.author_name}</Text>
+            <Text style={{ fontSize: 12 }}>{item.author_name}</Text>
             <View style={styles.origins}>
-              <Text>{item.author_nationality}</Text>
+              <Text style={{ fontSize: 12 }}>{item.author_nationality}</Text>
+              <Text style={{ fontSize: 12 }}>{item.author_occupation}</Text>
             </View>
-            <Text>{item.author_occupation}</Text>
           </View>
         </View>
         <View style={styles.quoteSection}>
@@ -53,13 +53,13 @@ function QuoteCard({ item, index }) {
             style={styles.buttons}
             name="share"
             size={24}
-            color="#e8fefe"
+            color="#e4ffff"
           />
           <Feather
             style={styles.buttons}
             name="heart"
             size={24}
-            color="#e8fefe"
+            color="#e4ffff"
           />
         </View>
       </LinearGradient>
@@ -70,8 +70,8 @@ function QuoteCard({ item, index }) {
 const styles = StyleSheet.create({
   outerContainer: {
     overflow: "hidden",
-    width: 340,
-    height: 460,
+    width: 365,
+    height: 470,
   },
   quoteContainer: {
     flex: 1,
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "flex-start",
-    maxWidth: 120,
+    maxWidth: 130,
     gap: 5,
   },
   quoteSection: {
@@ -113,11 +113,12 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     flexDirection: "row",
-    gap: 50,
+    gap: 45,
   },
   origins: {
     flexDirection: "row",
-    gap: 5,
+    gap: 3,
+
   },
   cardBottom: {
     justifyContent: "center",
@@ -126,10 +127,10 @@ const styles = StyleSheet.create({
   },
   buttons: {
     borderRadius: 50,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: "#e8fefe",
-    boxShadow: "0 10px 20px -2px rgba(140, 140, 140, 0.293)",
+    padding: 25,
+    borderWidth: 0.5,
+    borderColor: '#e4ffff',
+    boxShadow: "0 15px 20px 5px rgba(158, 158, 158, 0.293)",
     elevation: 4,
     opacity: 0.8,
   },

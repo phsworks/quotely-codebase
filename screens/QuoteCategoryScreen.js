@@ -4,10 +4,8 @@ import {
   StyleSheet,
   FlatList,
   Dimensions,
-  Button,
 } from "react-native";
 import QuoteCard from "../components/QuoteCard";
-import { useEffect } from "react";
 import Feather from "@expo/vector-icons/Feather";
 
 function QuoteCategoryScreen({ navigation, route }) {
@@ -19,7 +17,7 @@ function QuoteCategoryScreen({ navigation, route }) {
         <Feather
           onPress={() => navigation.goBack()}
           name="chevron-left"
-          size={24}
+          size={30}
           color="#4a5a5b"
         />
         <Text onPress={() => navigation.goBack()} style={styles.title}>
@@ -59,7 +57,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     marginLeft: 20,
     flexDirection: "row",
-    marginTop: 60,
+    marginTop: 80,
   },
   pageContainer: {
     width: Dimensions.get("window").width,
