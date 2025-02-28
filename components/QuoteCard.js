@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Feather from "@expo/vector-icons/Feather";
+import { Share } from "react-native";
 
 function QuoteCard({ item, index }) {
   const getGradientColors = (index) => {
@@ -23,6 +24,17 @@ function QuoteCard({ item, index }) {
     ];
     return gradients[index % gradients.length];
   };
+
+
+   function shareQuote() {
+    Share.share(
+      {
+        message: "Check out this Quote from Quotely!",
+        title: "Quote alert",
+      },
+      
+    );
+  }
 
   return (
     <View style={styles.outerContainer}>
@@ -49,7 +61,7 @@ function QuoteCard({ item, index }) {
           <Text style={styles.quoteText}>" {item.quote} "</Text>
         </View>
         <View style={styles.cardBottom}>
-          <Feather
+          <Feather onPress={shareQuote}
             style={styles.buttons}
             name="share"
             size={24}
@@ -71,7 +83,7 @@ const styles = StyleSheet.create({
   outerContainer: {
     overflow: "hidden",
     width: 365,
-    height: 470,
+    height: 520,
   },
   quoteContainer: {
     flex: 1,
