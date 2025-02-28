@@ -10,6 +10,8 @@ import { supabase } from "../supabase/config";
 import { useState, useEffect } from "react";
 import QuoteCard from "../components/QuoteCard";
 
+const DEFAULT_IMAGE = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+
 function QuoteScreen() {
   const [quotes, setQuotes] = useState([]);
   const [error, setError] = useState(null);
@@ -22,7 +24,25 @@ function QuoteScreen() {
         setError(error.message);
         console.log("There was an error", error);
       } else {
-        setQuotes(data);
+        const authorImages = {};
+
+        data.forEach((quote) => {
+          if (quote.author_imageURL && !authorImages[quote.author_name]) {
+            authorImages[quote.author_name] = quote.author_imageURL;
+          }
+        });
+
+        const updatedQuotes = data.map((quote) => {
+          if (quote.author_imageURL && !authorImages[quote.author_name]) {
+            authorImages[quote.author_name] = quote.author_imageURL || DEFAULT_IMAGE;
+          }
+          return {
+            ...quote,
+            author_imageURL:
+              authorImages[quote.author_name] || quote.author_imageURL,
+          };
+        });
+        setQuotes(updatedQuotes);
       }
     }
     getQuotes();

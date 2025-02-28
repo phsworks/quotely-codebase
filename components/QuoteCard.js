@@ -26,12 +26,10 @@ function QuoteCard({ item, index }) {
         end={{ x: 1, y: 1 }}
       >
         <View style={styles.cardTop}>
-          {item.author_imageURL && (
             <Image
               source={{ uri: item.author_imageURL }}
               style={styles.image}
             />
-          )}
           <View style={styles.quoteInfo}>
             <Text style={{ fontWeight: 700, fontSize: 18 }}>
               {item.quote_category}

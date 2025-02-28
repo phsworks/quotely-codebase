@@ -9,7 +9,7 @@ import {
 import { supabase } from "../supabase/config";
 import { useState, useEffect } from "react";
 
-function QuoteCategoriesScreen() {
+function QuoteCategoriesScreen( {navigation}) {
   const [quoteCategories, setQuoteCategories] = useState([]);
   const [error, setError] = useState(null);
 
@@ -17,7 +17,7 @@ function QuoteCategoriesScreen() {
     async function getQuotes() {
       let { data, error } = await supabase
         .from("famous-quotes")
-        .select("id, quote_category, category_image", { distinct: true })
+        .select("*", { distinct: true })
         .order("quote_category", { ascending: true });
 
       if (error) {
@@ -47,12 +47,13 @@ function QuoteCategoriesScreen() {
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
-            <Pressable>
+            <Pressable onPress={() => navigation.navigate("Quote Category", {name: item.quote_category, quotes: item.quote } )}>
               <View style={styles.quoteCategory}>
-                  <Image style={styles.image} source={{ uri: item.category_image }} />
-                  <Text style={styles.CategoryText}>
-                    {item.quote_category}
-                  </Text>
+                <Image
+                  style={styles.image}
+                  source={{ uri: item.category_image }}
+                />
+                <Text style={styles.CategoryText}>{item.quote_category}</Text>
               </View>
             </Pressable>
           )}
@@ -74,14 +75,14 @@ const styles = StyleSheet.create({
     marginTop: 80,
   },
   quoteCategoriesContainer: {
-    width: "90vw",
+    width: "80vw",
   },
   quoteCategory: {
     textAlign: "center",
     boxShadow: "rgba(180, 182, 184, 0.2) 0px 4px 5px",
     elevation: 4,
     borderRadius: 20,
-    width: 165,
+    width: 160,
     height: 180,
     margin: 10,
   },
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   columnWrapper: {
     justifyContent: "space-between",
     alignItems: "space-around",
-    gap: 20,
+    gap: 15,
   },
   CategoryText: {
     color: "black",

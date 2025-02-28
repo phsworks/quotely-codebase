@@ -9,6 +9,7 @@ import QuoteMainScreen from "./screens/QuotesMainScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import QuoteCategoriesScreen from "./screens/QuoteCategoriesScreen";
 import FavoritesScreen from "./screens/FavoritesScreen";
+import QuoteCategoryScreen from "./screens/QuoteCategoryScreen";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -78,6 +79,7 @@ export default function App() {
             headerShown: false,
           }}
         />
+        <Stack.Screen name="Quote Category" component={QuoteCategoryScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
