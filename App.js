@@ -79,7 +79,9 @@ export default function App() {
             headerShown: false,
           }}
         />
-        <Stack.Screen name="Quote Category" component={QuoteCategoryScreen} />
+        <Stack.Screen name="Quote Category" component={QuoteCategoryScreen} options={{
+          headerShown: false,
+        }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -9,7 +9,7 @@ import {
 import { supabase } from "../supabase/config";
 import { useState, useEffect } from "react";
 
-function QuoteCategoriesScreen( {navigation}) {
+function QuoteCategoriesScreen({ navigation }) {
   const [quoteCategories, setQuoteCategories] = useState([]);
   const [error, setError] = useState(null);
 
@@ -17,23 +17,30 @@ function QuoteCategoriesScreen( {navigation}) {
     async function getQuotes() {
       let { data, error } = await supabase
         .from("famous-quotes")
-        .select("*", { distinct: true })
+        .select("*")
         .order("quote_category", { ascending: true });
 
       if (error) {
         setError(error.message);
         console.log("There was an error", error);
       } else {
-        const uniqueCategories = Object.values(
-          data.reduce((uniqueCategoryObj, item) => {
-            if (!uniqueCategoryObj[item.quote_category]) {
-              uniqueCategoryObj[item.quote_category] = item;
-            }
-            return uniqueCategoryObj;
-          }, {})
-        );
-        setQuoteCategories(uniqueCategories);
+        // Groepeer de quotes per categorie
+        const categories = data.reduce((acc, quote) => {
+          if (!acc[quote.quote_category]) {
+            acc[quote.quote_category] = [];
+          }
+          acc[quote.quote_category].push(quote);
+          return acc;
+        }, {});
 
+        // Een array van unieke categorieën met hun quotes
+        const uniqueCategories = Object.keys(categories).map((category) => ({
+          quote_category: category,
+          quotes: categories[category],
+          category_image: categories[category][0]?.category_image || "",
+        }));
+
+        setQuoteCategories(uniqueCategories);
       }
     }
     getQuotes();
@@ -44,10 +51,17 @@ function QuoteCategoriesScreen( {navigation}) {
       <View style={styles.quoteCategoriesContainer}>
         <FlatList
           data={quoteCategories}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item, index) => index.toString()}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
-            <Pressable onPress={() => navigation.navigate("Quote Category", {name: item.quote_category, quotes: item.quote } )}>
+            <Pressable
+              onPress={() =>
+                navigation.navigate("Quote Category", {
+                  name: item.quote_category,
+                  quotes: item.quotes,
+                })
+              }
+            >
               <View style={styles.quoteCategory}>
                 <Image
                   style={styles.image}

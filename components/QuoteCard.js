@@ -1,18 +1,25 @@
-import { View, Text, StyleSheet, Image, Platform, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Platform,
+  Dimensions,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import Feather from "@expo/vector-icons/Feather";
 
 function QuoteCard({ item, index }) {
   const getGradientColors = (index) => {
     const gradients = [
-      ["#ff583346", "#ffc4004f"],
-      ["#33ff5824", "#00c5cc4b"],
-      ["#fc466a2b", "#3f5efb3b"],
-      ["#1f40373b", "#99f2c83b"],
-      ["#d9a7c73f", "#fffcdc43"],
-      ["#ff99663d", "#ff5e6137"],
-      ["#d9a7c739", "#fffcdc30"],
-      ["#297fb94d", "#6dd4fa48"],
-      ["#a7ff7854", "#78ffd747"],
+      ["#ff5833c8", "#ffc400c2"],
+      ["#33ff58b9", "#00c5ccb4"],
+      ["#fc466ac0", "#3f5efbb5"],
+      ["#1f4037b6", "#99f2c8bb"],
+      ["#d9a7c7c2", "#f7b67599"],
+      ["#ff9966c3", "#ff5e61b7"],
+      ["#297fb9c2", "#6dd4fabc"],
+      ["#a7ff78b2", "#78ffd7b7"],
     ];
     return gradients[index % gradients.length];
   };
@@ -26,26 +33,34 @@ function QuoteCard({ item, index }) {
         end={{ x: 1, y: 1 }}
       >
         <View style={styles.cardTop}>
-            <Image
-              source={{ uri: item.author_imageURL }}
-              style={styles.image}
-            />
+          <Image source={{ uri: item.author_imageURL }} style={styles.image} />
           <View style={styles.quoteInfo}>
-            <Text style={{ fontWeight: 700, fontSize: 18 }}>
+            <Text style={{ fontWeight: 700, fontSize: 20 }}>
               {item.quote_category}
             </Text>
             <Text>{item.author_name}</Text>
             <View style={styles.origins}>
               <Text>{item.author_nationality}</Text>
-              <Text>{item.author_occupation}</Text>
             </View>
+            <Text>{item.author_occupation}</Text>
           </View>
         </View>
         <View style={styles.quoteSection}>
           <Text style={styles.quoteText}>" {item.quote} "</Text>
         </View>
         <View style={styles.cardBottom}>
-          <Text>share</Text>
+          <Feather
+            style={styles.buttons}
+            name="share"
+            size={24}
+            color="#e8fefe"
+          />
+          <Feather
+            style={styles.buttons}
+            name="heart"
+            size={24}
+            color="#e8fefe"
+          />
         </View>
       </LinearGradient>
     </View>
@@ -63,7 +78,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-around",
-    gap: 50,
+    gap: 30,
     borderRadius: 20,
     boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
     elevation: 4,
@@ -85,25 +100,38 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: "center",
     color: "black",
-    fontWeight: "bold",
-    fontStyle: 'italic'
+    fontFamily: "Roboto",
+    fontWeight: "500",
   },
   image: {
-    width: 100,
-    height: 100,
-    borderRadius: 100,
-    marginBottom: 10,
-    opacity: 0.8,
+    width: 120,
+    height: 120,
+    borderRadius: 120,
+    resizeMode: "cover",
   },
   cardTop: {
     justifyContent: "flex-start",
     alignItems: "flex-start",
     flexDirection: "row",
-    gap: 35,
+    gap: 50,
   },
   origins: {
     flexDirection: "row",
     gap: 5,
+  },
+  cardBottom: {
+    justifyContent: "center",
+    flexDirection: "row",
+    gap: 80,
+  },
+  buttons: {
+    borderRadius: 50,
+    padding: 20,
+    borderWidth: 1,
+    borderColor: "#e8fefe",
+    boxShadow: "0 10px 20px -2px rgba(140, 140, 140, 0.293)",
+    elevation: 4,
+    opacity: 0.8,
   },
 });
 

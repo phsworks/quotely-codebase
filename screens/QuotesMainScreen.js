@@ -3,7 +3,6 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  Animated,
   Dimensions,
 } from "react-native";
 import { supabase } from "../supabase/config";
@@ -85,6 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: 'white'
   },
   quoteContainer: {
     flex: 1,

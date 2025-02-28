@@ -1,20 +1,31 @@
-import { View, Text, StyleSheet, FlatList, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Dimensions,
+  Button,
+} from "react-native";
 import QuoteCard from "../components/QuoteCard";
 import { useEffect } from "react";
+import Feather from "@expo/vector-icons/Feather";
 
 function QuoteCategoryScreen({ navigation, route }) {
   const { name, quotes } = route.params;
 
-  useEffect(() => {
-    console.log("Quotes data:", quotes);
-    console.log(quotes.length)
-  }, [quotes]);
-
-
-
   return (
     <View style={styles.container}>
-      <Text> {name}</Text>
+      <View style={styles.categoryTop}>
+        <Feather
+          onPress={() => navigation.goBack()}
+          name="chevron-left"
+          size={24}
+          color="#4a5a5b"
+        />
+        <Text onPress={() => navigation.goBack()} style={styles.title}>
+          {name}
+        </Text>
+      </View>
 
       <View style={styles.quoteCategoryCards}>
         <FlatList
@@ -40,18 +51,27 @@ function QuoteCategoryScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff",
+    gap: 80,
+    backgroundColor: 'white'
   },
-  quoteCategoryCards: {
-    paddingTop: 10,
+  categoryTop: {
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    marginLeft: 20,
+    flexDirection: "row",
+    marginTop: 60,
   },
   pageContainer: {
-      width: Dimensions.get('window').width,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
+    width: Dimensions.get("window").width,
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 3,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 600,
+    color: "#4a5a5b",
+  },
 });
 
 export default QuoteCategoryScreen;
