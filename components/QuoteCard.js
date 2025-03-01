@@ -15,12 +15,11 @@ function QuoteCard({ item, index }) {
     const gradients = [
       ["#ff5833c8", "#ffc400c2"],
       ["#33ff58b9", "#00c5ccb4"],
-      ["#fc466ac0", "#3f5efbb5"],
+      ["#fc5677c0", "#7e93ffb5"],
       ["#1f4037b6", "#99f2c8bb"],
       ["#d9a7c7c2", "#f7b67599"],
       ["#ff9966c3", "#ff5e61b7"],
       ["#297fb9c2", "#6dd4fabc"],
-      ["#a7ff78b2", "#78ffd7b7"],
     ];
     return gradients[index % gradients.length];
   };
@@ -32,7 +31,7 @@ function QuoteCard({ item, index }) {
         message: "Check out this Quote from Quotely!",
         title: "Quote alert",
       },
-      
+
     );
   }
 
@@ -82,8 +81,8 @@ function QuoteCard({ item, index }) {
 const styles = StyleSheet.create({
   outerContainer: {
     overflow: "hidden",
-    width: 365,
-    height: 520,
+    width: '90%',
+    height: '75%',
   },
   quoteContainer: {
     flex: 1,

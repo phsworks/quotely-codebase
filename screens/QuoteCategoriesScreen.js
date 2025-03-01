@@ -73,6 +73,7 @@ function QuoteCategoriesScreen({ navigation }) {
           )}
           numColumns={2}
           columnWrapperStyle={styles.columnWrapper}
+          style={styles.categoriesList}
         />
       </View>
     </View>
@@ -82,11 +83,9 @@ function QuoteCategoriesScreen({ navigation }) {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
-    padding: 10,
-    marginTop: 80,
+    paddingTop: 10,
   },
   quoteCategoriesContainer: {
     width: "80vw",
@@ -102,20 +101,21 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: "70%",
-    borderBottomWidth: 0.5,
-    borderBottomColor: "#e8e8e8",
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
+    height: "80%",
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
   },
   columnWrapper: {
     justifyContent: "space-between",
     alignItems: "space-around",
     gap: 15,
   },
+  categoriesList: {
+    paddingBottom: 50,
+  },
   CategoryText: {
     color: "black",
-    padding: 20,
+    padding: 10,
     textAlign: "center",
   },
 });

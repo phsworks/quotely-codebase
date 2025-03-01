@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     gap: 80,
-    backgroundColor: 'white'
+
   },
   categoryTop: {
     justifyContent: "flex-start",
