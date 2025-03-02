@@ -49,7 +49,7 @@ function QuoteCategoryScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    gap: 80,
+    gap: 10,
 
   },
   categoryTop: {
@@ -57,18 +57,22 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     marginLeft: 20,
     flexDirection: "row",
-    marginTop: 80,
+    marginTop: '20%',
   },
   pageContainer: {
     width: Dimensions.get("window").width,
     justifyContent: "center",
     alignItems: "center",
-    flex: 3,
+    flex: 1,
   },
   title: {
     fontSize: 22,
     fontWeight: 600,
     color: "#4a5a5b",
+  },
+  quoteCategoryCards: {
+    flex: 2,
+    paddingBottom: 50,
   },
 });
 

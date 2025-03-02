@@ -17,6 +17,8 @@ import QuoteCategoryScreen from "./screens/QuoteCategoryScreen";
 import { useColorScheme, StyleSheet, View } from "react-native";
 import { useState } from "react";
 
+
+
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 

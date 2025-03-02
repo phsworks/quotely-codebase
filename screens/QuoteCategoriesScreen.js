@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   },
   CategoryText: {
     color: "black",
-    padding: 10,
+    padding: 12,
     textAlign: "center",
   },
 });

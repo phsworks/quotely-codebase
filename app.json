@@ -39,7 +39,8 @@
           ],
           "enableBase64ShareAndroid": true
         }
-      ]
+      ],
+      "expo-font"
     ],
     "web": {
       "favicon": "./assets/favicon.png"
