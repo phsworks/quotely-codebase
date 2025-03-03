@@ -57,7 +57,7 @@ function QuoteCard({ item, index }) {
           </View>
         </View>
         <View style={styles.quoteSection}>
-          <Text style={styles.quoteText}>" {item.quote} "</Text>
+          <Text style={styles.quoteText}>"{item.quote}"</Text>
         </View>
         <View style={styles.cardBottom}>
           <Feather onPress={shareQuote}
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
     elevation: 4,
-
+    opacity: 0.85,
     paddingTop: 10,
   },
   quoteInfo: {
