@@ -16,6 +16,8 @@ import FavoritesScreen from "./screens/FavoritesScreen";
 import QuoteCategoryScreen from "./screens/QuoteCategoryScreen";
 import { useColorScheme, StyleSheet, View } from "react-native";
 import { useState } from "react";
+import LandingScreen from "./screens/LandingScreen";
+import SignupPage from "./screens/SignupPage";
 
 
 
@@ -87,6 +89,13 @@ export default function App() {
     <NavigationContainer>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack.Navigator>
+          <Stack.Screen name="landingscreen" component={LandingScreen} options={{
+            headerShown: false,
+          }}>
+          </Stack.Screen>
+          <Stack.Screen name="Signup" component={SignupPage} options={{
+            headerShown: false,
+          }} />
           <Stack.Screen
             name="Quotely Overview"
             component={QuotelyOverview}
