@@ -76,12 +76,59 @@ function QuotelyOverview() {
   );
 }
 
+function AuthStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="LandingScreen"
+        component={LandingScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Auth"
+        component={AuthScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function AppStack({ toggleColorScheme, colorScheme }) {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Quotely Overview"
+        component={QuotelyOverview}
+        options={{
+          headerLeft: () => (
+            <Feather
+              onPress={toggleColorScheme}
+              name={colorScheme === "dark" ? "sun" : "moon"}
+              size={27}
+              color={colorScheme === "dark" ? "white" : "black"}
+            />
+          ),
+          headerTitle: "",
+          headerStyle: {
+            backgroundColor: colorScheme === "dark" ? "#171717" : "#f2f2f2",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Quote Category"
+        component={QuoteCategoryScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+
 export default function App() {
   const systemColorScheme = useColorScheme();
   const [colorScheme, setColorScheme] = useState(systemColorScheme);
   const [session, setSession] = useState(null);
-  const [isLandingScreenComplete, setIsLandingScreenComplete] = useState(false);
-  const [isAuthComplete, setIsAuthComplete] = useState(false);
+
 
 
   function toggleColorScheme() {
@@ -104,63 +151,20 @@ export default function App() {
     };
   }, []);
 
+
+
+
   return (
     <NavigationContainer>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack.Navigator>
-          {!isLandingScreenComplete && (
-            <Stack.Screen
-              name="LandingScreen"
-              component={() => (
-                <LandingScreen
-                  setLandingScreenComplete={setIsLandingScreenComplete}
-                />
-              )}
-              options={{
-                headerShown: false,
-              }}
-            />
-          )}
-          {!session && isLandingScreenComplete && !isAuthComplete && (
-            <Stack.Screen
-              name="Auth"
-              component={() => <AuthScreen setAuthComplete={setIsAuthComplete} />}
-              options={{
-                headerShown: false,
-              }}
-            />
-          )}
-          {session && session.user && isAuthComplete && (
-            <>
-              <Stack.Screen
-                name="Quotely Overview"
-                component={QuotelyOverview}
-                options={{
-                  headerLeft: () => (
-                    <Feather
-                      onPress={toggleColorScheme}
-                      name={colorScheme === "dark" ? "sun" : "moon"}
-                      size={27}
-                      color={colorScheme === "dark" ? "white" : "black"}
-                    />
-                  ),
-                  headerTitle: "",
-                  headerStyle: {
-                    backgroundColor:
-                      colorScheme === "dark" ? "#171717" : "#f2f2f2",
-                  },
-                }}
-              />
-              <Stack.Screen
-                name="Quote Category"
-                component={QuoteCategoryScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-            </>
-          )}
-        </Stack.Navigator>
+        {session ? (
+          <AppStack
+            toggleColorScheme={toggleColorScheme}
+            colorScheme={colorScheme}
+          />
+        ) : (
+          <AuthStack />
+        )}
       </ThemeProvider>
     </NavigationContainer>
   );

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { Alert, StyleSheet, View, AppState, Text } from "react-native";
+import { useState } from "react";
+import { Alert, StyleSheet, View, AppState, Button, Image } from "react-native";
 import { supabase } from "../supabase/configUsers";
-import { Button, Input } from "@rneui/themed";
+import { Input } from "@rneui/themed";
 import MainButton from "../components/MainButton";
+import logo from "../assets/Quotely-logo.png";
 
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive
@@ -20,6 +21,7 @@ function AuthScreen({ setAuthComplete }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
 
   async function signInWithEmail() {
     setLoading(true);
@@ -60,40 +62,48 @@ function AuthScreen({ setAuthComplete }) {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
+      <View style={styles.imageContainer}>
+        <Image style={styles.logo} source={logo} />
+        <View style={styles.toggles}>
+          <Button
+            style={styles.toggle}
+            type="clear"
+            title={"Sign Up"}
+            onPress={() => setIsSignUp(true)}
+          />
+          <Button
+            style={styles.toggle}
+            type="clear"
+            title={"Sign In"}
+            onPress={() => setIsSignUp(false)}
+          />
+        </View>
+      </View>
+      <View style={styles.inputFields}>
         <Input
-          label="Email"
-          leftIcon={{ type: "font-awesome", name: "envelope" }}
+          label="Email address"
           onChangeText={(text) => setEmail(text)}
           value={email}
-          placeholder=""
-          autoCapitalize={"none"}
+          placeholder="email"
+          autoCapitalize="none"
         />
       </View>
-      <View style={styles.verticallySpaced}>
+      <View style={styles.inputFields}>
         <Input
           label="Password"
-          leftIcon={{ type: "font-awesome", name: "lock" }}
           onChangeText={(text) => setPassword(text)}
           value={password}
           secureTextEntry={true}
           placeholder="Password"
-          autoCapitalize={"none"}
+          autoCapitalize="none"
         />
       </View>
-      <View style={styles.verticallySpaced}>
+      <View style={styles.signButton}>
         <MainButton
-          title="Sign up"
+          style={styles.signButton}
+          title={isSignUp ? "Sign Up" : "Sign In"}
           disabled={loading}
-          onPress={() => signUpWithEmail()}
-        />
-      </View>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <MainButton
-          style={styles.signIn}
-          title="Sign in"
-          disabled={loading}
-          onPress={() => signInWithEmail()}
+          onPress={() => (isSignUp ? signUpWithEmail() : signInWithEmail())}
         />
       </View>
     </View>
@@ -104,15 +114,38 @@ export default AuthScreen;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
-    padding: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
   },
-  verticallySpaced: {
+  imageContainer: {
+    paddingTop: 100,
+    width: "100%",
+    height: "50%",
+    alignItems: "center",
+    justifyContent: 'space-between',
+    borderRadius: 30,
+    boxShadow: "rgba(180, 182, 184, 0.2) 0px 4px 5px",
+    backgroundColor: "white",
+    marginBottom: 30,
+  },
+  logo: {
+    width: "100%",
+    height: "40%",
+  },
+  toggles: {
+    flexDirection: "row",
+    gap: 50,
+  },
+  toggle: {
+    
+  },
+  inputFields: {
     paddingTop: 4,
     paddingBottom: 4,
     alignSelf: "stretch",
   },
-  mt20: {
-    marginTop: 20,
-  }
+  signButton: {
+    textAlign: "center",
+  },
 });

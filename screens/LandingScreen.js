@@ -3,14 +3,12 @@ import logo from "../assets/Quotely-logo.png";
 import { useNavigation } from '@react-navigation/native'
 import MainButton from "../components/MainButton";
 
-function LandingScreen({setLandingScreenComplete}) {
+function LandingScreen() {
 
   const navigation = useNavigation();
 
   const handleNext = () => {
-    // Set the landing screen as complete
-    setLandingScreenComplete(true);
-    // Navigate to the AuthPage
+
     navigation.navigate("Auth");
   };
 
