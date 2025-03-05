@@ -15,11 +15,10 @@ import QuoteCategoriesScreen from "./screens/QuoteCategoriesScreen";
 import FavoritesScreen from "./screens/FavoritesScreen";
 import QuoteCategoryScreen from "./screens/QuoteCategoryScreen";
 import { useColorScheme, StyleSheet, View } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LandingScreen from "./screens/LandingScreen";
-import SignupPage from "./screens/SignupPage";
-
-
+import AuthScreen from "./screens/AuthScreen";
+import { supabase } from "./supabase/configUsers";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -80,47 +79,87 @@ function QuotelyOverview() {
 export default function App() {
   const systemColorScheme = useColorScheme();
   const [colorScheme, setColorScheme] = useState(systemColorScheme);
+  const [session, setSession] = useState(null);
+  const [isLandingScreenComplete, setIsLandingScreenComplete] = useState(false);
+  const [isAuthComplete, setIsAuthComplete] = useState(false);
+
 
   function toggleColorScheme() {
     setColorScheme((prevScheme) => (prevScheme === "dark" ? "light" : "dark"));
   }
 
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
   return (
     <NavigationContainer>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack.Navigator>
-          <Stack.Screen name="landingscreen" component={LandingScreen} options={{
-            headerShown: false,
-          }}>
-          </Stack.Screen>
-          <Stack.Screen name="Signup" component={SignupPage} options={{
-            headerShown: false,
-          }} />
-          <Stack.Screen
-            name="Quotely Overview"
-            component={QuotelyOverview}
-            options={{
-              headerLeft: () => (
-                <Feather
-                  onPress={toggleColorScheme}
-                  name={colorScheme === "dark" ? "sun" : "moon"}
-                  size={27}
-                  color={colorScheme === "dark" ? "white" : "black"}
+          {!isLandingScreenComplete && (
+            <Stack.Screen
+              name="LandingScreen"
+              component={() => (
+                <LandingScreen
+                  setLandingScreenComplete={setIsLandingScreenComplete}
                 />
-              ),
-              headerTitle: "",
-              headerStyle: {
-                backgroundColor: colorScheme === "dark" ? "#171717" : "#f2f2f2",
-              },
-            }}
-          />
-          <Stack.Screen
-            name="Quote Category"
-            component={QuoteCategoryScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
+              )}
+              options={{
+                headerShown: false,
+              }}
+            />
+          )}
+          {!session && isLandingScreenComplete && !isAuthComplete && (
+            <Stack.Screen
+              name="Auth"
+              component={() => <AuthScreen setAuthComplete={setIsAuthComplete} />}
+              options={{
+                headerShown: false,
+              }}
+            />
+          )}
+          {session && session.user && isAuthComplete && (
+            <>
+              <Stack.Screen
+                name="Quotely Overview"
+                component={QuotelyOverview}
+                options={{
+                  headerLeft: () => (
+                    <Feather
+                      onPress={toggleColorScheme}
+                      name={colorScheme === "dark" ? "sun" : "moon"}
+                      size={27}
+                      color={colorScheme === "dark" ? "white" : "black"}
+                    />
+                  ),
+                  headerTitle: "",
+                  headerStyle: {
+                    backgroundColor:
+                      colorScheme === "dark" ? "#171717" : "#f2f2f2",
+                  },
+                }}
+              />
+              <Stack.Screen
+                name="Quote Category"
+                component={QuoteCategoryScreen}
+                options={{
+                  headerShown: false,
+                }}
+              />
+            </>
+          )}
         </Stack.Navigator>
       </ThemeProvider>
     </NavigationContainer>

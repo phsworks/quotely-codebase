@@ -3,9 +3,16 @@ import logo from "../assets/Quotely-logo.png";
 import { useNavigation } from '@react-navigation/native'
 import MainButton from "../components/MainButton";
 
-function LandingScreen() {
+function LandingScreen({setLandingScreenComplete}) {
 
   const navigation = useNavigation();
+
+  const handleNext = () => {
+    // Set the landing screen as complete
+    setLandingScreenComplete(true);
+    // Navigate to the AuthPage
+    navigation.navigate("Auth");
+  };
 
 
 
@@ -13,7 +20,7 @@ function LandingScreen() {
     <View style={styles.container}>
       <Image style={styles.logo} source={logo} />
       <MainButton
-        onPress={() => navigation.navigate("Quotely Overview")}
+        onPress={handleNext}
         title="Get Started"
       />
 

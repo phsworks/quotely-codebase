@@ -46,6 +46,9 @@ function QuoteCategoryScreen({ navigation, route }) {
   );
 }
 
+export default QuoteCategoryScreen;
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -76,4 +79,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default QuoteCategoryScreen;

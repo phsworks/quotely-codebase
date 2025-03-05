@@ -6,7 +6,7 @@ import {
   Pressable,
   Image,
 } from "react-native";
-import { supabase } from "../supabase/config";
+import { supabase } from "../supabase/configQuotes";
 import { useState, useEffect } from "react";
 
 function QuoteCategoriesScreen({ navigation }) {

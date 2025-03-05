@@ -5,7 +5,7 @@ import {
   FlatList,
   Dimensions,
 } from "react-native";
-import { supabase } from "../supabase/config";
+import { supabase } from "../supabase/configQuotes";
 import { useState, useEffect } from "react";
 import QuoteCard from "../components/QuoteCard";
 
