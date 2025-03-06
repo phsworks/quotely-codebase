@@ -23,7 +23,7 @@ import { supabase } from "./supabase/configUsers";
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
-function QuotelyOverview() {
+function QuotelyOverview({ session }) {
   return (
     <BottomTabs.Navigator
       screenOptions={{
@@ -71,6 +71,7 @@ function QuotelyOverview() {
         }}
         name="Profile"
         component={ProfileScreen}
+        initialParams={{ session }}
       />
     </BottomTabs.Navigator>
   );
@@ -93,7 +94,7 @@ function AuthStack() {
   );
 }
 
-function AppStack({ toggleColorScheme, colorScheme }) {
+function AppStack({ toggleColorScheme, colorScheme, session }) {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -113,6 +114,7 @@ function AppStack({ toggleColorScheme, colorScheme }) {
             backgroundColor: colorScheme === "dark" ? "#171717" : "#f2f2f2",
           },
         }}
+        initialParams={{ session }}
       />
       <Stack.Screen
         name="Quote Category"
@@ -123,13 +125,10 @@ function AppStack({ toggleColorScheme, colorScheme }) {
   );
 }
 
-
 export default function App() {
   const systemColorScheme = useColorScheme();
   const [colorScheme, setColorScheme] = useState(systemColorScheme);
   const [session, setSession] = useState(null);
-
-
 
   function toggleColorScheme() {
     setColorScheme((prevScheme) => (prevScheme === "dark" ? "light" : "dark"));
@@ -151,9 +150,6 @@ export default function App() {
     };
   }, []);
 
-
-
-
   return (
     <NavigationContainer>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
@@ -161,6 +157,7 @@ export default function App() {
           <AppStack
             toggleColorScheme={toggleColorScheme}
             colorScheme={colorScheme}
+            session={session}
           />
         ) : (
           <AuthStack />

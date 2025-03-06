@@ -14,10 +14,6 @@ import MainButton from "../components/MainButton";
 import logo from "../assets/Quotely-logo.png";
 import { AuthApple } from "../components/Auth.native";
 
-// Tells Supabase Auth to continuously refresh the session automatically if
-// the app is in the foreground. When this is added, you will continue to receive
-// `onAuthStateChange` events with the `TOKEN_REFRESHED` or `SIGNED_OUT` event
-// if the user's session is terminated. This should only be registered once.
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
     supabase.auth.startAutoRefresh();
@@ -26,9 +22,10 @@ AppState.addEventListener("change", (state) => {
   }
 });
 
-function AuthScreen({ setAuthComplete }) {
+function AuthScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
 
@@ -41,15 +38,13 @@ function AuthScreen({ setAuthComplete }) {
 
     if (error) {
       Alert.alert(error.message);
-    } else {
-      // Set the authentication as complete
-      setAuthComplete(true);
     }
     setLoading(false);
   }
 
   async function signUpWithEmail() {
     setLoading(true);
+
     const {
       data: { session },
       error,
@@ -60,6 +55,19 @@ function AuthScreen({ setAuthComplete }) {
 
     if (error) {
       Alert.alert(error.message);
+    } else {
+      // Insert the user's info into the profiles table
+      const { error: profileError } = await supabase
+        .from("profiles")
+        .upsert([{ id: session.user.id, email: email, name: name }]);
+
+      if (profileError) {
+        Alert.alert(profileError.message);
+      } else {
+        Alert.alert(
+          "Sign up successful!"
+        );
+      }
     }
     setLoading(false);
   }
@@ -81,7 +89,7 @@ function AuthScreen({ setAuthComplete }) {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.loginBottom}>
+      <View style={styles.loginCenter}>
         <View style={styles.inputFields}>
           <Input
             label="Email address"
@@ -101,15 +109,26 @@ function AuthScreen({ setAuthComplete }) {
             autoCapitalize="none"
           />
         </View>
+        {isSignUp && (
+          <View style={styles.inputFields}>
+            <Input
+              label="Name"
+              onChangeText={(text) => setName(text)}
+              value={name}
+              placeholder="Name"
+              autoCapitalize="words"
+            />
+          </View>
+        )}
+      </View>
+      <View style={styles.loginBottom}>
         <AuthApple />
-        <View style={styles.signButton}>
-          <MainButton
-            style={styles.signButton}
-            title={isSignUp ? "Sign Up" : "Sign In"}
-            disabled={loading}
-            onPress={() => (isSignUp ? signUpWithEmail() : signInWithEmail())}
-          />
-        </View>
+        <MainButton
+          style={styles.signButton}
+          title={isSignUp ? "Sign Up" : "Sign In"}
+          disabled={loading}
+          onPress={() => (isSignUp ? signUpWithEmail() : signInWithEmail())}
+        />
       </View>
     </View>
   );
@@ -122,6 +141,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#e9e9e947",
+    gap: 10,
   },
   imageContainer: {
     paddingTop: 150,
@@ -151,16 +171,19 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: "#8EEAEE",
   },
-  loginBottom: {
-    height: '60%'
+  loginCenter: {
+    height: "30%",
+    width: "85%",
   },
   inputFields: {
-    paddingTop: 10,
-    paddingBottom: 4,
     alignSelf: "stretch",
+  },
+  loginBottom: {
+    height: "20%",
+    paddingTop: 20,
+    gap: 10,
   },
   signButton: {
     textAlign: "center",
-    marginTop: 100,
   },
 });

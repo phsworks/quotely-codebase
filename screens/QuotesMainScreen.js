@@ -9,7 +9,7 @@ import { supabase } from "../supabase/configQuotes";
 import { useState, useEffect } from "react";
 import QuoteCard from "../components/QuoteCard";
 
-const DEFAULT_IMAGE = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+
 
 function QuoteScreen() {
   const [quotes, setQuotes] = useState([]);
@@ -33,7 +33,7 @@ function QuoteScreen() {
 
         const updatedQuotes = data.map((quote) => {
           if (quote.author_imageURL && !authorImages[quote.author_name]) {
-            authorImages[quote.author_name] = quote.author_imageURL || DEFAULT_IMAGE;
+            authorImages[quote.author_name] = quote.author_imageURL
           }
           return {
             ...quote,
