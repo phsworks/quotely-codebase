@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../supabase/configUsers";
-import { StyleSheet, View, Alert } from "react-native";
+import { StyleSheet, View, Alert, Text } from "react-native";
 import { Button, Input } from "@rneui/themed";
 import { Session } from "@supabase/supabase-js";
 import { useNavigation } from "@react-navigation/native";
@@ -77,6 +77,7 @@ function ProfileScreen({ session }) {
     <View style={styles.container}>
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Input label="Email" value={session?.user?.email} disabled />
+        <Text>{session?.user.email}</Text>
       </View>
       <View style={styles.verticallySpaced}>
         <Input
@@ -104,10 +105,7 @@ function ProfileScreen({ session }) {
       </View>
 
       <View style={styles.verticallySpaced}>
-        <Button title="Sign Out" onPress={() =>
-          supabase.auth.signOut()
-        }
-          />
+        <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
       </View>
     </View>
   );

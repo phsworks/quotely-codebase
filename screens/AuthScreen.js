@@ -1,9 +1,18 @@
 import { useState } from "react";
-import { Alert, StyleSheet, View, AppState, Button, Image } from "react-native";
+import {
+  Alert,
+  StyleSheet,
+  View,
+  AppState,
+  Image,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import { supabase } from "../supabase/configUsers";
 import { Input } from "@rneui/themed";
 import MainButton from "../components/MainButton";
 import logo from "../assets/Quotely-logo.png";
+import { AuthApple } from "../components/Auth.native";
 
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive
@@ -60,18 +69,16 @@ function AuthScreen({ setAuthComplete }) {
       <View style={styles.imageContainer}>
         <Image style={styles.logo} source={logo} />
         <View style={styles.toggles}>
-          <Button
-            style={styles.toggle}
-            type="clear"
-            title={"Sign Up"}
-            onPress={() => setIsSignUp(true)}
-          />
-          <Button
-            style={styles.toggle}
-            type="clear"
-            title={"Sign In"}
-            onPress={() => setIsSignUp(false)}
-          />
+          <TouchableOpacity onPress={() => setIsSignUp(true)}>
+            <Text style={[styles.toggle, isSignUp && styles.toggleActive]}>
+              Sign Up
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setIsSignUp(false)}>
+            <Text style={[styles.toggle, !isSignUp && styles.toggleActive]}>
+              Sign In
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.loginBottom}>
@@ -80,7 +87,7 @@ function AuthScreen({ setAuthComplete }) {
             label="Email address"
             onChangeText={(text) => setEmail(text)}
             value={email}
-            placeholder="email"
+            placeholder="Email"
             autoCapitalize="none"
           />
         </View>
@@ -94,6 +101,7 @@ function AuthScreen({ setAuthComplete }) {
             autoCapitalize="none"
           />
         </View>
+        <AuthApple />
         <View style={styles.signButton}>
           <MainButton
             style={styles.signButton}
@@ -116,9 +124,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#e9e9e947",
   },
   imageContainer: {
-    paddingTop: 100,
+    paddingTop: 150,
     width: "100%",
-    height: "50%",
+    height: "40%",
     alignItems: "center",
     justifyContent: "space-between",
     borderRadius: 30,
@@ -127,19 +135,27 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   logo: {
-    width: "100%",
-    height: "40%",
+    width: "60%",
+    height: "30%",
   },
   toggles: {
     flexDirection: "row",
-    gap: 50,
+    gap: 100,
   },
   toggle: {
-    color: "grey",
+    color: "#4d4d4d",
+    fontSize: 20,
+    paddingBottom: 15,
   },
-  loginBottom: {},
+  toggleActive: {
+    borderBottomWidth: 2,
+    borderBottomColor: "#8EEAEE",
+  },
+  loginBottom: {
+    height: '60%'
+  },
   inputFields: {
-    paddingTop: 4,
+    paddingTop: 10,
     paddingBottom: 4,
     alignSelf: "stretch",
   },
