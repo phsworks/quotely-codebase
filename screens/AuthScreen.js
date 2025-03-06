@@ -51,11 +51,6 @@ function AuthScreen({ setAuthComplete }) {
 
     if (error) {
       Alert.alert(error.message);
-    } else if (!session) {
-      Alert.alert("Please check your inbox for email verification!");
-    } else {
-      // Set the authentication as complete
-      setAuthComplete(true);
     }
     setLoading(false);
   }
@@ -79,32 +74,34 @@ function AuthScreen({ setAuthComplete }) {
           />
         </View>
       </View>
-      <View style={styles.inputFields}>
-        <Input
-          label="Email address"
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-          placeholder="email"
-          autoCapitalize="none"
-        />
-      </View>
-      <View style={styles.inputFields}>
-        <Input
-          label="Password"
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          secureTextEntry={true}
-          placeholder="Password"
-          autoCapitalize="none"
-        />
-      </View>
-      <View style={styles.signButton}>
-        <MainButton
-          style={styles.signButton}
-          title={isSignUp ? "Sign Up" : "Sign In"}
-          disabled={loading}
-          onPress={() => (isSignUp ? signUpWithEmail() : signInWithEmail())}
-        />
+      <View style={styles.loginBottom}>
+        <View style={styles.inputFields}>
+          <Input
+            label="Email address"
+            onChangeText={(text) => setEmail(text)}
+            value={email}
+            placeholder="email"
+            autoCapitalize="none"
+          />
+        </View>
+        <View style={styles.inputFields}>
+          <Input
+            label="Password"
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+            secureTextEntry={true}
+            placeholder="Password"
+            autoCapitalize="none"
+          />
+        </View>
+        <View style={styles.signButton}>
+          <MainButton
+            style={styles.signButton}
+            title={isSignUp ? "Sign Up" : "Sign In"}
+            disabled={loading}
+            onPress={() => (isSignUp ? signUpWithEmail() : signInWithEmail())}
+          />
+        </View>
       </View>
     </View>
   );
@@ -116,14 +113,14 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: "#e9e9e947",
   },
   imageContainer: {
     paddingTop: 100,
     width: "100%",
     height: "50%",
     alignItems: "center",
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     borderRadius: 30,
     boxShadow: "rgba(180, 182, 184, 0.2) 0px 4px 5px",
     backgroundColor: "white",
@@ -138,8 +135,9 @@ const styles = StyleSheet.create({
     gap: 50,
   },
   toggle: {
-    
+    color: "grey",
   },
+  loginBottom: {},
   inputFields: {
     paddingTop: 4,
     paddingBottom: 4,
@@ -147,5 +145,6 @@ const styles = StyleSheet.create({
   },
   signButton: {
     textAlign: "center",
+    marginTop: 100,
   },
 });
