@@ -1,15 +1,24 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../supabase/configUsers";
-import { StyleSheet, View, Alert, Text, BackHandler } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Alert,
+  Text,
+  BackHandler,
+  TouchableOpacity,
+} from "react-native";
 import { Button, Input } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-import Account from "../components/Account";
+import Feather from "@expo/vector-icons/Feather";
+import Avatar from "../components/Avatar";
 
 function ProfileScreen({ route }) {
-  const navigation = useNavigation();
   const [session, setSession] = useState(route.params?.session || null);
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
@@ -40,13 +49,15 @@ function ProfileScreen({ route }) {
 
       const { data, error, status } = await supabase
         .from("profiles")
-        .select("name, email")
+        .select("name, email", "avatar_url")
         .eq("id", session?.user.id)
         .single();
       if (error && status !== 406) throw error;
 
       if (data) {
         setName(data.name);
+        setEmail(data.email);
+        setAvatarUrl(data.avatar_url);
       }
     } catch (error) {
       Alert.alert(error.message);
@@ -55,7 +66,7 @@ function ProfileScreen({ route }) {
     }
   }
 
-  async function updateProfile({ name }) {
+  async function updateProfile({ name, email, avatarUrl }) {
     try {
       setLoading(true);
       if (!session?.user) throw new Error("No user on the session!");
@@ -63,16 +74,33 @@ function ProfileScreen({ route }) {
       const updates = {
         id: session?.user.id,
         name,
+        email,
+        avatarUrl,
         updated_at: new Date(),
       };
 
-      const { error } = await supabase.from("profiles").upsert(updates);
-      if (error) throw error;
+      // Update the profiles table
+      const { error: profilesError } = await supabase
+        .from("profiles")
+        .upsert(updates);
 
+      if (profilesError) throw profilesError;
+
+      // Update the auth table
+      const { error: authError } = await supabase.auth.updateUser({
+        data: {
+          email,
+        },
+      });
+
+      if (authError) throw authError;
+
+      // Success feedback
       setIsEditing(false);
       Alert.alert("Profile updated successfully!");
     } catch (error) {
-      Alert.alert(error.message);
+      // Error feedback
+      Alert.alert("Error updating profile:", error.message);
     } finally {
       setLoading(false);
     }
@@ -100,16 +128,44 @@ function ProfileScreen({ route }) {
 
   return (
     <View style={styles.container}>
-      {session && session.user ? (
-        <Account session={session} name={name} />
-      ) : (
-        <Text>Loading...</Text>
-      )}
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Text style={styles.label}>Email</Text>
-        <Text>{session?.user?.email}</Text>
+      <View style={styles.profileTop}>
+        <Text style={styles.profileTitle}>Profile</Text>
+        <Avatar
+          size={150}
+          url={avatarUrl}
+          onUpload={(url) => {
+            setAvatarUrl(url);
+            updateProfile({ avatar_url: url });
+          }}
+        />
       </View>
-      <View style={styles.verticallySpaced}>
+      <View style={styles.editProfile}>
+        {isEditing ? (
+          <>
+            <Button
+              title={loading ? "Loading ..." : "Save"}
+              onPress={() => updateProfile({ name, email })}
+              disabled={loading}
+            />
+            <TouchableOpacity onPress={() => setIsEditing(false)}>
+              <Feather name="slash" size={24} color="black" />
+            </TouchableOpacity>
+          </>
+        ) : (
+          <TouchableOpacity onPress={() => setIsEditing(true)}>
+            <Feather name="edit-3" size={24} color="black" />
+          </TouchableOpacity>
+        )}
+      </View>
+      <View style={styles.profileBottom}>
+        <Text style={styles.label}>Email</Text>
+        {isEditing ? (
+          <Input value={email || ""} onChangeText={(text) => setEmail(text)} />
+        ) : (
+          <Text>{email}</Text>
+        )}
+      </View>
+      <View>
         <Text style={styles.label}>Name</Text>
         {isEditing ? (
           <Input value={name || ""} onChangeText={(text) => setName(text)} />
@@ -118,32 +174,7 @@ function ProfileScreen({ route }) {
         )}
       </View>
 
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        {isEditing ? (
-          <>
-            <Button
-              title={loading ? "Loading ..." : "Save"}
-              onPress={() => updateProfile({ name, })}
-              disabled={loading}
-            />
-            <Button
-              title="Cancel"
-              onPress={() => setIsEditing(false)}
-              buttonStyle={{ backgroundColor: "grey" }}
-              titleStyle={{ color: "white" }}
-            />
-          </>
-        ) : (
-          <Button
-            title="Edit Profile"
-            onPress={() => setIsEditing(true)}
-            buttonStyle={{ backgroundColor: "blue" }}
-            titleStyle={{ color: "white" }}
-          />
-        )}
-      </View>
-
-      <View style={styles.verticallySpaced}>
+      <View>
         <Button
           title="Delete Profile"
           onPress={deleteProfile}
@@ -152,7 +183,7 @@ function ProfileScreen({ route }) {
         />
       </View>
 
-      <View style={styles.verticallySpaced}>
+      <View>
         <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
       </View>
     </View>
@@ -163,16 +194,24 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    marginTop: 30,
     padding: 12,
   },
-  verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: "stretch",
+  profileTop: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 20,
   },
-  mt20: {
-    marginTop: 20,
+  profileTitle: {
+    fontSize: 24,
+    textAlign: 'left',
+    fontWeight: 600,
+  },
+  editProfile: {
+    paddingTop: 2,
+    marginBottom: 20,
+    justifyContent: "center",
+    alignItems: "flex-end",
   },
   label: {
     fontWeight: "bold",
