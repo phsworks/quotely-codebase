@@ -29,7 +29,7 @@ function QuotelyOverview({ session }) {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: "#8EEAEE",
-        tabBarInactiveTintColor: "#4a5a5b",
+        tabBarInactiveTintColor: "#545567",
         tabBarShowLabel: true,
         tabBarStyle: {
           paddingTop: 5,
@@ -106,13 +106,14 @@ function AppStack({ toggleColorScheme, colorScheme, session }) {
               onPress={toggleColorScheme}
               name={colorScheme === "dark" ? "sun" : "moon"}
               size={27}
-              color={colorScheme === "dark" ? "white" : "black"}
+              color={colorScheme === "dark" ? "white" : "#545567"}
             />
           ),
           headerTitle: "",
           headerStyle: {
-            backgroundColor: colorScheme === "dark" ? "#171717" : "#f2f2f2",
+            backgroundColor: colorScheme === "dark" ? "black" : "#f2f2f2",
           },
+          headerShadowVisible: false,
         }}
         initialParams={{ session }}
       />

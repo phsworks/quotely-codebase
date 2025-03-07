@@ -7,6 +7,7 @@ import {
   Text,
   BackHandler,
   TouchableOpacity,
+  TextInput
 } from "react-native";
 import { Button, Input } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
@@ -106,25 +107,6 @@ function ProfileScreen({ route }) {
     }
   }
 
-  async function deleteProfile() {
-    try {
-      setLoading(true);
-      if (!session?.user) throw new Error("No user on the session!");
-
-      const { error } = await supabase
-        .from("profiles")
-        .delete()
-        .eq("id", session?.user.id);
-      if (error) throw error;
-
-      BackHandler.exitApp();
-      Alert.alert("Profile deleted successfully!");
-    } catch (error) {
-      Alert.alert(error.message);
-    } finally {
-      setLoading(false);
-    }
-  }
 
   return (
     <View style={styles.container}>
@@ -141,50 +123,62 @@ function ProfileScreen({ route }) {
       </View>
       <View style={styles.editProfile}>
         {isEditing ? (
-          <>
-            <Button
-              title={loading ? "Loading ..." : "Save"}
+          <View style={styles.editingControl}>
+            <Feather
               onPress={() => updateProfile({ name, email })}
-              disabled={loading}
+              name="check-circle"
+              size={28}
+              color="#545567"
             />
             <TouchableOpacity onPress={() => setIsEditing(false)}>
-              <Feather name="slash" size={24} color="black" />
+              <Feather name="x-circle" size={28} color="#545567" />
             </TouchableOpacity>
-          </>
+          </View>
         ) : (
           <TouchableOpacity onPress={() => setIsEditing(true)}>
-            <Feather name="edit-3" size={24} color="black" />
+            <Feather name="edit-3" size={28} color="#545567" />
           </TouchableOpacity>
         )}
       </View>
-      <View style={styles.profileBottom}>
-        <Text style={styles.label}>Email</Text>
+      <View style={styles.userTile}>
+        <Feather name="mail" size={24} color="#545567" />
         {isEditing ? (
-          <Input value={email || ""} onChangeText={(text) => setEmail(text)} />
+          <Input
+            value={email || ""}
+            inputStyle={styles.input}
+            inputContainerStyle={styles.inputContainer}
+            onChangeText={(text) => setEmail(text)}
+          />
         ) : (
-          <Text>{email}</Text>
+          <Text style={styles.userInfo}>{email}</Text>
         )}
       </View>
-      <View>
-        <Text style={styles.label}>Name</Text>
+      <View style={styles.userTile}>
+        <Feather name="user" size={24} color="#545567" />
         {isEditing ? (
-          <Input value={name || ""} onChangeText={(text) => setName(text)} />
+          <Input
+            inputStyle={styles.input}
+            inputContainerStyle={styles.inputContainer}
+            value={name || ""}
+            onChangeText={(text) => setName(text)}
+          />
         ) : (
-          <Text>{name}</Text>
+          <Text style={styles.userInfo}>{name}</Text>
         )}
+      </View>
+      <View style={styles.userTile}>
+        <Feather name="settings" size={24} color="#545567" />
+        <Text style={styles.userInfo}>Settings</Text>
       </View>
 
       <View>
-        <Button
-          title="Delete Profile"
-          onPress={deleteProfile}
-          buttonStyle={{ backgroundColor: "red" }}
-          titleStyle={{ color: "white" }}
-        />
-      </View>
-
-      <View>
-        <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
+        <TouchableOpacity
+          style={styles.userTile}
+          onPress={() => supabase.auth.signOut()}
+        >
+          <Feather name="log-out" size={24} color="#545567" />
+          <Text style={styles.userInfo}>Sign Out</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -194,27 +188,59 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30,
-    padding: 12,
+    marginTop: 0,
+    padding: 15,
   },
   profileTop: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 30,
   },
   profileTitle: {
-    fontSize: 24,
-    textAlign: 'left',
+    fontSize: 28,
     fontWeight: 600,
+    color: "#535360",
   },
   editProfile: {
     paddingTop: 2,
-    marginBottom: 20,
+    marginTop: 10,
+    marginBottom: 10,
     justifyContent: "center",
     alignItems: "flex-end",
+    paddingRight: 15,
   },
-  label: {
-    fontWeight: "bold",
-    marginBottom: 5,
+  editingControl: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  userTile: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    gap: 20,
+    boxShadow: "rgba(180, 182, 184, 0.402) 0px 4px 5px",
+    marginBottom: 20,
+    padding: 15,
+    borderRadius: 20,
+    backgroundColor: 'white'
+  },
+  userInfo: {
+    fontSize: 16,
+    color: "#434451",
+  },
+  inputContainer: {
+    width: "80%",
+    height: "1%",
+    borderBottomWidth: 0,
+    margin: 0,
+    marginTop: 20,
+  },
+  input: {
+    fontSize: 14, // Adjust the font size as needed
+    paddingHorizontal: 5,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    color: "#333",
   },
 });

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { supabase } from "../supabase/configUsers";
 import { StyleSheet, View, Alert, Image, Button } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import Feather from "@expo/vector-icons/Feather";
 
 function Avatar({ url, size = 150, onUpload }) {
   const [uploading, setUploading] = useState(false);
@@ -83,19 +84,24 @@ function Avatar({ url, size = 150, onUpload }) {
   return (
     <View>
       {avatarUrl ? (
-        <Image
-          source={{ uri: avatarUrl }}
-          accessibilityLabel="Avatar"
-          style={[avatarSize, styles.avatar, styles.image]}
-        />
+        <View>
+          <Image
+            source={{ uri: avatarUrl }}
+            accessibilityLabel="Avatar"
+            style={[avatarSize, styles.avatar, styles.image]}
+            onPress={uploadAvatar}
+          />
+        </View>
       ) : (
         <View style={[avatarSize, styles.avatar, styles.noImage]} />
       )}
-      <View>
-        <Button
-          title={uploading ? "Uploading ..." : "Upload"}
+      <View style={styles.editImage}>
+        <Feather
           onPress={uploadAvatar}
           disabled={uploading}
+          name="edit-2"
+          size={15}
+          color="black"
         />
       </View>
     </View>
@@ -115,6 +121,17 @@ const styles = StyleSheet.create({
   noImage: {
     backgroundColor: "#dadada",
     borderRadius: 100,
+    borderWidth: 1,
+    borderColor: "#8EEAEE",
+  },
+  editImage: {
+    borderRadius: 150,
+    backgroundColor: 'white',
+    padding: 5,
+    position: 'absolute',
+    marginTop: 100,
+    marginLeft: 130,
+    zIndex: 99999,
   },
 });
 
