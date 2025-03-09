@@ -127,10 +127,10 @@ const styles = StyleSheet.create({
   editImage: {
     borderRadius: 150,
     backgroundColor: 'white',
-    padding: 5,
+    padding: 10,
     position: 'absolute',
     marginTop: 100,
-    marginLeft: 130,
+    marginLeft: 120,
     zIndex: 99999,
   },
 });
