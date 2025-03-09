@@ -76,7 +76,7 @@ function ProfileScreen({ route }) {
         id: session?.user.id,
         name,
         email,
-        avatarUrl,
+        avatar_url: avatarUrl,
         updated_at: new Date(),
       };
 
