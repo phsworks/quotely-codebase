@@ -89,9 +89,7 @@ function ProfileScreen({ route }) {
 
       // Update the auth table
       const { error: authError } = await supabase.auth.updateUser({
-        data: {
           email,
-        },
       });
 
       if (authError) throw authError;
