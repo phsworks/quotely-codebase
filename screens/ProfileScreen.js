@@ -50,7 +50,7 @@ function ProfileScreen({ route }) {
 
       const { data, error, status } = await supabase
         .from("profiles")
-        .select("name, email", "avatar_url")
+        .select("name, email", "AvatarUrl")
         .eq("id", session?.user.id)
         .single();
       if (error && status !== 406) throw error;
@@ -58,7 +58,7 @@ function ProfileScreen({ route }) {
       if (data) {
         setName(data.name);
         setEmail(data.email);
-        setAvatarUrl(data.avatar_url);
+        setAvatarUrl(data.avatarUrl);
       }
     } catch (error) {
       Alert.alert(error.message);
@@ -76,7 +76,7 @@ function ProfileScreen({ route }) {
         id: session?.user.id,
         name,
         email,
-        avatar_url: avatarUrl,
+        avatarUrl,
         updated_at: new Date(),
       };
 
