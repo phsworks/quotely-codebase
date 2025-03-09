@@ -58,7 +58,7 @@ function ProfileScreen({ route }) {
       if (data) {
         setName(data.name);
         setEmail(data.email);
-        setAvatarUrl(data.avatarUrl);
+        setAvatarUrl(data.AvatarUrl);
       }
     } catch (error) {
       Alert.alert(error.message);
@@ -67,7 +67,7 @@ function ProfileScreen({ route }) {
     }
   }
 
-  async function updateProfile({ name, email, avatarUrl }) {
+  async function updateProfile({ name, email, AvatarUrl }) {
     try {
       setLoading(true);
       if (!session?.user) throw new Error("No user on the session!");
@@ -76,7 +76,7 @@ function ProfileScreen({ route }) {
         id: session?.user.id,
         name,
         email,
-        avatarUrl,
+        AvatarUrl,
         updated_at: new Date(),
       };
 
@@ -115,7 +115,7 @@ function ProfileScreen({ route }) {
           url={avatarUrl}
           onUpload={(url) => {
             setAvatarUrl(url);
-            updateProfile({ avatar_url: url });
+            updateProfile({ AvatarUrl: url });
           }}
         />
       </View>
