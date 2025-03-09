@@ -1,18 +1,13 @@
-import { useState, useEffect } from "react";
-import { supabase } from "../supabase/configUsers";
+import React, { useState, useEffect } from "react";
 import {
-  StyleSheet,
-  View,
   Alert,
-  Text,
-  BackHandler,
-  TouchableOpacity,
-  TextInput
+  View,
+  ActivityIndicator,
+  StyleSheet,
+  TextInput,
+  Button,
 } from "react-native";
-import { Button, Input } from "@rneui/themed";
-import { useNavigation } from "@react-navigation/native";
-import Feather from "@expo/vector-icons/Feather";
-import Avatar from "../components/Avatar";
+import { supabase } from "../supabase/configUsers";
 
 function ProfileScreen({ route }) {
   const [session, setSession] = useState(route.params?.session || null);
@@ -50,7 +45,7 @@ function ProfileScreen({ route }) {
 
       const { data, error, status } = await supabase
         .from("profiles")
-        .select("name, email", "avatar_url")
+        .select("name, email, avatar_url")
         .eq("id", session?.user.id)
         .single();
       if (error && status !== 406) throw error;
@@ -76,7 +71,7 @@ function ProfileScreen({ route }) {
         id: session?.user.id,
         name,
         email,
-        avatarUrl,
+        avatar_url: avatarUrl,
         updated_at: new Date(),
       };
 
@@ -89,9 +84,7 @@ function ProfileScreen({ route }) {
 
       // Update the auth table
       const { error: authError } = await supabase.auth.updateUser({
-        data: {
-          email,
-        },
+        email,
       });
 
       if (authError) throw authError;
@@ -107,79 +100,45 @@ function ProfileScreen({ route }) {
     }
   }
 
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
-      <View style={styles.profileTop}>
-        <Text style={styles.profileTitle}>Profile</Text>
-        <Avatar
-          size={150}
-          url={avatarUrl}
-          onUpload={(url) => {
-            setAvatarUrl(url);
-            updateProfile({ avatar_url: url });
-          }}
+      <TextInput
+        style={styles.input}
+        value={name}
+        onChangeText={setName}
+        placeholder="Name"
+        editable={isEditing}
+      />
+      <TextInput
+        style={styles.input}
+        value={email}
+        onChangeText={setEmail}
+        placeholder="Email"
+        editable={isEditing}
+      />
+      <TextInput
+        style={styles.input}
+        value={avatarUrl}
+        onChangeText={setAvatarUrl}
+        placeholder="Avatar URL"
+        editable={isEditing}
+      />
+      {isEditing ? (
+        <Button
+          title="Save"
+          onPress={() => updateProfile({ name, email, avatarUrl })}
         />
-      </View>
-      <View style={styles.editProfile}>
-        {isEditing ? (
-          <View style={styles.editingControl}>
-            <Feather
-              onPress={() => updateProfile({ name, email })}
-              name="check-circle"
-              size={28}
-              color="#545567"
-            />
-            <TouchableOpacity onPress={() => setIsEditing(false)}>
-              <Feather name="x-circle" size={28} color="#545567" />
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <TouchableOpacity onPress={() => setIsEditing(true)}>
-            <Feather name="edit-3" size={28} color="#545567" />
-          </TouchableOpacity>
-        )}
-      </View>
-      <View style={styles.userTile}>
-        <Feather name="mail" size={24} color="#545567" />
-        {isEditing ? (
-          <Input
-            value={email || ""}
-            inputStyle={styles.input}
-            inputContainerStyle={styles.inputContainer}
-            onChangeText={(text) => setEmail(text)}
-          />
-        ) : (
-          <Text style={styles.userInfo}>{email}</Text>
-        )}
-      </View>
-      <View style={styles.userTile}>
-        <Feather name="user" size={24} color="#545567" />
-        {isEditing ? (
-          <Input
-            inputStyle={styles.input}
-            inputContainerStyle={styles.inputContainer}
-            value={name || ""}
-            onChangeText={(text) => setName(text)}
-          />
-        ) : (
-          <Text style={styles.userInfo}>{name}</Text>
-        )}
-      </View>
-      <View style={styles.userTile}>
-        <Feather name="settings" size={24} color="#545567" />
-        <Text style={styles.userInfo}>Settings</Text>
-      </View>
-
-      <View>
-        <TouchableOpacity
-          style={styles.userTile}
-          onPress={() => supabase.auth.signOut()}
-        >
-          <Feather name="log-out" size={24} color="#545567" />
-          <Text style={styles.userInfo}>Sign Out</Text>
-        </TouchableOpacity>
-      </View>
+      ) : (
+        <Button title="Edit" onPress={() => setIsEditing(true)} />
+      )}
     </View>
   );
 }
@@ -188,59 +147,22 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 0,
-    padding: 15,
-  },
-  profileTop: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    gap: 30,
+    padding: 16,
   },
-  profileTitle: {
-    fontSize: 28,
-    fontWeight: 600,
-    color: "#535360",
-  },
-  editProfile: {
-    paddingTop: 2,
-    marginTop: 10,
-    marginBottom: 10,
+  loadingContainer: {
+    flex: 1,
     justifyContent: "center",
-    alignItems: "flex-end",
-    paddingRight: 15,
-  },
-  editingControl: {
-    flexDirection: 'row',
-    gap: 10,
-  },
-  userTile: {
-    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-start",
-    gap: 20,
-    boxShadow: "rgba(180, 182, 184, 0.402) 0px 4px 5px",
-    marginBottom: 20,
-    padding: 15,
-    borderRadius: 20,
-    backgroundColor: 'white'
-  },
-  userInfo: {
-    fontSize: 16,
-    color: "#434451",
-  },
-  inputContainer: {
-    width: "80%",
-    height: "1%",
-    borderBottomWidth: 0,
-    margin: 0,
-    marginTop: 20,
   },
   input: {
-    fontSize: 14, // Adjust the font size as needed
-    paddingHorizontal: 5,
+    height: 40,
+    borderColor: "gray",
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    color: "#333",
+    marginBottom: 12,
+    paddingHorizontal: 8,
+    width: "100%",
   },
 });
