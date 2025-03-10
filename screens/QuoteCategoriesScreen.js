@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 10,
+    paddingTop: 70,
   },
   quoteCategoriesContainer: {
     width: "80vw",

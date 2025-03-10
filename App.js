@@ -19,11 +19,12 @@ import { useState, useEffect } from "react";
 import LandingScreen from "./screens/LandingScreen";
 import AuthScreen from "./screens/AuthScreen";
 import { supabase } from "./supabase/configUsers";
+import SettingsScreen from "./screens/SettingsScreen";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
-function QuotelyOverview({ session }) {
+function QuotelyOverview({ session, toggleColorScheme, colorScheme }) {
   return (
     <BottomTabs.Navigator
       screenOptions={{
@@ -100,26 +101,32 @@ function AppStack({ toggleColorScheme, colorScheme, session }) {
       <Stack.Screen
         name="Quotely Overview"
         component={QuotelyOverview}
-        options={{
-          headerLeft: () => (
-            <Feather
-              onPress={toggleColorScheme}
-              name={colorScheme === "dark" ? "sun" : "moon"}
-              size={27}
-              color={colorScheme === "dark" ? "white" : "#545567"}
-            />
-          ),
-          headerTitle: "",
-          headerStyle: {
-            backgroundColor: colorScheme === "dark" ? "black" : "#f2f2f2",
-          },
-          headerShadowVisible: false,
-        }}
-        initialParams={{ session }}
+        options={{ headerShown: false }}
+        // options={{
+        //   headerLeft: () => (
+        //     <Feather
+        //       onPress={toggleColorScheme}
+        //       name={colorScheme === "dark" ? "sun" : "moon"}
+        //       size={27}
+        //       color={colorScheme === "dark" ? "white" : "#545567"}
+        //     />
+        //   ),
+        //   headerTitle: "",
+        //   headerStyle: {
+        //     backgroundColor: colorScheme === "dark" ? "black" : "#f2f2f2",
+        //   },
+        //   headerShadowVisible: false,
+        // }}
+        // initialParams={{ session }}
       />
       <Stack.Screen
         name="Quote Category"
         component={QuoteCategoryScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={SettingsScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -153,17 +160,17 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      {/* <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}> */}
         {session ? (
           <AppStack
-            toggleColorScheme={toggleColorScheme}
-            colorScheme={colorScheme}
+            // toggleColorScheme={toggleColorScheme}
+            // colorScheme={colorScheme}
             session={session}
           />
         ) : (
           <AuthStack />
         )}
-      </ThemeProvider>
+      {/* </ThemeProvider> */}
     </NavigationContainer>
   );
 }

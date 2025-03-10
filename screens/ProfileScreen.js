@@ -7,7 +7,7 @@ import {
   Text,
   BackHandler,
   TouchableOpacity,
-  TextInput
+  TextInput,
 } from "react-native";
 import { Button, Input } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
@@ -21,6 +21,8 @@ function ProfileScreen({ route }) {
   const [email, setEmail] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     const getSession = async () => {
@@ -89,7 +91,7 @@ function ProfileScreen({ route }) {
 
       // Update the auth table
       const { error: authError } = await supabase.auth.updateUser({
-          email,
+        email,
       });
 
       if (authError) throw authError;
@@ -104,7 +106,6 @@ function ProfileScreen({ route }) {
       setLoading(false);
     }
   }
-
 
   return (
     <View style={styles.container}>
@@ -139,19 +140,6 @@ function ProfileScreen({ route }) {
         )}
       </View>
       <View style={styles.userTile}>
-        <Feather name="mail" size={24} color="#545567" />
-        {isEditing ? (
-          <Input
-            value={email || ""}
-            inputStyle={styles.input}
-            inputContainerStyle={styles.inputContainer}
-            onChangeText={(text) => setEmail(text)}
-          />
-        ) : (
-          <Text style={styles.userInfo}>{email}</Text>
-        )}
-      </View>
-      <View style={styles.userTile}>
         <Feather name="user" size={24} color="#545567" />
         {isEditing ? (
           <Input
@@ -165,17 +153,27 @@ function ProfileScreen({ route }) {
         )}
       </View>
       <View style={styles.userTile}>
-        <Feather name="settings" size={24} color="#545567" />
-        <Text style={styles.userInfo}>Settings</Text>
+        <Feather name="mail" size={24} color="#545567" />
+        {isEditing ? (
+          <Input
+            value={email || ""}
+            inputStyle={styles.input}
+            inputContainerStyle={styles.inputContainer}
+            onChangeText={(text) => setEmail(text)}
+          />
+        ) : (
+          <Text style={styles.userInfo}>{email}</Text>
+        )}
       </View>
-
       <View>
         <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("Settings")
+          }
           style={styles.userTile}
-          onPress={() => supabase.auth.signOut()}
         >
-          <Feather name="log-out" size={24} color="#545567" />
-          <Text style={styles.userInfo}>Sign Out</Text>
+          <Feather name="settings" size={24} color="#545567" />
+          <Text style={styles.userInfo}>Settings</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -186,7 +184,7 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 0,
+    marginTop: 50,
     padding: 15,
   },
   profileTop: {
@@ -208,7 +206,7 @@ const styles = StyleSheet.create({
     paddingRight: 15,
   },
   editingControl: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 10,
   },
   userTile: {
@@ -220,7 +218,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     padding: 15,
     borderRadius: 20,
-    backgroundColor: 'white'
+    backgroundColor: "white",
   },
   userInfo: {
     fontSize: 16,
