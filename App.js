@@ -1,10 +1,4 @@
-import { StatusBar } from "expo-status-bar";
-import {
-  NavigationContainer,
-  ThemeProvider,
-  DarkTheme,
-  DefaultTheme,
-} from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Feather from "@expo/vector-icons/Feather";
@@ -20,6 +14,7 @@ import LandingScreen from "./screens/LandingScreen";
 import AuthScreen from "./screens/AuthScreen";
 import { supabase } from "./supabase/configUsers";
 import SettingsScreen from "./screens/SettingsScreen";
+import { FavoritesQuotesProvider } from "./context/FavoritesContext";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -159,8 +154,9 @@ export default function App() {
   }, []);
 
   return (
-    <NavigationContainer>
-      {/* <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}> */}
+    <FavoritesQuotesProvider>
+      <NavigationContainer>
+        {/* <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}> */}
         {session ? (
           <AppStack
             // toggleColorScheme={toggleColorScheme}
@@ -170,7 +166,8 @@ export default function App() {
         ) : (
           <AuthStack />
         )}
-      {/* </ThemeProvider> */}
-    </NavigationContainer>
+        {/* </ThemeProvider> */}
+      </NavigationContainer>
+    </FavoritesQuotesProvider>
   );
 }

@@ -3,14 +3,27 @@ import {
   Text,
   StyleSheet,
   Image,
-  Platform,
-  Dimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Feather from "@expo/vector-icons/Feather";
 import { Share } from "react-native";
+import { useContext } from "react";
+import FavoritesQuotesContext from "../context/FavoritesContext";
 
 function QuoteCard({ item, index }) {
+
+  const {  favoriteQuotes, addFavoriteQuote, removeFavoriteQuote  } = useContext(FavoritesQuotesContext);
+
+  const isFavorite = (quote) => favoriteQuotes.includes(quote);
+
+  const toggleFavorite = (quote) => {
+    if (isFavorite(quote)) {
+      removeFavoriteQuote(quote);
+    } else {
+      addFavoriteQuote(quote);
+    }
+  };
+
   const getGradientColors = (index) => {
     const gradients = [
       ["#ff5833c8", "#ffc400c2"],
@@ -28,12 +41,13 @@ function QuoteCard({ item, index }) {
    function shareQuote() {
     Share.share(
       {
-        message: "Check out this Quote from Quotely!",
+        message: `Check out this Quote from Quotely: ${item.quote}`,
         title: "Quote alert",
       },
 
     );
   }
+
 
   return (
     <View style={styles.outerContainer}>
@@ -67,6 +81,7 @@ function QuoteCard({ item, index }) {
             color="#e4ffff"
           />
           <Feather
+            onPress={() => toggleFavorite(item.quote)}
             style={styles.buttons}
             name="heart"
             size={24}

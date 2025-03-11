@@ -51,7 +51,7 @@ function SettingsScreen() {
       ]
     );
   const signOutAlert = () =>
-    Alert.alert("Are you sure you want to sign out?", [
+    Alert.alert("Are you sure you want to sign out?", "You can Sign In again whenever you want", [
       {
         text: "Cancel",
         onPress: () => console.log("Cancel Pressed"),

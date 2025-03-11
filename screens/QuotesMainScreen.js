@@ -8,6 +8,7 @@ import {
 import { supabase } from "../supabase/configQuotes";
 import { useState, useEffect } from "react";
 import QuoteCard from "../components/QuoteCard";
+import { FavoritesQuotesContext } from "../context/FavoritesContext";
 
 
 
