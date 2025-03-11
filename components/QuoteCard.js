@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   outerContainer: {
     overflow: "hidden",
     width: '90%',
-    height: '67%',
+    height: '70%',
   },
   quoteContainer: {
     flex: 1,
