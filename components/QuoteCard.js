@@ -1,9 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-} from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Feather from "@expo/vector-icons/Feather";
 import { Share } from "react-native";
@@ -11,8 +6,9 @@ import { useContext } from "react";
 import FavoritesQuotesContext from "../context/FavoritesContext";
 
 function QuoteCard({ item, index }) {
-
-  const {  favoriteQuotes, addFavoriteQuote, removeFavoriteQuote  } = useContext(FavoritesQuotesContext);
+  const { favoriteQuotes, addFavoriteQuote, removeFavoriteQuote } = useContext(
+    FavoritesQuotesContext
+  );
 
   const isFavorite = (quote) => favoriteQuotes.includes(quote);
 
@@ -37,17 +33,12 @@ function QuoteCard({ item, index }) {
     return gradients[index % gradients.length];
   };
 
-
-   function shareQuote() {
-    Share.share(
-      {
-        message: `Check out this Quote from Quotely: ${item.quote}`,
-        title: "Quote alert",
-      },
-
-    );
+  function shareQuote() {
+    Share.share({
+      message: `Check out this Quote from Quotely: ${item.quote}`,
+      title: "Quote alert",
+    });
   }
-
 
   return (
     <View style={styles.outerContainer}>
@@ -74,19 +65,19 @@ function QuoteCard({ item, index }) {
           <Text style={styles.quoteText}>"{item.quote}"</Text>
         </View>
         <View style={styles.cardBottom}>
-          <Feather onPress={shareQuote}
+          <TouchableOpacity style={styles.buttons} onPress={shareQuote}>
+            <Feather name="share" size={24} color="#e4ffff" />
+          </TouchableOpacity>
+          <TouchableOpacity
             style={styles.buttons}
-            name="share"
-            size={24}
-            color="#e4ffff"
-          />
-          <Feather
-            onPress={() => toggleFavorite(item.quote)}
-            style={styles.buttons}
-            name="heart"
-            size={24}
-            color="#e4ffff"
-          />
+            onPress={() => toggleFavorite(item)}
+          >
+            <Feather
+              name="heart"
+              size={24}
+              color={isFavorite ? "#e4ffff" : "#30b0b6"}
+            />
+          </TouchableOpacity>
         </View>
       </LinearGradient>
     </View>
@@ -96,8 +87,8 @@ function QuoteCard({ item, index }) {
 const styles = StyleSheet.create({
   outerContainer: {
     overflow: "hidden",
-    width: '90%',
-    height: '70%',
+    width: "90%",
+    height: "70%",
   },
   quoteContainer: {
     flex: 1,
@@ -144,7 +135,6 @@ const styles = StyleSheet.create({
   origins: {
     flexDirection: "row",
     gap: 3,
-
   },
   cardBottom: {
     justifyContent: "center",
@@ -155,7 +145,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     padding: 25,
     borderWidth: 0.5,
-    borderColor: '#e4ffff',
+    borderColor: "#e4ffff",
     boxShadow: "0 15px 20px 5px rgba(158, 158, 158, 0.293)",
     elevation: 4,
     opacity: 0.8,

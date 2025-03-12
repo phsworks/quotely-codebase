@@ -10,7 +10,9 @@ import { useState, useEffect } from "react";
 import QuoteCard from "../components/QuoteCard";
 import { FavoritesQuotesContext } from "../context/FavoritesContext";
 
-
+function shuffleArray(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
 
 function QuoteScreen() {
   const [quotes, setQuotes] = useState([]);
@@ -42,7 +44,9 @@ function QuoteScreen() {
               authorImages[quote.author_name] || quote.author_imageURL,
           };
         });
-        setQuotes(updatedQuotes);
+
+        // Shuffle the quotes randomly
+        setQuotes(shuffleArray(updatedQuotes));
       }
     }
     getQuotes();
@@ -85,7 +89,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-
   },
   quoteContainer: {
     flex: 1,
