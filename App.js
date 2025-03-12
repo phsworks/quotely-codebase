@@ -15,6 +15,7 @@ import AuthScreen from "./screens/AuthScreen";
 import { supabase } from "./supabase/configUsers";
 import SettingsScreen from "./screens/SettingsScreen";
 import { FavoritesQuotesProvider } from "./context/FavoritesContext";
+import QuoteDetailsScreen from "./screens/QuoteDetailsScreen";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -122,6 +123,11 @@ function AppStack({ toggleColorScheme, colorScheme, session }) {
       <Stack.Screen
         name="Settings"
         component={SettingsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="QuoteDetails"
+        component={QuoteDetailsScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

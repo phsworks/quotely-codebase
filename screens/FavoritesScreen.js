@@ -5,13 +5,15 @@ import {
   FlatList,
   Dimensions,
   Image,
+  TouchableOpacity,
+  Pressable,
 } from "react-native";
 import FavoritesQuotesContext from "../context/FavoritesContext";
 import { useContext } from "react";
-import QuoteCard from "../components/QuoteCard";
 import { LinearGradient } from "expo-linear-gradient";
-import Feather from "@expo/vector-icons/Feather";
 import { Share } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
 
 function FavoritesScreen() {
   const { favoriteQuotes, addFavoriteQuote, removeFavoriteQuote } = useContext(
@@ -35,6 +37,8 @@ function FavoritesScreen() {
     });
   }
 
+  const navigation = useNavigation();
+
   const getGradientColors = (index) => {
     const gradients = [
       ["#ff5833c8", "#ffc400c2"],
@@ -55,6 +59,9 @@ function FavoritesScreen() {
         keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         renderItem={({ item, index }) => (
+          <Pressable onPress={() =>
+            navigation.navigate("QuoteDetails", { quote: item })
+          } >
             <View style={styles.outerContainer}>
               <LinearGradient
                 colors={getGradientColors(index)}
@@ -62,20 +69,22 @@ function FavoritesScreen() {
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
               >
-                <View style={styles.cardTop}>
+                <View style={styles.quoteSection}>
+                  <Text style={styles.quoteText}>"{item.quote}"</Text>
+                </View>
+                <View style={styles.cardBottom}>
                   <Image
                     source={{ uri: item.author_imageURL }}
                     style={styles.image}
                   />
                   <View style={styles.quoteInfo}>
-                    <Text style={{ fontSize: 10 }}>{item.author_name}</Text>
+                    <Text style={{ fontSize: 10 }}> - {item.author_name}</Text>
                   </View>
-                </View>
-                <View style={styles.quoteSection}>
-                  <Text style={styles.quoteText}>"{item.quote}"</Text>
                 </View>
               </LinearGradient>
             </View>
+
+          </Pressable>
         )}
         numColumns={2}
         columnWrapperStyle={styles.columnWrapper}
@@ -110,7 +119,7 @@ const styles = StyleSheet.create({
   },
   outerContainer: {
     width: 180,
-    height: 140,
+    height: 130,
     marginTop: 10,
   },
   quoteInfo: {
@@ -120,10 +129,10 @@ const styles = StyleSheet.create({
     minWidth: 80,
     maxWidth: 120,
   },
-  cardTop: {
+  cardBottom: {
     alignItems: "center",
     flexDirection: "row",
-    gap: 20,
+    gap: 15,
   },
   image: {
     width: 30,
@@ -144,6 +153,7 @@ const styles = StyleSheet.create({
     color: "black",
     fontFamily: "Roboto",
     fontWeight: "500",
+    paddingTop: 20,
   },
   favoriteQuotesList: {
     paddingBottom: 50,
