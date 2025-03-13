@@ -1,3 +1,4 @@
+import React from "react";
 import {
   View,
   Text,
@@ -5,11 +6,11 @@ import {
   FlatList,
   Image,
   Pressable,
+  Share,
 } from "react-native";
 import FavoritesQuotesContext from "../context/FavoritesContext";
 import { useContext } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Share } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 function FavoritesScreen() {
@@ -41,39 +42,49 @@ function FavoritesScreen() {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={favoriteQuotes}
-        keyExtractor={(item, index) => index.toString()}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item, index }) => (
-          <Pressable onPress={() => {
-            console.log(item); 
-            navigation.navigate("QuoteDetails", { item: item, index: index });
-          }}>
-            <View style={styles.outerContainer}>
-              <LinearGradient
-                colors={getGradientColors(index)}
-                style={styles.quoteContainer}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-              >
-                <View style={styles.quoteSection}>
-                  <Text style={styles.quoteText}>"{item.quote}"</Text>
-                </View>
-                <View style={styles.cardBottom}>
-                  <Image
-                    source={{ uri: item.author_imageURL }}
-                    style={styles.image}
-                  />
-                </View>
-              </LinearGradient>
-            </View>
-          </Pressable>
-        )}
-        numColumns={2}
-        columnWrapperStyle={styles.columnWrapper}
-        style={styles.favoriteQuotesList}
-      />
+      {favoriteQuotes.length === 0 ? (
+        <View style={styles.noFavoritesContainer}>
+          <Text style={{ fontSize: 20, textAlign: 'center'}}> No favorites yet... </Text>
+        </View>
+      ) : (
+        <FlatList
+          data={favoriteQuotes}
+          keyExtractor={(item, index) => index.toString()}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.contentContainer}
+          renderItem={({ item, index }) => (
+            <Pressable
+              onPress={() => {
+                navigation.navigate("QuoteDetails", {
+                  item: item,
+                  index: index,
+                });
+              }}
+            >
+              <View style={styles.outerContainer}>
+                <LinearGradient
+                  colors={getGradientColors(index)}
+                  style={styles.quoteContainer}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                >
+                  <View style={styles.quoteSection}>
+                    <Text style={styles.quoteText}>"{item.quote}"</Text>
+                  </View>
+                  <View style={styles.cardBottom}>
+                    <Image
+                      source={{ uri: item.author_imageURL }}
+                      style={styles.image}
+                    />
+                  </View>
+                </LinearGradient>
+              </View>
+            </Pressable>
+          )}
+          numColumns={2}
+          columnWrapperStyle={styles.columnWrapper}
+        />
+      )}
     </View>
   );
 }
@@ -84,13 +95,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexWrap: "wrap",
-    paddingTop: 70,
+    paddingTop: 50,
     paddingHorizontal: 10,
+  },
+  noFavoritesContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 150,
   },
   columnWrapper: {
     justifyContent: "space-between",
     alignItems: "space-around",
     gap: 8,
+  },
+  contentContainer: {
+    paddingBottom: 30,
   },
   quoteContainer: {
     flex: 1,
@@ -98,7 +118,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,
-    boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+    shadowColor: "rgba(149, 157, 165, 0.2)",
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 1,
+    shadowRadius: 24,
     elevation: 4,
   },
   outerContainer: {
@@ -106,16 +129,9 @@ const styles = StyleSheet.create({
     height: 130,
     marginTop: 10,
   },
-  quoteInfo: {
-    justifyContent: "center",
-    alignItems: "center",
-    justifyContent: 'center',
-    minWidth: 80,
-    maxWidth: 120,
-  },
   cardBottom: {
     alignItems: "flex-end",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   image: {
     width: 30,
@@ -133,13 +149,10 @@ const styles = StyleSheet.create({
   quoteText: {
     fontSize: 10,
     textAlign: "center",
-    color: "black",
+    color: "#36363c",
     fontFamily: "Roboto",
-    fontWeight: "400",
+    fontWeight: "500",
     paddingTop: 20,
-  },
-  favoriteQuotesList: {
-    paddingBottom: 50,
   },
 });
 

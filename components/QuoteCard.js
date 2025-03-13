@@ -7,6 +7,7 @@ import { useContext } from "react";
 import FavoritesQuotesContext from "../context/FavoritesContext";
 
 
+
 function QuoteCard({ item, index }) {
   const { favoriteQuotes, addFavoriteQuote, removeFavoriteQuote } = useContext(
     FavoritesQuotesContext
@@ -53,13 +54,19 @@ function QuoteCard({ item, index }) {
         <View style={styles.cardTop}>
           <Image source={{ uri: item.author_imageURL }} style={styles.image} />
           <View style={styles.quoteInfo}>
-            <Text style={{ fontWeight: 700, fontSize: 18 }}>
+            <Text style={{ fontWeight: 700, fontSize: 18, color: "#36363c" }}>
               {item.quote_category}
             </Text>
-            <Text style={{ fontSize: 12 }}>{item.author_name}</Text>
+            <Text style={{ fontSize: 12, color: "#36363c" }}>
+              {item.author_name}
+            </Text>
             <View style={styles.origins}>
-              <Text style={{ fontSize: 12 }}>{item.author_nationality}</Text>
-              <Text style={{ fontSize: 12 }}>{item.author_occupation}</Text>
+              <Text style={{ fontSize: 12, color: "#36363c" }}>
+                {item.author_nationality}
+              </Text>
+              <Text style={{ fontSize: 12, color: "#36363c" }}>
+                {item.author_occupation}
+              </Text>
             </View>
           </View>
         </View>
@@ -90,7 +97,7 @@ const styles = StyleSheet.create({
   outerContainer: {
     overflow: "hidden",
     width: "90%",
-    height: "73%",
+    height: "82%",
   },
   quoteContainer: {
     flex: 1,
@@ -101,7 +108,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
     elevation: 4,
-    opacity: 0.85,
     paddingTop: 10,
   },
   quoteInfo: {
@@ -118,7 +124,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 10,
     textAlign: "center",
-    color: "black",
+    color: "#36363c",
     fontFamily: "Roboto",
     fontWeight: "500",
   },

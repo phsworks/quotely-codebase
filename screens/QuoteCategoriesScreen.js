@@ -55,24 +55,25 @@ function QuoteCategoriesScreen({ navigation }) {
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <Pressable
-              onPress={() =>
-                navigation.navigate("Quote Category", {
-                  name: item.quote_category,
-                  quotes: item.quotes,
-                })
-              }
+            onPress={() =>
+              navigation.navigate("Quote Category", {
+                name: item.quote_category,
+                quotes: item.quotes,
+              })
+            }
             >
               <View style={styles.quoteCategory}>
                 <Image
                   style={styles.image}
                   source={{ uri: item.category_image }}
-                />
+                  />
                 <Text style={styles.CategoryText}>{item.quote_category}</Text>
               </View>
             </Pressable>
           )}
           numColumns={2}
           columnWrapperStyle={styles.columnWrapper}
+          contentContainerStyle={styles.contentContainer}
           style={styles.categoriesList}
         />
       </View>
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 70,
+    paddingTop: 50,
   },
   quoteCategoriesContainer: {
     width: "80vw",
@@ -98,6 +99,7 @@ const styles = StyleSheet.create({
     width: 160,
     height: 180,
     margin: 10,
+    zIndex: 999,
   },
   image: {
     width: "100%",
@@ -111,11 +113,15 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   categoriesList: {
-    paddingBottom: 50,
+    paddingVertical: 20,
+  },
+  contentContainer: {
+    paddingBottom: 30,
   },
   CategoryText: {
-    color: "black",
-    padding: 12,
+    color: "#545567",
+    fontWeight: "600",
+    padding: 10,
     textAlign: "center",
   },
 });

@@ -38,6 +38,9 @@ function QuotelyOverview({ session, toggleColorScheme, colorScheme }) {
           tabBarIcon: ({ color, size }) => (
             <Feather name="cloud" size={size} color={color} />
           ),
+          headerSearchBarOptions: {
+            placeholder: "Search",
+          }
         }}
         name="Quotes"
         component={QuoteMainScreen}
@@ -65,6 +68,7 @@ function QuotelyOverview({ session, toggleColorScheme, colorScheme }) {
           tabBarIcon: ({ color, size }) => (
             <Feather name="user" size={size} color={color} />
           ),
+          
         }}
         name="Profile"
         component={ProfileScreen}

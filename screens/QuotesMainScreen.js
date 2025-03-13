@@ -4,11 +4,11 @@ import {
   StyleSheet,
   FlatList,
   Dimensions,
+  TextInput,
 } from "react-native";
 import { supabase } from "../supabase/configQuotes";
 import { useState, useEffect } from "react";
 import QuoteCard from "../components/QuoteCard";
-import { FavoritesQuotesContext } from "../context/FavoritesContext";
 
 function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.5);
@@ -16,7 +16,9 @@ function shuffleArray(array) {
 
 function QuoteScreen() {
   const [quotes, setQuotes] = useState([]);
+  const [originalQuotes, setOriginalQuotes] = useState([]);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     async function getQuotes() {
@@ -35,9 +37,6 @@ function QuoteScreen() {
         });
 
         const updatedQuotes = data.map((quote) => {
-          if (quote.author_imageURL && !authorImages[quote.author_name]) {
-            authorImages[quote.author_name] = quote.author_imageURL
-          }
           return {
             ...quote,
             author_imageURL:
@@ -46,7 +45,9 @@ function QuoteScreen() {
         });
 
         // Shuffle the quotes randomly
-        setQuotes(shuffleArray(updatedQuotes));
+        const shuffledQuotes = shuffleArray(updatedQuotes);
+        setQuotes(shuffledQuotes);
+        setOriginalQuotes(shuffledQuotes); // Set original quotes
       }
     }
     getQuotes();
@@ -60,8 +61,32 @@ function QuoteScreen() {
     );
   }
 
+  function handleSearch(query) {
+    setSearchQuery(query);
+    if (!query) {
+      setQuotes(originalQuotes); // Reset to original quotes
+    } else {
+      const filteredQuotes = originalQuotes.filter((quote) => {
+        return quote.author_name.toLowerCase().includes(query.toLowerCase());
+      });
+      setQuotes(filteredQuotes);
+    }
+  }
+
   return (
     <View style={styles.mainContainer}>
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchBar}
+          placeholder="Search for authors..."
+          autoFocus={true}
+          clearButtonMode="always"
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={searchQuery}
+          onChangeText={(query) => handleSearch(query)}
+        />
+      </View>
       <View style={styles.quoteContainer}>
         <FlatList
           data={quotes}
@@ -79,7 +104,6 @@ function QuoteScreen() {
           )}
         />
       </View>
-      <View></View>
     </View>
   );
 }
@@ -90,21 +114,27 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  searchContainer: {
+    paddingTop: "22%",
+  },
+  searchBar: {
+    width: 350,
+    height: 60,
+    backgroundColor: "#ffffff",
+    borderRadius: 50,
+    paddingHorizontal: 20,
+    color: "#8EEAEE",
+    fontWeight: 600,
+    fontSize: 18,
+  },
   quoteContainer: {
     flex: 1,
   },
-  listStyle: {
-    alignItems: "center",
-  },
-  errorText: {
-    color: "red",
-    fontSize: 18,
-    textAlign: "center",
-  },
   pageContainer: {
-    width: Dimensions.get('window').width,
-    justifyContent: 'center',
-    alignItems: 'center'
+    width: Dimensions.get("window").width,
+    height: 'auto',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

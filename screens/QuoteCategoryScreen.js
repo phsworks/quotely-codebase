@@ -4,6 +4,7 @@ import {
   StyleSheet,
   FlatList,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import QuoteCard from "../components/QuoteCard";
 import Feather from "@expo/vector-icons/Feather";
@@ -13,17 +14,15 @@ function QuoteCategoryScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.categoryTop}>
-        <Feather
-          onPress={() => navigation.goBack()}
-          name="chevron-left"
-          size={30}
-          color="#4a5a5b"
-        />
-        <Text onPress={() => navigation.goBack()} style={styles.title}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.categoryTop}
+      >
+        <Feather name="chevron-left" size={30} color="#4a5a5b" />
+        <Text style={styles.title}>
           {name}
         </Text>
-      </View>
+      </TouchableOpacity>
 
       <View style={styles.quoteCategoryCards}>
         <FlatList
@@ -48,12 +47,10 @@ function QuoteCategoryScreen({ navigation, route }) {
 
 export default QuoteCategoryScreen;
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     gap: 10,
-
   },
   categoryTop: {
     justifyContent: "flex-start",
@@ -64,6 +61,7 @@ const styles = StyleSheet.create({
   },
   pageContainer: {
     width: Dimensions.get("window").width,
+    height: '93%',
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
