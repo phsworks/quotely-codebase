@@ -60,7 +60,7 @@ function FavoritesScreen() {
         showsVerticalScrollIndicator={false}
         renderItem={({ item, index }) => (
           <Pressable onPress={() =>
-            navigation.navigate("QuoteDetails", { quote: item })
+            navigation.navigate("QuoteDetails", { item: item, index: index })
           } >
             <View style={styles.outerContainer}>
               <LinearGradient
@@ -77,9 +77,6 @@ function FavoritesScreen() {
                     source={{ uri: item.author_imageURL }}
                     style={styles.image}
                   />
-                  <View style={styles.quoteInfo}>
-                    <Text style={{ fontSize: 10 }}> - {item.author_name}</Text>
-                  </View>
                 </View>
               </LinearGradient>
             </View>
@@ -112,7 +109,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "center",
     borderRadius: 10,
     boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
     elevation: 4,
@@ -130,9 +127,8 @@ const styles = StyleSheet.create({
     maxWidth: 120,
   },
   cardBottom: {
-    alignItems: "center",
-    flexDirection: "row",
-    gap: 15,
+    alignItems: "flex-end",
+    justifyContent: "flex-end"
   },
   image: {
     width: 30,
@@ -145,14 +141,14 @@ const styles = StyleSheet.create({
     minWidth: 120,
     maxWidth: 160,
     minHeight: 40,
-    maxHeight: 80,
+    maxHeight: 90,
   },
   quoteText: {
-    fontSize: 9,
+    fontSize: 10,
     textAlign: "center",
     color: "black",
     fontFamily: "Roboto",
-    fontWeight: "500",
+    fontWeight: "400",
     paddingTop: 20,
   },
   favoriteQuotesList: {

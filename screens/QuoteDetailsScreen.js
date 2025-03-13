@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import Feather from "@expo/vector-icons/Feather";
 import QuoteCard from '../components/QuoteCard';
 
-function QuoteDetailsScreen({ quote }) {
+function QuoteDetailsScreen({ item, index }) {
   const navigation = useNavigation();
 
   return (
@@ -18,7 +18,7 @@ function QuoteDetailsScreen({ quote }) {
         <Text style={styles.settingsTitle}>Quote</Text>
       </View>
       <View>
-          <QuoteCard item={quote} />
+          <QuoteCard item={item} index={index} />
       </View>
     </View>
   );
