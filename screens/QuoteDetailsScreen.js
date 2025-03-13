@@ -1,10 +1,12 @@
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import Feather from "@expo/vector-icons/Feather";
 import QuoteCard from '../components/QuoteCard';
 
-function QuoteDetailsScreen({ item, index }) {
+function QuoteDetailsScreen(props) {
+  const { item, index } = props.route.params;
   const navigation = useNavigation();
+
 
   return (
     <View style={styles.container}>
@@ -15,29 +17,39 @@ function QuoteDetailsScreen({ item, index }) {
           size={30}
           color="#4a5a5b"
         />
-        <Text style={styles.settingsTitle}>Quote</Text>
+        <Text style={styles.goBack}>Go Back</Text>
       </View>
-      <View>
+      <View style={styles.quoteCardWrapper}>
           <QuoteCard item={item} index={index} />
       </View>
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff",
+    alignItems: "flex-start",
+    paddingTop: 120,
   },
   quoteDetailsTop: {
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
+    justifyContent: "center",
+    alignItems: "center",
     marginLeft: 20,
-    flexDirection: "column",
-    gap: 20,
-    marginBottom: "10%",
+    flexDirection: "row",
+    gap: 5,
+  },
+  goBack: {
+    fontSize: 18,
+    color: "#4a5a5b",
+  },
+  quoteCardWrapper: {
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    marginTop: 50,
+    justifyContent: "flex-start",
   },
 });
 

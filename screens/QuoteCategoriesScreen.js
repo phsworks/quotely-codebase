@@ -51,7 +51,7 @@ function QuoteCategoriesScreen({ navigation }) {
       <View style={styles.quoteCategoriesContainer}>
         <FlatList
           data={quoteCategories}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(index) => index.toString()}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <Pressable

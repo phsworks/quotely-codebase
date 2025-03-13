@@ -3,9 +3,7 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  Dimensions,
   Image,
-  TouchableOpacity,
   Pressable,
 } from "react-native";
 import FavoritesQuotesContext from "../context/FavoritesContext";
@@ -14,23 +12,12 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Share } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-
 function FavoritesScreen() {
   const { favoriteQuotes, addFavoriteQuote, removeFavoriteQuote } = useContext(
     FavoritesQuotesContext
   );
 
-  const isFavorite = (quote) => favoriteQuotes.includes(quote);
-
-  const toggleFavorite = (quote) => {
-    if (isFavorite(quote)) {
-      removeFavoriteQuote(quote);
-    } else {
-      addFavoriteQuote(quote);
-    }
-  };
-
-  function shareQuote() {
+  function shareQuote(item) {
     Share.share({
       message: `Check out this Quote from Quotely: ${item.quote}`,
       title: "Quote alert",
@@ -59,9 +46,10 @@ function FavoritesScreen() {
         keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         renderItem={({ item, index }) => (
-          <Pressable onPress={() =>
-            navigation.navigate("QuoteDetails", { item: item, index: index })
-          } >
+          <Pressable onPress={() => {
+            console.log(item); 
+            navigation.navigate("QuoteDetails", { item: item, index: index });
+          }}>
             <View style={styles.outerContainer}>
               <LinearGradient
                 colors={getGradientColors(index)}
@@ -80,7 +68,6 @@ function FavoritesScreen() {
                 </View>
               </LinearGradient>
             </View>
-
           </Pressable>
         )}
         numColumns={2}
@@ -154,7 +141,6 @@ const styles = StyleSheet.create({
   favoriteQuotesList: {
     paddingBottom: 50,
   },
-
 });
 
 export default FavoritesScreen;

@@ -1,9 +1,11 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Feather from "@expo/vector-icons/Feather";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { Share } from "react-native";
 import { useContext } from "react";
 import FavoritesQuotesContext from "../context/FavoritesContext";
+
 
 function QuoteCard({ item, index }) {
   const { favoriteQuotes, addFavoriteQuote, removeFavoriteQuote } = useContext(
@@ -72,11 +74,11 @@ function QuoteCard({ item, index }) {
             style={styles.buttons}
             onPress={() => toggleFavorite(item)}
           >
-            <Feather
-              name="heart"
-              size={24}
-              color={isFavorite ? "#e4ffff" : "#30b0b6"}
-            />
+            {!isFavorite(item) ? (
+              <Feather name="heart" size={24} color="#e4ffff" />
+            ) : (
+              <AntDesign name="heart" size={24} color="#e4ffff" />
+            )}
           </TouchableOpacity>
         </View>
       </LinearGradient>
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
   outerContainer: {
     overflow: "hidden",
     width: "90%",
-    height: "70%",
+    height: "73%",
   },
   quoteContainer: {
     flex: 1,
