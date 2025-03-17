@@ -112,7 +112,7 @@ function ProfileScreen({ route }) {
       <View style={styles.profileTop}>
         <Text style={styles.profileTitle}>Profile</Text>
         <Avatar
-          size={150}
+          size={180}
           url={avatarUrl}
           onUpload={(url) => {
             setAvatarUrl(url);
@@ -167,9 +167,14 @@ function ProfileScreen({ route }) {
       </View>
       <View>
         <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("Settings")
-          }
+          onPress={() => navigation.navigate("Settings")}
+          style={styles.userTile}
+        >
+          <Feather name="bell" size={24} color="#545567" />
+          <Text style={styles.userInfo}>Notifications</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Settings")}
           style={styles.userTile}
         >
           <Feather name="settings" size={24} color="#545567" />
@@ -184,13 +189,13 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
-    padding: 15,
+    marginTop: 70,
+    padding: 20,
   },
   profileTop: {
     justifyContent: "center",
     alignItems: "center",
-    gap: 30,
+    gap: 50,
   },
   profileTitle: {
     fontSize: 28,

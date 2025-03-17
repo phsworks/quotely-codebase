@@ -101,7 +101,7 @@ function Avatar({ url, size = 150, onUpload }) {
           disabled={uploading}
           name="edit-2"
           size={15}
-          color="black"
+          color="white"
         />
       </View>
     </View>
@@ -117,20 +117,24 @@ const styles = StyleSheet.create({
   image: {
     objectFit: "cover",
     paddingTop: 0,
+    borderWidth: 3,
+    borderColor: "#8EEAEE",
   },
   noImage: {
     backgroundColor: "#dadada",
     borderRadius: 100,
-    borderWidth: 1,
+    borderWidth: 3,
     borderColor: "#8EEAEE",
   },
   editImage: {
     borderRadius: 150,
-    backgroundColor: 'white',
+    backgroundColor: "#8EEAEE",
+    borderWidth: 1,
+    borderColor: "white",
     padding: 10,
-    position: 'absolute',
+    position: "absolute",
     marginTop: 100,
-    marginLeft: 120,
+    marginLeft: 150,
     zIndex: 99999,
   },
 });
