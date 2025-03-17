@@ -81,13 +81,6 @@ function SettingsScreen() {
           <Text style={{ fontSize: 18, color: "grey", paddingLeft: 20, paddingBottom: 10, }}>GENERAL</Text>
           <TouchableOpacity style={styles.settingsTile}>
             <View style={styles.tileLeft}>
-              <Feather name="user" size={24} color="#545567" />
-              <Text style={styles.userInfo}>Account</Text>
-            </View>
-            <Feather name="chevron-right" size={24} color="#545567" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.settingsTile}>
-            <View style={styles.tileLeft}>
               <Feather name="bell" size={24} color="#545567" />
               <Text style={styles.userInfo}>Notifications</Text>
             </View>

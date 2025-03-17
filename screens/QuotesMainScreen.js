@@ -79,7 +79,6 @@ function QuoteScreen() {
         <TextInput
           style={styles.searchBar}
           placeholder="Search for authors..."
-          autoFocus={true}
           clearButtonMode="always"
           autoCapitalize="none"
           autoCorrect={false}
