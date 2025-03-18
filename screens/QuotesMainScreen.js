@@ -7,8 +7,9 @@ import {
   TextInput,
 } from "react-native";
 import { supabase } from "../supabase/configQuotes";
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback } from "react";
 import QuoteCard from "../components/QuoteCard";
+
 
 function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.5);
@@ -19,6 +20,7 @@ function QuoteScreen() {
   const [originalQuotes, setOriginalQuotes] = useState([]);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+
 
   useEffect(() => {
     async function getQuotes() {
@@ -94,6 +96,8 @@ function QuoteScreen() {
     debouncedSearch(searchQuery);
   }, [searchQuery, debouncedSearch]);
 
+
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.searchContainer}>
@@ -118,7 +122,7 @@ function QuoteScreen() {
           snapToInterval={Dimensions.get("window").width}
           decelerationRate="fast"
           renderItem={({ item, index }) => (
-            <View style={styles.pageContainer}>
+            <View  style={styles.pageContainer}>
               <QuoteCard index={index} item={item} />
             </View>
           )}
