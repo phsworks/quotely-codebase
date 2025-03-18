@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../supabase/configUsers";
-import { StyleSheet, View, Alert, Image, Button } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Alert,
+  Image,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Feather from "@expo/vector-icons/Feather";
 
@@ -96,13 +103,9 @@ function Avatar({ url, size = 150, onUpload }) {
         <View style={[avatarSize, styles.avatar, styles.noImage]} />
       )}
       <View style={styles.editImage}>
-        <Feather
-          onPress={uploadAvatar}
-          disabled={uploading}
-          name="edit-2"
-          size={15}
-          color="white"
-        />
+        <TouchableOpacity onPress={uploadAvatar}>
+          <Feather disabled={uploading} name="edit-2" size={20} color="white" />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -133,8 +136,8 @@ const styles = StyleSheet.create({
     borderColor: "white",
     padding: 10,
     position: "absolute",
-    marginTop: 100,
-    marginLeft: 170,
+    marginTop: 130,
+    marginLeft: 160,
     zIndex: 99999,
   },
 });

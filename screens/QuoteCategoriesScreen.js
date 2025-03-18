@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
   CategoryText: {
-    color: "#545567",
+    color: "#69c5ca",
     fontWeight: "600",
     padding: 10,
     textAlign: "center",

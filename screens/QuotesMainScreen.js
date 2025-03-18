@@ -7,7 +7,7 @@ import {
   TextInput,
 } from "react-native";
 import { supabase } from "../supabase/configQuotes";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import QuoteCard from "../components/QuoteCard";
 
 function shuffleArray(array) {
@@ -61,17 +61,38 @@ function QuoteScreen() {
     );
   }
 
-  function handleSearch(query) {
-    setSearchQuery(query);
-    if (!query) {
-      setQuotes(originalQuotes); // Reset to original quotes
-    } else {
-      const filteredQuotes = originalQuotes.filter((quote) => {
-        return quote.author_name.toLowerCase().includes(query.toLowerCase());
-      });
-      setQuotes(filteredQuotes);
-    }
-  }
+  // Debounce function to limit how often search is performed
+  const debounce = (func, wait) => {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  };
+
+  // Create memoized debounced search function
+  const debouncedSearch = useCallback(
+    debounce((query) => {
+      if (!query) {
+        setQuotes(originalQuotes); // Reset to original quotes
+      } else {
+        const filteredQuotes = originalQuotes.filter((quote) => {
+          return quote.author_name.toLowerCase().includes(query.toLowerCase());
+        });
+        setQuotes(filteredQuotes);
+      }
+    }, 300),
+    [originalQuotes]
+  );
+
+  // Apply search when query changes
+  useEffect(() => {
+    debouncedSearch(searchQuery);
+  }, [searchQuery, debouncedSearch]);
 
   return (
     <View style={styles.mainContainer}>
@@ -83,7 +104,7 @@ function QuoteScreen() {
           autoCapitalize="none"
           autoCorrect={false}
           value={searchQuery}
-          onChangeText={(query) => handleSearch(query)}
+          onChangeText={setSearchQuery}
         />
       </View>
       <View style={styles.quoteContainer}>

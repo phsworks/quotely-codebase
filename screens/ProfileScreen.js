@@ -135,7 +135,7 @@ function ProfileScreen({ route }) {
           </View>
         ) : (
           <TouchableOpacity onPress={() => setIsEditing(true)}>
-            <Feather name="edit-3" size={28} color="#545567" />
+            <Feather name="edit-2" size={28} color="#545567" />
           </TouchableOpacity>
         )}
       </View>
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
   },
   editProfile: {
     paddingTop: 2,
-    marginTop: 10,
+    marginTop: 20,
     marginBottom: 10,
     justifyContent: "center",
     alignItems: "flex-end",
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    gap: 20,
+    gap: 15,
     boxShadow: "rgba(180, 182, 184, 0.402) 0px 4px 5px",
     marginBottom: 20,
     padding: 15,
@@ -223,14 +223,14 @@ const styles = StyleSheet.create({
     color: "#434451",
   },
   inputContainer: {
-    width: "80%",
+    width: "90%",
     height: "1%",
     borderBottomWidth: 0,
     margin: 0,
     marginTop: 20,
   },
   input: {
-    fontSize: 14,
+    fontSize: 13,
     paddingHorizontal: 5,
     borderWidth: 1,
     borderColor: "#ccc",
