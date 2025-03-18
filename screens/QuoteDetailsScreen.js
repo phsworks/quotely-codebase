@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Touchable, TouchableOpacity } from 'react-nativ
 import { useNavigation } from "@react-navigation/native";
 import Feather from "@expo/vector-icons/Feather";
 import QuoteCard from '../components/QuoteCard';
+import GoBack from '../components/GoBack';
 
 function QuoteDetailsScreen(props) {
   const { item, index } = props.route.params;
@@ -10,18 +11,7 @@ function QuoteDetailsScreen(props) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={styles.quoteDetailsTop}
-      >
-        <Feather
-          
-          name="chevron-left"
-          size={30}
-          color="#4a5a5b"
-        />
-        <Text style={styles.goBack}>Go Back</Text>
-      </TouchableOpacity>
+      <GoBack screenTitle="Go Back" />
       <View style={styles.quoteCardWrapper}>
         <QuoteCard item={item} index={index} />
       </View>
@@ -33,21 +23,12 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "flex-start",
-    paddingTop: 110,
-  },
-  quoteDetailsTop: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 20,
-    flexDirection: "row",
-  },
-  goBack: {
-    fontSize: 18,
-    color: "#4a5a5b",
+    padding: 3,
+
   },
   quoteCardWrapper: {
     width: "100%",
-    height: "90%",
+    height: "80%",
     alignItems: "center",
     marginTop: 50,
     justifyContent: "flex-start",

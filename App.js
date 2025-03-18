@@ -16,6 +16,7 @@ import { supabase } from "./supabase/configUsers";
 import SettingsScreen from "./screens/SettingsScreen";
 import { FavoritesQuotesProvider } from "./context/FavoritesContext";
 import QuoteDetailsScreen from "./screens/QuoteDetailsScreen";
+import NotificationsScreen from "./screens/NotificationsScreen";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -68,7 +69,7 @@ function QuotelyOverview({ session, toggleColorScheme, colorScheme }) {
           tabBarIcon: ({ color, size }) => (
             <Feather name="user" size={size} color={color} />
           ),
-          
+
         }}
         name="Profile"
         component={ProfileScreen}
@@ -132,6 +133,11 @@ function AppStack({ toggleColorScheme, colorScheme, session }) {
       <Stack.Screen
         name="QuoteDetails"
         component={QuoteDetailsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Notifications"
+        component={NotificationsScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

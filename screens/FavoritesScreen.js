@@ -12,18 +12,19 @@ import FavoritesQuotesContext from "../context/FavoritesContext";
 import { useContext } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
+import GoBackk from "../components/GoBack";
 
 function FavoritesScreen() {
   const { favoriteQuotes, addFavoriteQuote, removeFavoriteQuote } = useContext(
     FavoritesQuotesContext
   );
 
-  function shareQuote(item) {
-    Share.share({
-      message: `Check out this Quote from Quotely: ${item.quote}`,
-      title: "Quote alert",
-    });
-  }
+  // function shareQuote(item) {
+  //   Share.share({
+  //     message: `Check out this Quote from Quotely: ${item.quote}`,
+  //     title: "Quote alert",
+  //   });
+  // }
 
   const navigation = useNavigation();
 

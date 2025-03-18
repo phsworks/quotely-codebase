@@ -9,6 +9,7 @@ import {
 import Feather from "@expo/vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import { supabase } from "../supabase/configUsers";
+import GoBack from "../components/GoBack";
 
 function SettingsScreen() {
   const navigation = useNavigation();
@@ -67,15 +68,7 @@ function SettingsScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.settingsTop}>
-        <Feather
-          onPress={() => navigation.goBack()}
-          name="chevron-left"
-          size={30}
-          color="#4a5a5b"
-        />
-        <Text style={styles.settingsTitle}>Settings</Text>
-      </View>
+      <GoBack screenTitle="Settings" />
       <View style={styles.settingTiles}>
         <View style={styles.generalSettings}>
           <Text style={{ fontSize: 18, color: "grey", paddingLeft: 20, paddingBottom: 10, }}>GENERAL</Text>
@@ -134,23 +127,11 @@ function SettingsScreen() {
 const styles = StyleSheet.create({
   container: {
     padding: 15,
-    marginTop: 50,
-  },
-  settingsTop: {
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    marginLeft: 20,
-    flexDirection: "column",
-    gap: 20,
-    marginBottom: "10%",
-  },
-  settingsTitle: {
-    fontSize: 24,
-    fontWeight: "600",
   },
   settingTiles: {
     flexDirection: "column",
     gap: 40,
+    marginTop: 70,
   },
   settingsTile: {
     flexDirection: "row",

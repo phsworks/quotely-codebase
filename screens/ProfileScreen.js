@@ -11,8 +11,8 @@ import {
 } from "react-native";
 import { Button, Input } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-import Feather from "@expo/vector-icons/Feather";
 import Avatar from "../components/Avatar";
+import Feather from "@expo/vector-icons/Feather";
 
 function ProfileScreen({ route }) {
   const [session, setSession] = useState(route.params?.session || null);
@@ -167,7 +167,7 @@ function ProfileScreen({ route }) {
       </View>
       <View>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Settings")}
+          onPress={() => navigation.navigate("Notifications")}
           style={styles.userTile}
         >
           <Feather name="bell" size={24} color="#545567" />
