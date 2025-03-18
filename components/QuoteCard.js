@@ -140,14 +140,13 @@ const styles = StyleSheet.create({
   outerContainer: {
     overflow: "hidden",
     width: "90%",
-    height: "82%",
+    height: "84%",
   },
   quoteContainer: {
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-around",
-    gap: 20,
     borderRadius: 50,
     boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
     elevation: 4,
@@ -182,6 +181,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     flexDirection: "row",
     gap: 45,
+    marginBottom: 30,
   },
   origins: {
     flexDirection: "row",
