@@ -52,7 +52,7 @@ function ProfileScreen({ route }) {
 
       const { data, error, status } = await supabase
         .from("profiles")
-        .select("name, email", "AvatarUrl")
+        .select("name, email, AvatarUrl")
         .eq("id", session?.user.id)
         .single();
       if (error && status !== 406) throw error;
@@ -85,7 +85,7 @@ function ProfileScreen({ route }) {
       // Update the profiles table
       const { error: profilesError } = await supabase
         .from("profiles")
-        .upsert(updates);
+        .upsert(updates)
 
       if (profilesError) throw profilesError;
 
@@ -112,7 +112,7 @@ function ProfileScreen({ route }) {
       <View style={styles.profileTop}>
         <Text style={styles.profileTitle}>Profile</Text>
         <Avatar
-          size={180}
+          size={200}
           url={avatarUrl}
           onUpload={(url) => {
             setAvatarUrl(url);
@@ -166,13 +166,6 @@ function ProfileScreen({ route }) {
         )}
       </View>
       <View>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Notifications")}
-          style={styles.userTile}
-        >
-          <Feather name="bell" size={24} color="#545567" />
-          <Text style={styles.userInfo}>Notifications</Text>
-        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("Settings")}
           style={styles.userTile}
@@ -237,7 +230,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   input: {
-    fontSize: 14, // Adjust the font size as needed
+    fontSize: 14,
     paddingHorizontal: 5,
     borderWidth: 1,
     borderColor: "#ccc",

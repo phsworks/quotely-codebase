@@ -38,7 +38,7 @@ function Avatar({ url, size = 150, onUpload }) {
       setUploading(true);
 
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        mediaTypes: ImagePicker.MediaType,
         allowsMultipleSelection: false,
         allowsEditing: true,
         quality: 1,
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   image: {
     objectFit: "cover",
     paddingTop: 0,
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: "#8EEAEE",
   },
   noImage: {
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     padding: 10,
     position: "absolute",
     marginTop: 100,
-    marginLeft: 150,
+    marginLeft: 170,
     zIndex: 99999,
   },
 });

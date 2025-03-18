@@ -9,7 +9,7 @@ function GoBack({ screenTitle }) {
     <>
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <View style={styles.goBackTop}>
-          <Feather name="chevron-left" size={30} color="#4a5a5b" />
+          <Feather name="chevron-left" size={35} color="#4a5a5b" />
           <Text style={styles.screenTitle}>{screenTitle}</Text>
         </View>
       </TouchableOpacity>
@@ -21,15 +21,16 @@ const styles = StyleSheet.create({
   goBackTop: {
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    marginLeft: 10,
+    marginLeft: 5,
     marginTop: '20%',
     flexDirection: "row",
-    gap: 3,
+    alignItems: 'center',
   },
   screenTitle: {
     fontSize: 24,
     fontWeight: "600",
     color: "#4a5a5b",
+
   },
 });
 
