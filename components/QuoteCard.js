@@ -54,29 +54,29 @@ function QuoteCard({ item, index }) {
   }, []);
 
   async function shareQuote() {
-      try {
-        // Hide buttons before capturing
-        setButtonsVisible(false);
+    try {
+      // Hide buttons before capturing
+      setButtonsVisible(false);
 
-         await new Promise((resolve) => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
-        // Capture the view
-        const uri = await captureRef(imageRef.current, {
-          format: "png",
-          quality: 0.9,
-        });
+      // Capture the view
+      const uri = await captureRef(imageRef.current, {
+        format: "png",
+        quality: 0.9,
+      });
 
-        // Share the image
-        await Share.share({
-          url: uri,
-          title: "Quote alert",
-          message: "Check out this Quote from Quotely!",
-        });
-      } catch (error) {
-        console.error("Error sharing quote:", error);
-      } finally {
-        setButtonsVisible(true);
-      }
+      // Share the image
+      await Share.share({
+        url: uri,
+        title: "Quote alert",
+        message: "Check out this Quote from Quotely!",
+      });
+    } catch (error) {
+      console.error("Error sharing quote:", error);
+    } finally {
+      setButtonsVisible(true);
+    }
   }
 
   return (
@@ -113,23 +113,24 @@ function QuoteCard({ item, index }) {
           <View style={styles.quoteSection}>
             <Text style={styles.quoteText}>"{item.quote}"</Text>
           </View>
-          {buttonsVisible && (
-            <View style={styles.cardBottom}>
-              <Pressable style={styles.buttons} onPress={shareQuote}>
-                <Feather name="share" size={24} color="#e4ffff" />
-              </Pressable>
-              <TouchableOpacity
-                style={styles.buttons}
-                onPress={() => toggleFavorite(item)}
-              >
-                {!isFavorite(item) ? (
-                  <Feather name="heart" size={24} color="#e4ffff" />
-                ) : (
-                  <AntDesign name="heart" size={24} color="#e4ffff" />
-                )}
-              </TouchableOpacity>
-            </View>
-          )}
+          <View style={styles.cardBottom}>
+            <Pressable
+              style={buttonsVisible ? styles.buttons : styles.buttonsInvisible}
+              onPress={shareQuote}
+            >
+              <Feather name="share" size={24} color="#e4ffff" />
+            </Pressable>
+            <TouchableOpacity
+              style={buttonsVisible ? styles.buttons : styles.buttonsInvisible}
+              onPress={() => toggleFavorite(item)}
+            >
+              {!isFavorite(item) ? (
+                <Feather name="heart" size={24} color="#e4ffff" />
+              ) : (
+                <AntDesign name="heart" size={24} color="#e4ffff" />
+              )}
+            </TouchableOpacity>
+          </View>
         </LinearGradient>
       </View>
     </>
@@ -201,6 +202,9 @@ const styles = StyleSheet.create({
     boxShadow: "0 15px 20px 5px rgba(158, 158, 158, 0.293)",
     elevation: 4,
     opacity: 0.8,
+  },
+  buttonsInvisible: {
+    display: "none",
   },
 });
 
