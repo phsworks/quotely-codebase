@@ -94,17 +94,21 @@ function QuoteCard({ item, index }) {
               style={styles.image}
             />
             <View style={styles.quoteInfo}>
-              <Text style={{ fontWeight: 700, fontSize: 18, color: "#000000" }}>
+              <Text style={{ fontWeight: 800, fontSize: 18, color: "#000000" }}>
                 {item.quote_category}
               </Text>
-              <Text style={{ fontSize: 12, color: "#000000" }}>
+              <Text style={{ fontSize: 12, fontWeight: 600, color: "#000000" }}>
                 {item.author_name}
               </Text>
               <View style={styles.origins}>
-                <Text style={{ fontSize: 12, color: "#000000" }}>
+                <Text
+                  style={{ fontSize: 12, fontWeight: 600, color: "#000000" }}
+                >
                   {item.author_nationality}
                 </Text>
-                <Text style={{ fontSize: 12, color: "#000000" }}>
+                <Text
+                  style={{ fontSize: 12, fontWeight: 600, color: "#000000" }}
+                >
                   {item.author_occupation}
                 </Text>
               </View>
@@ -152,6 +156,7 @@ const styles = StyleSheet.create({
     boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
     elevation: 4,
     paddingTop: 10,
+    opacity: 0.9,
   },
   quoteInfo: {
     flexDirection: "column",
@@ -164,11 +169,11 @@ const styles = StyleSheet.create({
     width: 280,
   },
   quoteText: {
-    fontSize: 20,
+    fontSize: 21,
     marginBottom: 10,
     textAlign: "center",
     color: "#000000",
-    fontFamily: "Roboto",
+    fontFamily: "playfairdisplay",
     fontWeight: "500",
   },
   image: {
@@ -187,6 +192,7 @@ const styles = StyleSheet.create({
   origins: {
     flexDirection: "row",
     gap: 3,
+
   },
   cardBottom: {
     justifyContent: "center",
