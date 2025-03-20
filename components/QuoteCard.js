@@ -36,13 +36,12 @@ function QuoteCard({ item, index }) {
 
   const getGradientColors = (index) => {
     const gradients = [
-      ["#ff5833c8", "#ffc400c2"],
-      ["#33ff58b9", "#00c5ccb4"],
-      ["#fc5677c0", "#7e93ffb5"],
-      ["#1f4037b6", "#99f2c8bb"],
-      ["#d9a7c7c2", "#f7b67599"],
-      ["#ff9966c3", "#ff5e61b7"],
-      ["#297fb9c2", "#6dd4fabc"],
+      ["#ff5833ed", "#ffc400ff"],
+      ["#33ff58ff", "#00c5ccff"],
+      ["#fc5677ff", "#7e93ffff"],
+      ["#1f4037ff", "#99f2c8ff"],
+      ["#d9a7c7ff", "#f7b675ff"],
+      ["#297fb9ff", "#6dd4faff"],
     ];
     return gradients[index % gradients.length];
   };
@@ -63,7 +62,7 @@ function QuoteCard({ item, index }) {
       // Capture the view
       const uri = await captureRef(imageRef.current, {
         format: "png",
-        quality: 0.9,
+        quality: 1.0,
       });
 
       // Share the image
@@ -145,7 +144,7 @@ const styles = StyleSheet.create({
   outerContainer: {
     overflow: "hidden",
     width: "90%",
-    height: "84%",
+    height: "82%",
   },
   quoteContainer: {
     flex: 1,
@@ -156,7 +155,7 @@ const styles = StyleSheet.create({
     boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
     elevation: 4,
     paddingTop: 10,
-    opacity: 0.9,
+    opacity: 0.8,
   },
   quoteInfo: {
     flexDirection: "column",
@@ -192,7 +191,6 @@ const styles = StyleSheet.create({
   origins: {
     flexDirection: "row",
     gap: 3,
-
   },
   cardBottom: {
     justifyContent: "center",

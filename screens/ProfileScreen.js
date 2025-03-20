@@ -36,7 +36,7 @@ function ProfileScreen({ route }) {
       (_event, session) => {
         setSession(session);
       }
-    );
+    )
 
     return () => authListener.subscription.unsubscribe();
   }, []);
