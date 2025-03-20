@@ -71,15 +71,30 @@ function SettingsScreen() {
       <GoBack screenTitle="Settings" />
       <View style={styles.settingTiles}>
         <View style={styles.generalSettings}>
-          <Text style={{ fontSize: 18, color: "grey", paddingLeft: 20, paddingBottom: 10, }}>GENERAL</Text>
-          <TouchableOpacity style={styles.settingsTile}>
+          <Text
+            style={{
+              fontSize: 18,
+              color: "grey",
+              paddingLeft: 20,
+              paddingBottom: 10,
+            }}
+          >
+            GENERAL
+          </Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Privacy")}
+            style={styles.settingsTile}
+          >
             <View style={styles.tileLeft}>
               <Feather name="lock" size={24} color="#545567" />
               <Text style={styles.userInfo}>Privacy</Text>
             </View>
             <Feather name="chevron-right" size={24} color="#545567" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.settingsTile}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Info")}
+            style={styles.settingsTile}
+          >
             <View style={styles.tileLeft}>
               <Feather name="info" size={24} color="#545567" />
               <Text style={styles.userInfo}>Info</Text>
@@ -102,7 +117,16 @@ function SettingsScreen() {
           </TouchableOpacity>
         </View>
         <View>
-          <Text style={{ fontSize: 18, color: "grey", paddingBottom: 10, paddingLeft: 20, }}>FEEDBACK</Text>
+          <Text
+            style={{
+              fontSize: 18,
+              color: "grey",
+              paddingBottom: 10,
+              paddingLeft: 20,
+            }}
+          >
+            FEEDBACK
+          </Text>
           <TouchableOpacity style={styles.settingsTile}>
             <View style={styles.tileLeft}>
               <Feather name="alert-triangle" size={24} color="#545567" />
@@ -119,7 +143,6 @@ function SettingsScreen() {
           </TouchableOpacity>
         </View>
       </View>
-      <View></View>
     </View>
   );
 }

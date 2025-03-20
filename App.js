@@ -15,6 +15,8 @@ import { supabase } from "./supabase/configUsers";
 import SettingsScreen from "./screens/SettingsScreen";
 import { FavoritesQuotesProvider } from "./context/FavoritesContext";
 import QuoteDetailsScreen from "./screens/QuoteDetailsScreen";
+import PrivacyScreen from "./screens/PrivacyScreen";
+import InfoScreen from "./screens/InfoScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -116,6 +118,16 @@ function AppStack({ session }) {
       <Stack.Screen
         name="QuoteDetails"
         component={QuoteDetailsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Privacy"
+        component={PrivacyScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Info"
+        component={InfoScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
