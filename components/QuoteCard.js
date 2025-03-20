@@ -93,7 +93,7 @@ function QuoteCard({ item, index }) {
               style={styles.image}
             />
             <View style={styles.quoteInfo}>
-              <Text style={{ fontWeight: 800, fontSize: 18, color: "#000000" }}>
+              <Text style={{ fontWeight: 800, fontSize: 16, color: "#000000" }}>``
                 {item.quote_category}
               </Text>
               <Text style={{ fontSize: 12, fontWeight: 600, color: "#000000" }}>
