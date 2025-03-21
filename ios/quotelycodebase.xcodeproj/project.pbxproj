@@ -16,6 +16,9 @@
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		DC099635FEF127216EC30322 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 952CA9124FA7DA495A74A25F /* PrivacyInfo.xcprivacy */; };
+		EF50673F435B479E9FF1CD95 /* PlayfairDisplayBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1CDD9E8D1EE44545B945F8C5 /* PlayfairDisplayBold.ttf */; };
+		57602794C2DA4E9CBA9F56F2 /* PlayfairDisplayItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3FF77870022E4386835805F4 /* PlayfairDisplayItalic.ttf */; };
+		77F6BD96E5EC4E5BA89674F5 /* PlayfairDisplayRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8749DB20B10A4476BA5906E4 /* PlayfairDisplayRegular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +38,9 @@
 		C02632EE3D484F53843BBCD9 /* quotelycodebase-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "quotelycodebase-Bridging-Header.h"; path = "quotelycodebase/quotelycodebase-Bridging-Header.h"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-quotelycodebase/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		1CDD9E8D1EE44545B945F8C5 /* PlayfairDisplayBold.ttf */ = {isa = PBXFileReference; name = "PlayfairDisplayBold.ttf"; path = "../assets/Fonts/PlayfairDisplayBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3FF77870022E4386835805F4 /* PlayfairDisplayItalic.ttf */ = {isa = PBXFileReference; name = "PlayfairDisplayItalic.ttf"; path = "../assets/Fonts/PlayfairDisplayItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8749DB20B10A4476BA5906E4 /* PlayfairDisplayRegular.ttf */ = {isa = PBXFileReference; name = "PlayfairDisplayRegular.ttf"; path = "../assets/Fonts/PlayfairDisplayRegular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +97,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D65327D7A22EEC0BE12398D9 /* Pods */,
 				D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */,
+				B1C4884DE93B4B898A07F938 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -138,6 +145,17 @@
 			);
 			name = ExpoModulesProviders;
 			sourceTree = "<group>";
+		};
+		B1C4884DE93B4B898A07F938 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				1CDD9E8D1EE44545B945F8C5 /* PlayfairDisplayBold.ttf */,
+				3FF77870022E4386835805F4 /* PlayfairDisplayItalic.ttf */,
+				8749DB20B10A4476BA5906E4 /* PlayfairDisplayRegular.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -204,6 +222,9 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
 				DC099635FEF127216EC30322 /* PrivacyInfo.xcprivacy in Resources */,
+				EF50673F435B479E9FF1CD95 /* PlayfairDisplayBold.ttf in Resources */,
+				57602794C2DA4E9CBA9F56F2 /* PlayfairDisplayItalic.ttf in Resources */,
+				77F6BD96E5EC4E5BA89674F5 /* PlayfairDisplayRegular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

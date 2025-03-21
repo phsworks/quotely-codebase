@@ -19,6 +19,7 @@ import PrivacyScreen from "./screens/PrivacyScreen";
 import InfoScreen from "./screens/InfoScreen";
 
 
+
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 

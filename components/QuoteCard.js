@@ -13,7 +13,6 @@ import { Share } from "react-native";
 import { useContext, useRef, useEffect, useState } from "react";
 import FavoritesQuotesContext from "../context/FavoritesContext";
 import * as MediaLibrary from "expo-media-library";
-import { captureRef } from "react-native-view-shot";
 
 function QuoteCard({ item, index }) {
   const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
@@ -93,20 +92,44 @@ function QuoteCard({ item, index }) {
               style={styles.image}
             />
             <View style={styles.quoteInfo}>
-              <Text style={{ fontWeight: 800, fontSize: 16, color: "#000000" }}>``
+              <Text
+                style={{
+                  fontWeight: 700,
+                  fontSize: 18,
+                  color: "#000000",
+                  fontFamily: "Avenir",
+                }}
+              >
                 {item.quote_category}
               </Text>
-              <Text style={{ fontSize: 12, fontWeight: 600, color: "#000000" }}>
+              <Text
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  color: "#000000",
+                  fontFamily: "Avenir",
+                }}
+              >
                 {item.author_name}
               </Text>
               <View style={styles.origins}>
                 <Text
-                  style={{ fontSize: 12, fontWeight: 600, color: "#000000" }}
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 700,
+                    color: "#000000",
+                    fontFamily: "Avenir",
+                  }}
                 >
                   {item.author_nationality}
                 </Text>
                 <Text
-                  style={{ fontSize: 12, fontWeight: 600, color: "#000000" }}
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 800,
+                    color: "#000000",
+                    fontFamily: "Avenir",
+                  }}
                 >
                   {item.author_occupation}
                 </Text>
@@ -144,7 +167,7 @@ const styles = StyleSheet.create({
   outerContainer: {
     overflow: "hidden",
     width: "90%",
-    height: "82%",
+    height: "84%",
   },
   quoteContainer: {
     flex: 1,
@@ -162,18 +185,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-start",
     maxWidth: 130,
-    gap: 5,
+    gap: 3,
+
   },
   quoteSection: {
     width: 280,
   },
   quoteText: {
     fontSize: 21,
-    marginBottom: 10,
     textAlign: "center",
     color: "#000000",
-    fontFamily: "playfairdisplay",
-    fontWeight: "500",
+    fontWeight: "600",
+    fontFamily: "Avenir",
   },
   image: {
     width: 120,
@@ -185,12 +208,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     flexDirection: "row",
-    gap: 45,
+    gap: 50,
     marginBottom: 30,
   },
   origins: {
     flexDirection: "row",
     gap: 3,
+
   },
   cardBottom: {
     justifyContent: "center",
