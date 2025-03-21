@@ -20,7 +20,6 @@ function GoBack({ screenTitle }) {
 const styles = StyleSheet.create({
   goBackTop: {
     justifyContent: "flex-start",
-    alignItems: "flex-start",
     marginLeft: 5,
     marginTop: '20%',
     flexDirection: "row",

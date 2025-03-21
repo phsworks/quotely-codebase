@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     padding: 10,
     textAlign: "center",
+    fontFamily: 'Avenir',
   },
 });
 

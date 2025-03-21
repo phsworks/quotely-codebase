@@ -51,15 +51,14 @@ export default QuoteCategoryScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    gap: 10,
+    gap: 30,
   },
   categoryTop: {
     justifyContent: "flex-start",
-    alignItems: "flex-start",
+    alignItems: "center",
     marginLeft: 20,
     flexDirection: "row",
-    marginTop: "20%",
-    padding: 3,
+    marginTop: "22%",
   },
   pageContainer: {
     width: Dimensions.get("window").width,
