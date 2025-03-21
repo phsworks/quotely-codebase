@@ -13,12 +13,13 @@ function InfoScreen() {
       <View style={styles.infoContainer}>
         <Text style={styles.title}>About Quotely</Text>
         <Text style={styles.paragraph}>Version: 1.0.0</Text>
-        <Text style={styles.paragraph}>Developer: PHS Development</Text>
+        <Text style={styles.paragraph}>Developed By: PHS Development</Text>
         <Text style={styles.paragraph}>Website: www.phsdevelopment.nl</Text>
         <Text style={styles.paragraph}>
-          Contact: piethein@phsdevelopment.nl
+          Contact: support@phsdevelopment.com
         </Text>
         <Text style={styles.paragraph}>Last Updated: March 2025</Text>
+        <Text style={styles.paragraph}>Sources: WikiQuote - Wikimedia </Text>
 
         <Image style={{ width: "90%", height: "20%", marginTop: 50, }} source={logo} />
       </View>
@@ -39,12 +40,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     color: "#545567",
+    fontFamily: "Avenir",
   },
   paragraph: {
     fontSize: 14,
     marginBottom: 10,
     fontWeight: 600,
     color: "#545567",
+    fontFamily: "Avenir",
   },
 });
 

@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "600",
     color: "#4a5a5b",
+    fontFamily: 'Avenir',
 
   },
 });

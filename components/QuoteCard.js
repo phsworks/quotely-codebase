@@ -11,6 +11,7 @@ import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Share } from "react-native";
 import { useContext, useRef, useEffect, useState } from "react";
+import { captureRef } from "react-native-view-shot";
 import FavoritesQuotesContext from "../context/FavoritesContext";
 import * as MediaLibrary from "expo-media-library";
 
@@ -137,7 +138,7 @@ function QuoteCard({ item, index }) {
             </View>
           </View>
           <View style={styles.quoteSection}>
-            <Text style={styles.quoteText}>"{item.quote}"</Text>
+            <Text style={styles.quoteText}>{item.quote}</Text>
           </View>
           <View style={styles.cardBottom}>
             <Pressable
@@ -199,8 +200,8 @@ const styles = StyleSheet.create({
     fontFamily: "Avenir",
   },
   image: {
-    width: 120,
-    height: 120,
+    width: 100,
+    height: 100,
     borderRadius: 120,
     resizeMode: "cover",
   },
@@ -208,7 +209,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     flexDirection: "row",
-    gap: 50,
+    gap: 60,
     marginBottom: 30,
   },
   origins: {

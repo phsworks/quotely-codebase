@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 600,
     color: "#535360",
+    fontFamily: "Avenir",
   },
   editProfile: {
     paddingTop: 2,
@@ -221,6 +222,7 @@ const styles = StyleSheet.create({
   userInfo: {
     fontSize: 16,
     color: "#434451",
+    fontFamily: "Avenir",
   },
   inputContainer: {
     width: "90%",
@@ -236,5 +238,6 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 5,
     color: "#333",
+    fontFamily: "Avenir",
   },
 });

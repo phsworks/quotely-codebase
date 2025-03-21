@@ -10,9 +10,16 @@ import { supabase } from "../supabase/configQuotes";
 import { useState, useEffect, useCallback } from "react";
 import QuoteCard from "../components/QuoteCard";
 
-
 function shuffleArray(array) {
-  return array.sort(() => Math.random() - 0.5);
+  const shuffled = [...array];
+
+  for (let i = shuffled.length - 1; i > 0; i--) {
+
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return shuffled;
 }
 
 function QuoteScreen() {
@@ -20,7 +27,6 @@ function QuoteScreen() {
   const [originalQuotes, setOriginalQuotes] = useState([]);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-
 
   useEffect(() => {
     async function getQuotes() {
@@ -30,26 +36,9 @@ function QuoteScreen() {
         setError(error.message);
         console.log("There was an error", error);
       } else {
-        const authorImages = {};
-
-        data.forEach((quote) => {
-          if (quote.author_imageURL && !authorImages[quote.author_name]) {
-            authorImages[quote.author_name] = quote.author_imageURL;
-          }
-        });
-
-        const updatedQuotes = data.map((quote) => {
-          return {
-            ...quote,
-            author_imageURL:
-              authorImages[quote.author_name] || quote.author_imageURL,
-          };
-        });
-
-        // Shuffle the quotes randomly
-        const shuffledQuotes = shuffleArray(updatedQuotes);
-        setQuotes(shuffledQuotes);
-        setOriginalQuotes(shuffledQuotes); // Set original quotes
+        const shuffledQuotes = shuffleArray(data);
+        setQuotes([...shuffledQuotes]);
+        setOriginalQuotes([...shuffledQuotes]);
       }
     }
     getQuotes();
@@ -96,8 +85,6 @@ function QuoteScreen() {
     debouncedSearch(searchQuery);
   }, [searchQuery, debouncedSearch]);
 
-
-
   return (
     <View style={styles.mainContainer}>
       <View style={styles.searchContainer}>
@@ -122,7 +109,7 @@ function QuoteScreen() {
           snapToInterval={Dimensions.get("window").width}
           decelerationRate="fast"
           renderItem={({ item, index }) => (
-            <View  style={styles.pageContainer}>
+            <View style={styles.pageContainer}>
               <QuoteCard index={index} item={item} />
             </View>
           )}

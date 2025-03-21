@@ -5,6 +5,8 @@ import {
   Button,
   TouchableOpacity,
   Alert,
+  Linking,
+  Share
 } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
@@ -52,19 +54,66 @@ function SettingsScreen() {
       ]
     );
   const signOutAlert = () =>
-    Alert.alert("Are you sure you want to sign out?", "You can Sign In again whenever you want", [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel",
-      },
-      {
-        text: "Sign Out",
-        onPress: () => {
-          supabase.auth.signOut();
+    Alert.alert(
+      "Are you sure you want to sign out?",
+      "You can Sign In again whenever you want",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
         },
-      },
-    ]);
+        {
+          text: "Sign Out",
+          onPress: () => {
+            supabase.auth.signOut();
+          },
+        },
+      ]
+    );
+
+  const openEmailBug = () => {
+    const email = "support@phsdevelopment.com";
+    const subject = "Bug Report";
+    const body = "Describe your bug: ";
+
+    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+
+    Linking.openURL(mailtoLink).catch((err) =>
+      Alert.alert("Error", "Could not open mail app")
+    );
+  };
+  const suggestQuote = () => {
+    const email = "support@phsdevelopment.com";
+    const subject = "Quote Suggestion for Quotely";
+    const body = `I’d love to suggest this quote for Quotely✨:
+
+    Author (if known):
+    Hope this can be added!`;
+
+    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(
+      subject
+    )}&body=${body}`;
+
+    Linking.openURL(mailtoLink).catch(() =>
+      Alert.alert("Error", "Could not open mail app")
+    );
+  };
+
+
+const shareApp = async () => {
+  try {
+    await Share.share({
+      message:
+        "Check out Quotely! A great app for daily inspiration✨. Download it here: https://quotely.app",
+    });
+  } catch (error) {
+    Alert.alert("Error", "Could not share the app");
+  }
+};
+
 
   return (
     <View style={styles.container}>
@@ -87,7 +136,7 @@ function SettingsScreen() {
           >
             <View style={styles.tileLeft}>
               <Feather name="lock" size={24} color="#545567" />
-              <Text style={styles.userInfo}>Privacy</Text>
+              <Text style={styles.userSettings}>Privacy</Text>
             </View>
             <Feather name="chevron-right" size={24} color="#545567" />
           </TouchableOpacity>
@@ -97,21 +146,21 @@ function SettingsScreen() {
           >
             <View style={styles.tileLeft}>
               <Feather name="info" size={24} color="#545567" />
-              <Text style={styles.userInfo}>Info</Text>
+              <Text style={styles.userSettings}>Info</Text>
             </View>
             <Feather name="chevron-right" size={24} color="#545567" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.settingsTile} onPress={signOutAlert}>
             <View style={styles.tileLeft}>
               <Feather name="log-out" size={24} color="#545567" />
-              <Text style={styles.userInfo}>Sign Out</Text>
+              <Text style={styles.userSettings}>Sign Out</Text>
             </View>
             <Feather name="chevron-right" size={24} color="#545567" />
           </TouchableOpacity>
           <TouchableOpacity onPress={deleteAlert} style={styles.settingsTile}>
             <View style={styles.tileLeft}>
               <Feather name="trash-2" size={24} color="#545567" />
-              <Text style={styles.userInfo}>Delete Account</Text>
+              <Text style={styles.userSettings}>Delete Account</Text>
             </View>
             <Feather name="chevron-right" size={24} color="#545567" />
           </TouchableOpacity>
@@ -123,21 +172,36 @@ function SettingsScreen() {
               color: "grey",
               paddingBottom: 10,
               paddingLeft: 20,
+              fontFamily: "Avenir",
             }}
           >
             FEEDBACK
           </Text>
-          <TouchableOpacity style={styles.settingsTile}>
+          <TouchableOpacity onPress={suggestQuote} style={styles.settingsTile}>
             <View style={styles.tileLeft}>
-              <Feather name="alert-triangle" size={24} color="#545567" />
-              <Text style={styles.userInfo}>Report a bug</Text>
+              <Feather name="cloud" size={24} color="#545567" />
+              <Text style={styles.userInfo}>Send Your Quote Suggestions!</Text>
             </View>
             <Feather name="chevron-right" size={24} color="#545567" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={deleteAlert} style={styles.settingsTile}>
+          <TouchableOpacity style={styles.settingsTile}>
+            <View style={styles.tileLeft}>
+              <Feather name="star" size={24} color="#545567" />
+              <Text style={styles.userInfo}>Rate us in the Appstore</Text>
+            </View>
+            <Feather name="chevron-right" size={24} color="#545567" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={shareApp} style={styles.settingsTile}>
             <View style={styles.tileLeft}>
               <Feather name="send" size={24} color="#545567" />
-              <Text style={styles.userInfo}>Send feedback</Text>
+              <Text style={styles.userInfo}>Share Quotely</Text>
+            </View>
+            <Feather name="chevron-right" size={24} color="#545567" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={openEmailBug} style={styles.settingsTile}>
+            <View style={styles.tileLeft}>
+              <Feather name="alert-triangle" size={24} color="#545567" />
+              <Text style={styles.userInfo}>Report a bug</Text>
             </View>
             <Feather name="chevron-right" size={24} color="#545567" />
           </TouchableOpacity>
@@ -153,8 +217,8 @@ const styles = StyleSheet.create({
   },
   settingTiles: {
     flexDirection: "column",
-    gap: 40,
-    marginTop: 70,
+    gap: 30,
+    marginTop: 30,
   },
   settingsTile: {
     flexDirection: "row",
@@ -164,6 +228,11 @@ const styles = StyleSheet.create({
     padding: 20,
     borderBottomWidth: 1,
     borderColor: "#c4c4c4",
+  },
+  userSettings: {
+    fontSize: 16,
+    color: "#434451",
+    fontFamily: "Avenir",
   },
   tileLeft: {
     flexDirection: "row",

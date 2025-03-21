@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     color: "#545567",
+    fontFamily: "Avenir",
   },
   subtitle: {
     fontSize: 18,
@@ -87,11 +88,13 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 5,
     color: "#545567",
+    fontFamily: "Avenir",
   },
   paragraph: {
     fontSize: 14,
     marginBottom: 10,
     color: "#545567",
+    fontFamily: "Avenir",
   },
 });
 

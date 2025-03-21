@@ -29,7 +29,7 @@ function QuotelyOverview({ session }) {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: "#8EEAEE",
-        tabBarInactiveTintColor: "#545567",
+        tabBarInactiveTintColor: "#676879",
         tabBarShowLabel: true,
         tabBarStyle: {
           paddingTop: 5,
@@ -41,9 +41,6 @@ function QuotelyOverview({ session }) {
           tabBarIcon: ({ color, size }) => (
             <Feather name="cloud" size={size} color={color} />
           ),
-          headerSearchBarOptions: {
-            placeholder: "Search",
-          }
         }}
         name="Quotes"
         component={QuoteMainScreen}

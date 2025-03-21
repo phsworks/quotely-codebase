@@ -5,7 +5,6 @@ import {
   View,
   Alert,
   Image,
-  Button,
   TouchableOpacity,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";

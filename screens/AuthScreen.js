@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
     color: "#4d4d4d",
     fontSize: 20,
     paddingBottom: 15,
+    fontFamily: "Avenir",
   },
   toggleActive: {
     borderBottomWidth: 2,

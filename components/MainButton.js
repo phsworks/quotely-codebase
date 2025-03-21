@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     color: "white",
+    fontFamily: "Avenir"
   },
 });
 

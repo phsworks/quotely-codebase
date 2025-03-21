@@ -19,13 +19,6 @@ function FavoritesScreen() {
     FavoritesQuotesContext
   );
 
-  // function shareQuote(item) {
-  //   Share.share({
-  //     message: `Check out this Quote from Quotely: ${item.quote}`,
-  //     title: "Quote alert",
-  //   });
-  // }
-
   const navigation = useNavigation();
 
   const getGradientColors = (index) => {
@@ -40,51 +33,69 @@ function FavoritesScreen() {
     ];
     return gradients[index % gradients.length];
   };
+  const TotalFavoriteQuotes = favoriteQuotes.length;
 
   return (
     <View style={styles.container}>
       {favoriteQuotes.length === 0 ? (
         <View style={styles.noFavoritesContainer}>
-          <Text style={{ fontSize: 20, textAlign: 'center'}}> No favorites yet... </Text>
+          <Text style={{ fontSize: 20, textAlign: "center" }}>
+            {" "}
+            No favorites yet...{" "}
+          </Text>
         </View>
       ) : (
-        <FlatList
-          data={favoriteQuotes}
-          keyExtractor={(item, index) => index.toString()}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.contentContainer}
-          renderItem={({ item, index }) => (
-            <Pressable
-              onPress={() => {
-                navigation.navigate("QuoteDetails", {
-                  item: item,
-                  index: index,
-                });
+        <View style={styles.favoriteQuoteContainer}>
+          <View style={styles.totalFavoriteQuotes}>
+            <Text
+              style={{
+                textAlign: "center",
+                color: "#74d4da",
+                fontFamily: "Avenir",
+                fontWeight: 600,
               }}
             >
-              <View style={styles.outerContainer}>
-                <LinearGradient
-                  colors={getGradientColors(index)}
-                  style={styles.quoteContainer}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                >
-                  <View style={styles.quoteSection}>
-                    <Text style={styles.quoteText}>"{item.quote}"</Text>
-                  </View>
-                  <View style={styles.cardBottom}>
-                    <Image
-                      source={{ uri: item.author_imageURL }}
-                      style={styles.image}
-                    />
-                  </View>
-                </LinearGradient>
-              </View>
-            </Pressable>
-          )}
-          numColumns={2}
-          columnWrapperStyle={styles.columnWrapper}
-        />
+              {TotalFavoriteQuotes} Favorite Quotes
+            </Text>
+          </View>
+          <FlatList
+            data={favoriteQuotes}
+            keyExtractor={(item, index) => index.toString()}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.contentContainer}
+            renderItem={({ item, index }) => (
+              <Pressable
+                onPress={() => {
+                  navigation.navigate("QuoteDetails", {
+                    item: item,
+                    index: index,
+                  });
+                }}
+              >
+                <View style={styles.outerContainer}>
+                  <LinearGradient
+                    colors={getGradientColors(index)}
+                    style={styles.quoteContainer}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                  >
+                    <View style={styles.quoteSection}>
+                      <Text style={styles.quoteText}>{item.quote}</Text>
+                    </View>
+                    <View style={styles.cardBottom}>
+                      <Image
+                        source={{ uri: item.author_imageURL }}
+                        style={styles.image}
+                      />
+                    </View>
+                  </LinearGradient>
+                </View>
+              </Pressable>
+            )}
+            numColumns={2}
+            columnWrapperStyle={styles.columnWrapper}
+          />
+        </View>
       )}
     </View>
   );
@@ -96,7 +107,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexWrap: "wrap",
-    paddingTop: 50,
+    paddingTop: 60,
     paddingHorizontal: 10,
   },
   noFavoritesContainer: {
@@ -105,13 +116,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginLeft: 150,
   },
+  favoriteQuoteContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 5,
+  },
   columnWrapper: {
     justifyContent: "space-between",
     alignItems: "space-around",
     gap: 8,
   },
   contentContainer: {
-    paddingBottom: 30,
+    paddingTop: 10,
+    paddingBottom: 50,
   },
   quoteContainer: {
     flex: 1,
@@ -151,9 +168,14 @@ const styles = StyleSheet.create({
     fontSize: 10,
     textAlign: "center",
     color: "#36363c",
-    fontFamily: "Roboto",
+    fontFamily: "Avenir",
     fontWeight: "500",
     paddingTop: 20,
+  },
+  totalFavoriteQuotes: {
+    width: "100%",
+    height: "5%",
+    justifyContent: "center",
   },
 });
 
