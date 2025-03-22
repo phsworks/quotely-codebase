@@ -6,8 +6,10 @@ import {
   TouchableOpacity,
   Alert,
   Linking,
-  Share
+  Share,
+  BackHandler,
 } from "react-native";
+import { useState, useEffect } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import { supabase } from "../supabase/configUsers";
@@ -15,22 +17,47 @@ import GoBack from "../components/GoBack";
 
 function SettingsScreen() {
   const navigation = useNavigation();
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  // Get the current session when component mounts
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   async function deleteProfile() {
     try {
       setLoading(true);
       if (!session?.user) throw new Error("No user on the session!");
 
-      const { error } = await supabase
-        .from("profiles")
-        .delete()
-        .eq("id", session?.user.id);
+      // Use only the RPC approach to delete the account
+      const { error } = await supabase.rpc("delete_user");
+
       if (error) throw error;
 
-      BackHandler.exitApp();
-      Alert.alert("Profile deleted successfully!");
+      // Sign out after successful deletion
+      await supabase.auth.signOut();
+
+      // Navigate to login screen or exit app
+      Alert.alert("Account deleted successfully!", "The app will now close.", [
+        { text: "OK", onPress: () => BackHandler.exitApp() },
+      ]);
     } catch (error) {
-      Alert.alert(error.message);
+      console.error("Delete account error:", error);
+      Alert.alert(
+        "Error",
+        error.message || "Failed to delete account. Please contact support."
+      );
     } finally {
       setLoading(false);
     }
@@ -47,9 +74,7 @@ function SettingsScreen() {
         },
         {
           text: "Delete",
-          onPress: () => {
-            deleteProfile;
-          },
+          onPress: () => deleteProfile(),
         },
       ]
     );
@@ -102,18 +127,16 @@ function SettingsScreen() {
     );
   };
 
-
-const shareApp = async () => {
-  try {
-    await Share.share({
-      message:
-        "Check out Quotely! A great app for daily inspiration✨. Download it here: https://quotely.app",
-    });
-  } catch (error) {
-    Alert.alert("Error", "Could not share the app");
-  }
-};
-
+  const shareApp = async () => {
+    try {
+      await Share.share({
+        message:
+          "Check out Quotely! A great app for daily inspiration✨. Download it here: https://quotely.app",
+      });
+    } catch (error) {
+      Alert.alert("Error", "Could not share the app");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -207,6 +230,11 @@ const shareApp = async () => {
           </TouchableOpacity>
         </View>
       </View>
+      {loading && (
+        <View style={styles.loadingOverlay}>
+          <Text style={styles.loadingText}>Deleting account...</Text>
+        </View>
+      )}
     </View>
   );
 }
@@ -214,6 +242,7 @@ const shareApp = async () => {
 const styles = StyleSheet.create({
   container: {
     padding: 15,
+    flex: 1,
   },
   settingTiles: {
     flexDirection: "column",
@@ -224,12 +253,31 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    alignItems: "center",
     padding: 20,
     borderBottomWidth: 1,
     borderColor: "#c4c4c4",
   },
+  loadingOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loadingText: {
+    fontSize: 18,
+    color: "#545567",
+    fontWeight: "bold",
+  },
   userSettings: {
+    fontSize: 16,
+    color: "#434451",
+    fontFamily: "Avenir",
+  },
+  userInfo: {
     fontSize: 16,
     color: "#434451",
     fontFamily: "Avenir",

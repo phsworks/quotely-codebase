@@ -5,85 +5,101 @@ import {
   FlatList,
   Dimensions,
   TextInput,
+  ActivityIndicator,
 } from "react-native";
 import { supabase } from "../supabase/configQuotes";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import QuoteCard from "../components/QuoteCard";
 
-function shuffleArray(array) {
-  const shuffled = [...array];
-
-  for (let i = shuffled.length - 1; i > 0; i--) {
-
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-
-  return shuffled;
-}
+// Debounce function defined outside component to avoid recreation
+const debounce = (func, wait) => {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
 
 function QuoteScreen() {
   const [quotes, setQuotes] = useState([]);
-  const [originalQuotes, setOriginalQuotes] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Fetch quotes on component mount
   useEffect(() => {
     async function getQuotes() {
-      let { data, error } = await supabase.from("famous-quotes").select("*");
+      try {
+        setLoading(true);
+        // Get quotes ordered by id to ensure consistent ordering
+        const { data, error } = await supabase
+          .from("famous-quotes")
+          .select("*")
+          .order("id");
 
-      if (error) {
+        if (error) {
+          throw error;
+        }
+
+        // Filter out quotes with missing author images
+        const validQuotes = data.filter(
+          (quote) => quote && quote.author_imageURL && quote.author_name
+        );
+
+        if (validQuotes.length === 0) {
+          throw new Error("No valid quotes found with author images");
+        }
+
+        setQuotes(validQuotes);
+      } catch (error) {
+        console.error("Error fetching quotes:", error.message);
         setError(error.message);
-        console.log("There was an error", error);
-      } else {
-        const shuffledQuotes = shuffleArray(data);
-        setQuotes([...shuffledQuotes]);
-        setOriginalQuotes([...shuffledQuotes]);
+      } finally {
+        setLoading(false);
       }
     }
+
     getQuotes();
   }, []);
 
-  if (error) {
+  // Create memoized debounced search function
+  const handleSearchChange = useMemo(() => {
+    return debounce((text) => {
+      setSearchQuery(text);
+    }, 300);
+  }, []);
+
+  // Filter quotes based on search query
+  const filteredQuotes = useMemo(() => {
+    if (!searchQuery.trim()) return quotes;
+
+    return quotes.filter((quote) =>
+      quote.author_name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [quotes, searchQuery]);
+
+  // Display loading indicator while fetching quotes
+  if (loading) {
     return (
-      <View style={styles.mainContainer}>
-        <Text>There was an error (error)</Text>
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#8EEAEE" />
+        <Text style={styles.loadingText}>Loading quotes...</Text>
       </View>
     );
   }
 
-  // Debounce function to limit how often search is performed
-  const debounce = (func, wait) => {
-    let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  };
-
-  // Create memoized debounced search function
-  const debouncedSearch = useCallback(
-    debounce((query) => {
-      if (!query) {
-        setQuotes(originalQuotes); // Reset to original quotes
-      } else {
-        const filteredQuotes = originalQuotes.filter((quote) => {
-          return quote.author_name.toLowerCase().includes(query.toLowerCase());
-        });
-        setQuotes(filteredQuotes);
-      }
-    }, 300),
-    [originalQuotes]
-  );
-
-  // Apply search when query changes
-  useEffect(() => {
-    debouncedSearch(searchQuery);
-  }, [searchQuery, debouncedSearch]);
+  // Display error message if there was an error fetching quotes
+  if (error) {
+    return (
+      <View style={styles.mainContainer}>
+        <Text style={styles.errorText}>Error: {error}</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.mainContainer}>
@@ -94,27 +110,36 @@ function QuoteScreen() {
           clearButtonMode="always"
           autoCapitalize="none"
           autoCorrect={false}
-          value={searchQuery}
-          onChangeText={setSearchQuery}
+          defaultValue={searchQuery}
+          onChangeText={handleSearchChange}
         />
       </View>
-      <View style={styles.quoteContainer}>
-        <FlatList
-          data={quotes}
-          keyExtractor={(item) => item.id}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          pagingEnabled
-          snapToAlignment="center"
-          snapToInterval={Dimensions.get("window").width}
-          decelerationRate="fast"
-          renderItem={({ item, index }) => (
-            <View style={styles.pageContainer}>
-              <QuoteCard index={index} item={item} />
-            </View>
-          )}
-        />
-      </View>
+
+      {filteredQuotes.length === 0 ? (
+        <View style={styles.noResultsContainer}>
+          <Text style={styles.noResultsText}>
+            No authors found matching "{searchQuery}"
+          </Text>
+        </View>
+      ) : (
+        <View style={styles.quoteContainer}>
+          <FlatList
+            data={filteredQuotes}
+            keyExtractor={(item) => item.id.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            pagingEnabled
+            snapToAlignment="center"
+            snapToInterval={Dimensions.get("window").width}
+            decelerationRate="fast"
+            renderItem={({ item, index }) => (
+              <View style={styles.pageContainer}>
+                <QuoteCard index={index} item={item} />
+              </View>
+            )}
+          />
+        </View>
+      )}
     </View>
   );
 }
@@ -124,6 +149,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: "#545567",
+  },
+  errorText: {
+    color: "red",
+    fontSize: 16,
+    textAlign: "center",
+    padding: 20,
   },
   searchContainer: {
     paddingTop: "22%",
@@ -143,9 +184,20 @@ const styles = StyleSheet.create({
   },
   pageContainer: {
     width: Dimensions.get("window").width,
-    height: 'auto',
+    height: "auto",
     justifyContent: "center",
     alignItems: "center",
+  },
+  noResultsContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  noResultsText: {
+    fontSize: 16,
+    color: "#545567",
+    textAlign: "center",
   },
 });
 
