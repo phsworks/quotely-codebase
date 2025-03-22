@@ -110,6 +110,7 @@ function QuoteCard({ item, index }) {
                   color: "#000000",
                   fontFamily: "Avenir",
                 }}
+                adjustsFontSizeToFit
               >
                 {item.author_name}
               </Text>
@@ -130,7 +131,9 @@ function QuoteCard({ item, index }) {
                     fontWeight: 800,
                     color: "#000000",
                     fontFamily: "Avenir",
+                    maxWidth: 110,
                   }}
+                  adjustsFontSizeToFit
                 >
                   {item.author_occupation}
                 </Text>
@@ -168,7 +171,7 @@ const styles = StyleSheet.create({
   outerContainer: {
     overflow: "hidden",
     width: "90%",
-    height: "84%",
+    height: "86%",
   },
   quoteContainer: {
     flex: 1,
@@ -190,7 +193,7 @@ const styles = StyleSheet.create({
 
   },
   quoteSection: {
-    width: 280,
+    width: 285,
   },
   quoteText: {
     fontSize: 21,
@@ -210,7 +213,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     flexDirection: "row",
     gap: 60,
-    marginBottom: 30,
+
   },
   origins: {
     flexDirection: "row",
@@ -221,7 +224,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     gap: 80,
-    marginTop: 30,
+    marginTop: 20,
   },
   buttons: {
     borderRadius: 50,

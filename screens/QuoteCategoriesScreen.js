@@ -13,12 +13,13 @@ function QuoteCategoriesScreen({ navigation }) {
   const [quoteCategories, setQuoteCategories] = useState([]);
   const [error, setError] = useState(null);
 
+
   useEffect(() => {
     async function getQuotes() {
       let { data, error } = await supabase
-        .from("famous-quotes")
-        .select("*")
-        .order("quote_category", { ascending: true });
+      .from("famous-quotes")
+      .select("*")
+      .order("quote_category", { ascending: true });
 
       if (error) {
         setError(error.message);
@@ -40,11 +41,14 @@ function QuoteCategoriesScreen({ navigation }) {
           category_image: categories[category][0]?.category_image || "",
         }));
 
+
         setQuoteCategories(uniqueCategories);
       }
     }
     getQuotes();
   }, []);
+
+
 
   return (
     <View style={styles.mainContainer}>
@@ -67,7 +71,7 @@ function QuoteCategoriesScreen({ navigation }) {
                   style={styles.image}
                   source={{ uri: item.category_image }}
                   />
-                <Text style={styles.CategoryText}>{item.quote_category}</Text>
+                <Text style={styles.CategoryText}>{item.quote_category} {item.quotes.length}</Text>
               </View>
             </Pressable>
           )}
@@ -92,7 +96,6 @@ const styles = StyleSheet.create({
     width: "80vw",
   },
   quoteCategory: {
-    textAlign: "center",
     boxShadow: "rgba(180, 182, 184, 0.2) 0px 4px 5px",
     elevation: 4,
     borderRadius: 20,
@@ -100,10 +103,12 @@ const styles = StyleSheet.create({
     height: 180,
     margin: 10,
     zIndex: 999,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   image: {
     width: "100%",
-    height: "80%",
+    height: "78%",
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
   },
@@ -121,8 +126,8 @@ const styles = StyleSheet.create({
   CategoryText: {
     color: "#545567",
     fontWeight: "600",
-    padding: 10,
-    textAlign: "center",
+    textAlign: 'center',
+    padding: 12,
     fontFamily: 'Avenir',
   },
 });
