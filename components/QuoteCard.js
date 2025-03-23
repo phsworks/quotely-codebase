@@ -114,7 +114,6 @@ function QuoteCard({ item, index }) {
               >
                 {item.author_name}
               </Text>
-              <View style={styles.origins}>
                 <Text
                   style={{
                     fontSize: 11,
@@ -123,21 +122,8 @@ function QuoteCard({ item, index }) {
                     fontFamily: "Avenir",
                   }}
                 >
-                  {item.author_nationality}
+                  {item.author_nationality} {item.author_occupation}
                 </Text>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: 800,
-                    color: "#000000",
-                    fontFamily: "Avenir",
-                    maxWidth: 110,
-                  }}
-                  adjustsFontSizeToFit
-                >
-                  {item.author_occupation}
-                </Text>
-              </View>
             </View>
           </View>
           <View style={styles.quoteSection}>
@@ -170,7 +156,7 @@ function QuoteCard({ item, index }) {
 const styles = StyleSheet.create({
   outerContainer: {
     overflow: "hidden",
-    width: "90%",
+    width: "92%",
     height: "86%",
   },
   quoteContainer: {
@@ -186,10 +172,10 @@ const styles = StyleSheet.create({
   },
   quoteInfo: {
     flexDirection: "column",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "flex-start",
-    maxWidth: 130,
-    gap: 3,
+    maxWidth: 160,
+    gap: 5,
 
   },
   quoteSection: {
@@ -213,11 +199,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     flexDirection: "row",
     gap: 60,
-
-  },
-  origins: {
-    flexDirection: "row",
-    gap: 3,
 
   },
   cardBottom: {
