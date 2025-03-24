@@ -11,7 +11,7 @@ function QuoteDetailsScreen(props) {
 
   return (
     <View style={styles.container}>
-      <GoBack screenTitle="Go Back" />
+      <GoBack screenTitle="Favorite Quotes" />
       <View style={styles.quoteCardWrapper}>
         <QuoteCard item={item} index={index} />
       </View>
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   quoteCardWrapper: {
     width: "100%",
-    height: "80%",
+    height: "77%",
     alignItems: "center",
     marginTop: 50,
     justifyContent: "flex-start",

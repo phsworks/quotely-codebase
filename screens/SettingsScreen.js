@@ -203,7 +203,7 @@ function SettingsScreen() {
           <TouchableOpacity onPress={suggestQuote} style={styles.settingsTile}>
             <View style={styles.tileLeft}>
               <Feather name="cloud" size={24} color="#545567" />
-              <Text style={styles.userInfo}>Send Your Quote Suggestions!</Text>
+              <Text style={styles.userInfo}>Send Your Quotes!</Text>
             </View>
             <Feather name="chevron-right" size={24} color="#545567" />
           </TouchableOpacity>
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
   settingTiles: {
     flexDirection: "column",
     gap: 30,
-    marginTop: 30,
+    marginTop: 20,
   },
   settingsTile: {
     flexDirection: "row",

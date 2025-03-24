@@ -8,11 +8,14 @@ import {
   BackHandler,
   TouchableOpacity,
   TextInput,
+  Platform,
 } from "react-native";
 import { Button, Input } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import Avatar from "../components/Avatar";
 import Feather from "@expo/vector-icons/Feather";
+
+
 
 function ProfileScreen({ route }) {
   const [session, setSession] = useState(route.params?.session || null);
@@ -36,14 +39,17 @@ function ProfileScreen({ route }) {
       (_event, session) => {
         setSession(session);
       }
-    )
+    );
 
     return () => authListener.subscription.unsubscribe();
   }, []);
 
   useEffect(() => {
-    if (session) getProfile();
+    if (session) {
+      getProfile();
+    }
   }, [session]);
+
 
   async function getProfile() {
     try {
@@ -85,7 +91,7 @@ function ProfileScreen({ route }) {
       // Update the profiles table
       const { error: profilesError } = await supabase
         .from("profiles")
-        .upsert(updates)
+        .upsert(updates);
 
       if (profilesError) throw profilesError;
 
@@ -106,6 +112,7 @@ function ProfileScreen({ route }) {
       setLoading(false);
     }
   }
+
 
   return (
     <View style={styles.container}>
@@ -167,8 +174,8 @@ function ProfileScreen({ route }) {
       </View>
       <View>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Settings")}
           style={styles.userTile}
+          onPress={() => navigation.navigate("Settings")}
         >
           <Feather name="settings" size={24} color="#545567" />
           <Text style={styles.userInfo}>Settings</Text>

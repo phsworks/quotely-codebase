@@ -7,7 +7,6 @@ import ProfileScreen from "./screens/ProfileScreen";
 import QuoteCategoriesScreen from "./screens/QuoteCategoriesScreen";
 import FavoritesScreen from "./screens/FavoritesScreen";
 import QuoteCategoryScreen from "./screens/QuoteCategoryScreen";
-import { StatusBar } from "react-native";
 import { useState, useEffect } from "react";
 import LandingScreen from "./screens/LandingScreen";
 import AuthScreen from "./screens/AuthScreen";
@@ -17,6 +16,7 @@ import { FavoritesQuotesProvider } from "./context/FavoritesContext";
 import QuoteDetailsScreen from "./screens/QuoteDetailsScreen";
 import PrivacyScreen from "./screens/PrivacyScreen";
 import InfoScreen from "./screens/InfoScreen";
+
 
 
 

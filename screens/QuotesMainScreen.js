@@ -39,7 +39,7 @@ function QuoteScreen() {
         const { data, error } = await supabase
           .from("famous-quotes")
           .select("*")
-          .order("id");
+
 
         if (error) {
           throw error;

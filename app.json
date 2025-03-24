@@ -44,7 +44,15 @@
           "enableBase64ShareAndroid": true
         }
       ],
-      "expo-font"
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/Quotely-favicon.png",
+          "color": "#ffffff",
+          "defaultChannel": "default",
+          "enableBackgroundRemoteNotifications": false
+        }
+      ]
     ],
     "web": {
       "favicon": "./assets/favicon.png"

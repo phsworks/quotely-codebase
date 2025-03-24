@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   goBackTop: {
     justifyContent: "flex-start",
     marginLeft: 5,
-    marginTop: '20%',
+    marginTop: '15%',
     flexDirection: "row",
     alignItems: 'center',
   },
