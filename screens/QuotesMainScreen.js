@@ -6,10 +6,21 @@ import {
   Dimensions,
   TextInput,
   ActivityIndicator,
+  Button,
 } from "react-native";
 import { supabase } from "../supabase/configQuotes";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import QuoteCard from "../components/QuoteCard";
+
+import {
+  InterstitialAd,
+  AdEventType,
+  TestIds,
+} from "react-native-google-mobile-ads";
+import { Platform } from "react-native";
+
+
+
 
 // Debounce function defined outside component to avoid recreation
 const debounce = (func, wait) => {
@@ -24,13 +35,57 @@ const debounce = (func, wait) => {
   };
 };
 
+function shuffleArray(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 function QuoteScreen() {
   const [quotes, setQuotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Fetch quotes on component mount
+
+  // const [adLoaded, setAdLoaded] = useState(false);
+
+  // // Maak een InterstitialAd aan en laad deze
+  // const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL); // Gebruik Test ID voor testen
+
+  // useEffect(() => {
+  //   // Laad de advertentie bij het starten van het scherm
+  //   const loadAd = () => {
+  //     interstitial.load();
+  //     interstitial.onAdEvent((type) => {
+  //       if (type === AdEventType.LOADED) {
+  //         setAdLoaded(true); // Markeer de advertentie als geladen
+  //       }
+  //     });
+  //   };
+
+  //   loadAd();
+
+  //   // Opruimen bij het verlaten van het scherm
+  //   return () => {
+  //     interstitial?.offAdEvent();
+  //   };
+  // }, [interstitial]);
+
+  // const showAd = () => {
+  //   if (adLoaded) {
+  //     interstitial.show(); // Toon de interstitial als deze geladen is
+  //     setAdLoaded(false); // Zet adLoaded op false zodat je niet meerdere keren dezelfde advertentie toont
+  //   }
+  // };
+
+
+
+
+
   useEffect(() => {
     async function getQuotes() {
       try {
@@ -38,14 +93,13 @@ function QuoteScreen() {
         // Get quotes ordered by id to ensure consistent ordering
         const { data, error } = await supabase
           .from("famous-quotes")
-          .select("*")
-
+          .select("*");
 
         if (error) {
           throw error;
         }
 
-        // Filter out quotes with missing author images
+        // Filter out quotes with missing author images or author name
         const validQuotes = data.filter(
           (quote) => quote && quote.author_imageURL && quote.author_name
         );
@@ -54,7 +108,9 @@ function QuoteScreen() {
           throw new Error("No valid quotes found with author images");
         }
 
-        setQuotes(validQuotes);
+        // Shuffle the valid quotes array so the author info remains connected to their quote
+        const shuffledQuotes = shuffleArray(validQuotes);
+        setQuotes(shuffledQuotes);
       } catch (error) {
         console.error("Error fetching quotes:", error.message);
         setError(error.message);
@@ -114,6 +170,7 @@ function QuoteScreen() {
           onChangeText={handleSearchChange}
         />
       </View>
+      <Button title="add" />
 
       {filteredQuotes.length === 0 ? (
         <View style={styles.noResultsContainer}>
@@ -176,7 +233,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     paddingHorizontal: 20,
     color: "#8EEAEE",
-    fontWeight: 600,
+    fontWeight: "600",
     fontSize: 18,
   },
   quoteContainer: {

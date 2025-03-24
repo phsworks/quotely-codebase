@@ -14,18 +14,32 @@
     },
     "ios": {
       "supportsTablet": true,
-      "usesAppleSignIn": true
+      "usesAppleSignIn": true,
+      "infoPlist": {
+        "NSUserTrackingUsageDescription": "Deze app gebruikt advertentie-ID's om gepersonaliseerde advertenties te tonen.",
+        "LSApplicationQueriesSchemes": [
+          "fb",
+          "instagram",
+          "twitter",
+          "tiktoksharesdk"
+        ]
+      },
+      "bundleIdentifier": "com.anonymous.quotelycodebase"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ],
+      "package": "com.anonymous.quotelycodebase"
     },
     "plugins": [
-        [
-          "expo-apple-authentication"
-        ],
+      [
+        "expo-apple-authentication"
+      ],
       [
         "react-native-share",
         {
@@ -51,6 +65,12 @@
           "color": "#ffffff",
           "defaultChannel": "default",
           "enableBackgroundRemoteNotifications": false
+        }
+      ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "iosAppId": "ca-app-pub-3363401404948517~5371067554"
         }
       ]
     ],
