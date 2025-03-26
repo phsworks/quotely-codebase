@@ -51,36 +51,36 @@ function QuoteScreen() {
   const [searchQuery, setSearchQuery] = useState("");
 
 
-  // const [adLoaded, setAdLoaded] = useState(false);
+  const [adLoaded, setAdLoaded] = useState(false);
 
-  // // Maak een InterstitialAd aan en laad deze
-  // const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL); // Gebruik Test ID voor testen
+  // Maak een InterstitialAd aan en laad deze
+  const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL); // Gebruik Test ID voor testen
 
-  // useEffect(() => {
-  //   // Laad de advertentie bij het starten van het scherm
-  //   const loadAd = () => {
-  //     interstitial.load();
-  //     interstitial.onAdEvent((type) => {
-  //       if (type === AdEventType.LOADED) {
-  //         setAdLoaded(true); // Markeer de advertentie als geladen
-  //       }
-  //     });
-  //   };
+  useEffect(() => {
+    // Laad de advertentie bij het starten van het scherm
+    const loadAd = () => {
+      interstitial.load();
+      interstitial.onAdEvent((type) => {
+        if (type === AdEventType.LOADED) {
+          setAdLoaded(true); // Markeer de advertentie als geladen
+        }
+      });
+    };
 
-  //   loadAd();
+    loadAd();
 
-  //   // Opruimen bij het verlaten van het scherm
-  //   return () => {
-  //     interstitial?.offAdEvent();
-  //   };
-  // }, [interstitial]);
+    // Opruimen bij het verlaten van het scherm
+    return () => {
+      interstitial?.offAdEvent();
+    };
+  }, [interstitial]);
 
-  // const showAd = () => {
-  //   if (adLoaded) {
-  //     interstitial.show(); // Toon de interstitial als deze geladen is
-  //     setAdLoaded(false); // Zet adLoaded op false zodat je niet meerdere keren dezelfde advertentie toont
-  //   }
-  // };
+  const showAd = () => {
+    if (adLoaded) {
+      interstitial.show(); // Toon de interstitial als deze geladen is
+      setAdLoaded(false); // Zet adLoaded op false zodat je niet meerdere keren dezelfde advertentie toont
+    }
+  };
 
 
 
