@@ -12,7 +12,6 @@ import { supabase } from "../supabase/configUsers";
 import { Input } from "@rneui/themed";
 import MainButton from "../components/MainButton";
 import logo from "../assets/Quotely-logo.png";
-import { AuthApple } from "../components/Auth.native";
 
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
@@ -122,7 +121,6 @@ function AuthScreen() {
         )}
       </View>
       <View style={styles.loginBottom}>
-        <AuthApple />
         <MainButton
           style={styles.signButton}
           title={isSignUp ? "Sign Up" : "Sign In"}
