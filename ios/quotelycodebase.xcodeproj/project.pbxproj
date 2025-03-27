@@ -882,6 +882,62 @@
 			remoteGlobalIDString = 65D0A19C165FA1126B1360680FE6DB12;
 			remoteInfo = Yoga;
 		};
+		3E54B88F2D95760600C2AED5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E548BB72D9494F800C2AED5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F8E0CC88BCE27B513814FD8E352EEEA5;
+			remoteInfo = EXJSONUtils;
+		};
+		3E54B8912D95760600C2AED5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E548BB72D9494F800C2AED5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D097506274EC2BE06FC8A4B80E7DCD87;
+			remoteInfo = EXManifests;
+		};
+		3E54B8932D95760600C2AED5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E548BB72D9494F800C2AED5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0DA42E6FA720EFDCE2C34470C00789E1;
+			remoteInfo = "expo-dev-launcher";
+		};
+		3E54B8952D95760600C2AED5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E548BB72D9494F800C2AED5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D547CA5C43861A03C7A8472A3E6C4EB8;
+			remoteInfo = "expo-dev-launcher-EXDevLauncher";
+		};
+		3E54B8972D95760600C2AED5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E548BB72D9494F800C2AED5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5AC04627CA70AFD8FF89158C7A3F57C6;
+			remoteInfo = "expo-dev-menu";
+		};
+		3E54B8992D95760600C2AED5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E548BB72D9494F800C2AED5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2BC00BFA8D1EA7E3AB9803FD3B8A970C;
+			remoteInfo = "expo-dev-menu-EXDevMenu";
+		};
+		3E54B89B2D95760600C2AED5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E548BB72D9494F800C2AED5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 51C57F24B4EB722B9F961BC822634561;
+			remoteInfo = "expo-dev-menu-interface";
+		};
+		3E54B89D2D95760600C2AED5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E548BB72D9494F800C2AED5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 12728BA7F12072B31D5FC2F00E438275;
+			remoteInfo = EXUpdatesInterface;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -9658,9 +9714,16 @@
 				3E54B2132D94950100C2AED5 /* EXConstants-EXConstants */,
 				3E54B2152D94950100C2AED5 /* EXConstants-ExpoConstants_privacy */,
 				3E54B2172D94950100C2AED5 /* EXImageLoader */,
+				3E54B8902D95760600C2AED5 /* EXJSONUtils */,
+				3E54B8922D95760600C2AED5 /* EXManifests */,
 				3E54B2192D94950100C2AED5 /* EXNotifications */,
 				3E54B21B2D94950100C2AED5 /* EXNotifications-ExpoNotifications_privacy */,
 				3E54B21D2D94950100C2AED5 /* Expo */,
+				3E54B8942D95760600C2AED5 /* expo-dev-launcher */,
+				3E54B8962D95760600C2AED5 /* expo-dev-launcher-EXDevLauncher */,
+				3E54B8982D95760600C2AED5 /* expo-dev-menu */,
+				3E54B89A2D95760600C2AED5 /* expo-dev-menu-EXDevMenu */,
+				3E54B89C2D95760600C2AED5 /* expo-dev-menu-interface */,
 				3E54B21F2D94950100C2AED5 /* ExpoAppleAuthentication */,
 				3E54B2212D94950100C2AED5 /* ExpoAsset */,
 				3E54B2232D94950100C2AED5 /* ExpoDevice */,
@@ -9674,6 +9737,7 @@
 				3E54B2332D94950100C2AED5 /* ExpoMediaLibrary */,
 				3E54B2352D94950100C2AED5 /* ExpoMediaLibrary-ExpoMediaLibrary_privacy */,
 				3E54B2372D94950100C2AED5 /* ExpoModulesCore */,
+				3E54B89E2D95760600C2AED5 /* EXUpdatesInterface */,
 				3E54B2392D94950100C2AED5 /* fmt */,
 				3E54B23B2D94950100C2AED5 /* glog */,
 				3E54B23D2D94950100C2AED5 /* glog-glog_privacy */,
@@ -27162,7 +27226,7 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "quotelycodebase" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				3DA13039244B31419359B946 /* [Expo] Configure project */,
+				082A6225E8A67F0E74C6D28E /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
@@ -27984,6 +28048,70 @@
 			remoteRef = 3E54B2C42D94950100C2AED5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		3E54B8902D95760600C2AED5 /* EXJSONUtils */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			name = EXJSONUtils;
+			path = libEXJSONUtils.a;
+			remoteRef = 3E54B88F2D95760600C2AED5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3E54B8922D95760600C2AED5 /* EXManifests */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			name = EXManifests;
+			path = libEXManifests.a;
+			remoteRef = 3E54B8912D95760600C2AED5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3E54B8942D95760600C2AED5 /* expo-dev-launcher */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			name = "expo-dev-launcher";
+			path = "libexpo-dev-launcher.a";
+			remoteRef = 3E54B8932D95760600C2AED5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3E54B8962D95760600C2AED5 /* expo-dev-launcher-EXDevLauncher */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			name = "expo-dev-launcher-EXDevLauncher";
+			path = EXDevLauncher.bundle;
+			remoteRef = 3E54B8952D95760600C2AED5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3E54B8982D95760600C2AED5 /* expo-dev-menu */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			name = "expo-dev-menu";
+			path = "libexpo-dev-menu.a";
+			remoteRef = 3E54B8972D95760600C2AED5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3E54B89A2D95760600C2AED5 /* expo-dev-menu-EXDevMenu */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			name = "expo-dev-menu-EXDevMenu";
+			path = EXDevMenu.bundle;
+			remoteRef = 3E54B8992D95760600C2AED5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3E54B89C2D95760600C2AED5 /* expo-dev-menu-interface */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			name = "expo-dev-menu-interface";
+			path = "libexpo-dev-menu-interface.a";
+			remoteRef = 3E54B89B2D95760600C2AED5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3E54B89E2D95760600C2AED5 /* EXUpdatesInterface */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			name = EXUpdatesInterface;
+			path = libEXUpdatesInterface.a;
+			remoteRef = 3E54B89D2D95760600C2AED5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -28012,6 +28140,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\nif [[ \"$CONFIGURATION\" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z \"$ENTRY_FILE\" ]]; then\n  # Set the entry JS file using the bundler's entry resolution.\n  export ENTRY_FILE=\"$(\"$NODE_BINARY\" -e \"require('expo/scripts/resolveAppEntry')\" \"$PROJECT_ROOT\" ios absolute | tail -n 1)\"\nfi\n\nif [[ -z \"$CLI_PATH\" ]]; then\n  # Use Expo CLI\n  export CLI_PATH=\"$(\"$NODE_BINARY\" --print \"require.resolve('@expo/cli', { paths: [require.resolve('expo/package.json')] })\")\"\nfi\nif [[ -z \"$BUNDLE_COMMAND\" ]]; then\n  # Default Expo CLI command for bundling\n  export BUNDLE_COMMAND=\"export:embed\"\nfi\n\n# Source .xcode.env.updates if it exists to allow\n# SKIP_BUNDLING to be unset if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.updates\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.updates\"\nfi\n# Source local changes to allow overrides\n# if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n`\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n\n";
+		};
+		082A6225E8A67F0E74C6D28E /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-quotelycodebase/expo-configure-project.sh\"\n";
 		};
 		08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -28053,25 +28200,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-quotelycodebase/Pods-quotelycodebase-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3DA13039244B31419359B946 /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-quotelycodebase/expo-configure-project.sh\"\n";
-		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -28092,6 +28220,8 @@
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/React-Core_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-cxxreact/React-cxxreact_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/boost/boost_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/expo-dev-launcher/EXDevLauncher.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/expo-dev-menu/EXDevMenu.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/glog/glog_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/react-native-image-filter-kit/bundle.bundle",
 			);
@@ -28110,6 +28240,8 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-Core_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-cxxreact_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/boost_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXDevLauncher.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXDevMenu.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/glog_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/bundle.bundle",
 			);
@@ -28351,8 +28483,8 @@
 				DEVELOPMENT_TEAM = 3LWZJ3B25L;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/hermes-engine/destroot/Library/Frameworks/macosx",
+					"$(inherited)",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -28372,7 +28504,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.anonymous.quotelycodebase;
-				PRODUCT_NAME = "quotelycodebase";
+				PRODUCT_NAME = quotelycodebase;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -28395,8 +28527,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3LWZJ3B25L;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/hermes-engine/destroot/Library/Frameworks/macosx",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = quotelycodebase/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
@@ -28412,7 +28544,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.anonymous.quotelycodebase;
-				PRODUCT_NAME = "quotelycodebase";
+				PRODUCT_NAME = quotelycodebase;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -28481,7 +28613,10 @@
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -28538,7 +28673,10 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
