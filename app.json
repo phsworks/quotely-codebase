@@ -37,42 +37,7 @@
       "package": "com.anonymous.quotelycodebase"
     },
     "plugins": [
-      [
-        "expo-apple-authentication"
-      ],
-      [
-        "react-native-share",
-        {
-          "ios": [
-            "fb",
-            "instagram",
-            "twitter",
-            "tiktoksharesdk"
-          ],
-          "android": [
-            "com.facebook.katana",
-            "com.instagram.android",
-            "com.twitter.android",
-            "com.zhiliaoapp.musically"
-          ],
-          "enableBase64ShareAndroid": true
-        }
-      ],
-      [
-        "expo-notifications",
-        {
-          "icon": "./assets/Quotely-favicon.png",
-          "color": "#ffffff",
-          "defaultChannel": "default",
-          "enableBackgroundRemoteNotifications": false
-        }
-      ],
-      [
-        "react-native-google-mobile-ads",
-        {
-          "iosAppId": "ca-app-pub-3363401404948517~5371067554"
-        }
-      ]
+
     ],
     "web": {
       "favicon": "./assets/favicon.png"
