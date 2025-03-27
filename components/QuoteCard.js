@@ -9,7 +9,6 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { Share } from "react-native";
 import { useContext, useRef, useEffect, useState } from "react";
 import { captureRef } from "react-native-view-shot";
 import FavoritesQuotesContext from "../context/FavoritesContext";
