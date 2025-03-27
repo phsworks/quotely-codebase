@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "codegen": "react-native-codegen"
   },
   "dependencies": {
     "@expo/config-plugins": "^9.0.16",
@@ -38,7 +39,8 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@react-native-community/cli": "latest",
-    "expo-build-properties": "^0.13.2"
+    "expo-build-properties": "^0.13.2",
+    "react-native-codegen": "^0.70.7"
   },
   "private": true
 }

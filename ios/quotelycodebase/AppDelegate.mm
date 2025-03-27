@@ -1,3 +1,5 @@
+#define NO_THREADS
+
 #import "AppDelegate.h"
 
 #import <React/RCTBundleURLProvider.h>
