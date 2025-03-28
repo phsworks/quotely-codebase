@@ -2,7 +2,7 @@ PODS:
   - Bolts/Tasks (1.9.0)
   - boost (1.84.0)
   - DoubleConversion (1.1.6)
-  - EXConstants (17.0.8):
+  - EXConstants (17.0.1):
     - ExpoModulesCore
   - EXImageLoader (5.0.0):
     - ExpoModulesCore
@@ -1910,7 +1910,7 @@ SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   boost: 1dca942403ed9342f98334bf4c3621f011aa7946
   DoubleConversion: f16ae600a246532c4020132d54af21d0ddb2a385
-  EXConstants: fcfc75800824ac2d5c592b5bc74130bad17b146b
+  EXConstants: b506ff6d556c57fb44c4201727a7b3899c0d4cc4
   EXImageLoader: e5da974e25b13585c196b658a440720c075482d5
   Expo: 73171149d69a436153195f72d7b0fef4d82ae380
   ExpoAsset: 48386d40d53a8c1738929b3ed509bcad595b5516
