@@ -7,20 +7,17 @@ import {
   TextInput,
   ActivityIndicator,
   Button,
+  Platform,
 } from "react-native";
 import { supabase } from "../supabase/configQuotes";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import QuoteCard from "../components/QuoteCard";
 
-import {
-  InterstitialAd,
-  AdEventType,
-  TestIds,
-} from "react-native-google-mobile-ads";
-import { Platform } from "react-native";
-
-
-
+// import {
+//   InterstitialAd,
+//   AdEventType,
+//   TestIds,
+// } from "react-native-google-mobile-ads";
 
 // Debounce function defined outside component to avoid recreation
 const debounce = (func, wait) => {
@@ -49,42 +46,68 @@ function QuoteScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-
-
   const [adLoaded, setAdLoaded] = useState(false);
+  const [adError, setAdError] = useState(null);
 
-  // Maak een InterstitialAd aan en laad deze
-  const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL); // Gebruik Test ID voor testen
+  // // Create interstitial ad with proper error handling
+  // useEffect(() => {
+  //   let isMounted = true;
+  //   let adEventListener = null;
 
-  useEffect(() => {
-    // Laad de advertentie bij het starten van het scherm
-    const loadAd = () => {
-      interstitial.load();
-      interstitial.onAdEvent((type) => {
-        if (type === AdEventType.LOADED) {
-          setAdLoaded(true); // Markeer de advertentie als geladen
-        }
-      });
-    };
+  //   try {
+  //     // Create the interstitial ad
+  //     const interstitial = InterstitialAd.createForAdRequest(
+  //       TestIds.INTERSTITIAL, // Use test ID for testing
+  //       {
+  //         requestNonPersonalizedAdsOnly: true,
+  //         keywords: ["quotes", "inspiration", "motivation"],
+  //       }
+  //     );
 
-    loadAd();
+  //     // Set up event listener
+  //     adEventListener = interstitial.onAdEvent((type, error) => {
+  //       if (!isMounted) return;
 
-    // Opruimen bij het verlaten van het scherm
-    return () => {
-      interstitial?.offAdEvent();
-    };
-  }, [interstitial]);
+  //       if (type === AdEventType.LOADED) {
+  //         setAdLoaded(true);
+  //       } else if (type === AdEventType.ERROR) {
+  //         console.warn("Ad error:", error);
+  //         setAdError(error?.message || "Unknown ad error");
+  //       } else if (type === AdEventType.CLOSED) {
+  //         // Reload ad when closed
+  //         interstitial.load();
+  //       }
+  //     });
 
-  const showAd = () => {
-    if (adLoaded) {
-      interstitial.show(); // Toon de interstitial als deze geladen is
-      setAdLoaded(false); // Zet adLoaded op false zodat je niet meerdere keren dezelfde advertentie toont
-    }
-  };
+  //     // Load the ad
+  //     interstitial.load();
 
+  //     // Function to show ad
+  //     window.showAd = () => {
+  //       if (adLoaded && interstitial) {
+  //         interstitial.show();
+  //         setAdLoaded(false);
+  //       } else {
+  //         console.log("Ad not ready yet");
+  //       }
+  //     };
 
-
-
+  //     // Clean up
+  //     return () => {
+  //       isMounted = false;
+  //       if (adEventListener) {
+  //         adEventListener();
+  //       }
+  //       delete window.showAd;
+  //     };
+  //   } catch (err) {
+  //     console.error("Failed to initialize ad:", err);
+  //     setAdError(err.message);
+  //     return () => {
+  //       isMounted = false;
+  //     };
+  //   }
+  // }, []);
 
   useEffect(() => {
     async function getQuotes() {
@@ -170,7 +193,16 @@ function QuoteScreen() {
           onChangeText={handleSearchChange}
         />
       </View>
-      <Button title="add" />
+      <Button
+        title="Show Ad"
+        onPress={() => {
+          if (window.showAd) {
+            window.showAd();
+          } else {
+            console.log("Ad functionality not available");
+          }
+        }}
+      />
 
       {filteredQuotes.length === 0 ? (
         <View style={styles.noResultsContainer}>

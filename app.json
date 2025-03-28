@@ -15,7 +15,8 @@
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.anonymous.quotelycodebase"
+      "bundleIdentifier": "com.anonymous.quotelycodebase",
+      "deploymentTarget": "15.1"
     },
     "android": {
       "adaptiveIcon": {
