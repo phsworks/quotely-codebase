@@ -7,23 +7,14 @@
     "icon": "./assets/Quotely-favicon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": false,
+    "jsEngine": "hermes",
     "splash": {
       "image": "./assets/Quotely-favicon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#fffff"
+      "backgroundColor": "#ffffff"
     },
     "ios": {
       "supportsTablet": false,
-      "usesAppleSignIn": true,
-      "infoPlist": {
-        "NSUserTrackingUsageDescription": "Deze app gebruikt advertentie-ID's om gepersonaliseerde advertenties te tonen.",
-        "LSApplicationQueriesSchemes": [
-          "fb",
-          "instagram",
-          "twitter",
-          "tiktoksharesdk"
-        ]
-      },
       "bundleIdentifier": "com.anonymous.quotelycodebase"
     },
     "android": {
@@ -31,17 +22,17 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": [
-        "android.permission.WRITE_EXTERNAL_STORAGE"
-      ],
       "package": "com.anonymous.quotelycodebase"
     },
     "plugins": [
-
+      "expo-build-properties"
     ],
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "extra": {
       "eas": {
         "projectId": "0c0c7f5f-1396-4ed9-9365-d26bbff502a2"

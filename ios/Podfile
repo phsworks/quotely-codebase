@@ -1,6 +1,7 @@
 require File.join(File.dirname(`node --print "require.resolve('expo/package.json')"`), "scripts/autolinking")
 require File.join(File.dirname(`node --print "require.resolve('react-native/package.json')"`), "scripts/react_native_pods")
 
+# Resolve react_native_pods.rb with node to allow for hoisting
 require 'json'
 $Glog_Options = "--host=x86_64-apple-darwin --with-pic --disable-shared --enable-static CXXFLAGS='-DNO_THREADS'"
 
@@ -38,12 +39,18 @@ target 'quotelycodebase' do
   use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
   use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
 
+  # Flags change depending on the env values.
+  flags = get_default_flags()
+
   use_react_native!(
     :path => config[:reactNativePath],
     :hermes_enabled => podfile_properties['expo.jsEngine'] == nil || podfile_properties['expo.jsEngine'] == 'hermes',
     :app_path => "#{Pod::Config.instance.installation_root}/..",
     :privacy_file_aggregation_enabled => podfile_properties['apple.privacyManifestAggregationEnabled'] != 'false',
   )
+
+  # Fix for Hermes architecture mismatch
+  pod 'hermes-engine', :podspec => "#{Pod::Config.instance.installation_root}/../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
 
   post_install do |installer|
     react_native_post_install(
@@ -82,6 +89,9 @@ target 'quotelycodebase' do
         config.build_settings['EXPANDED_CODE_SIGN_IDENTITY'] = ""
         config.build_settings['CODE_SIGNING_REQUIRED'] = "NO"
         config.build_settings['CODE_SIGNING_ALLOWED'] = "NO"
+        
+        # Fix architecture issues
+        config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64'
       end
     end
   end

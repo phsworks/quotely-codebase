@@ -1,0 +1,4 @@
+{
+  "enableHermes": true,
+  "hermesPath": "../node_modules/hermes-engine"
+}
