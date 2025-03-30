@@ -46,8 +46,8 @@ function QuoteScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [adLoaded, setAdLoaded] = useState(false);
-  const [adError, setAdError] = useState(null);
+  // const [adLoaded, setAdLoaded] = useState(false);
+  // const [adError, setAdError] = useState(null);
 
   // // Create interstitial ad with proper error handling
   // useEffect(() => {

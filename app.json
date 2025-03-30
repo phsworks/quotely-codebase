@@ -4,12 +4,12 @@
     "slug": "quotely-codebase",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/Quotely-favicon.png",
+    "icon": "./assets/QuotelyAppIcon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": false,
     "jsEngine": "hermes",
     "splash": {
-      "image": "./assets/Quotely-favicon.png",
+      "image": "./assets/Quotely-logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -26,7 +26,14 @@
       "package": "com.anonymous.quotelycodebase"
     },
     "plugins": [
-      "expo-build-properties"
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "GADApplicationIdentifier": "ca-app-pub-3363401404948517~5371067554"
+          }
+        }
+      ]
     ],
     "web": {
       "favicon": "./assets/favicon.png"
