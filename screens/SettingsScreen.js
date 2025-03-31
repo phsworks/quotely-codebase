@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
   settingTiles: {
     flexDirection: "column",
     gap: 30,
-    marginTop: 20,
+    marginTop: 40,
   },
   settingsTile: {
     flexDirection: "row",

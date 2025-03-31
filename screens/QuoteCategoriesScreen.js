@@ -25,7 +25,6 @@ function QuoteCategoriesScreen({ navigation }) {
         setError(error.message);
         console.log("There was an error", error);
       } else {
-        // Groepeer de quotes per categorie
         const categories = data.reduce((acc, quote) => {
           if (!acc[quote.quote_category]) {
             acc[quote.quote_category] = [];
@@ -34,7 +33,6 @@ function QuoteCategoriesScreen({ navigation }) {
           return acc;
         }, {});
 
-        // Een array van unieke categorieën met hun quotes
         const uniqueCategories = Object.keys(categories).map((category) => ({
           quote_category: category,
           quotes: categories[category],
@@ -96,15 +94,23 @@ const styles = StyleSheet.create({
     width: "80vw",
   },
   quoteCategory: {
-    boxShadow: "rgba(180, 182, 184, 0.2) 0px 4px 5px",
-    elevation: 4,
+    backgroundColor: "white",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
     borderRadius: 20,
     width: 160,
     height: 180,
     margin: 10,
     zIndex: 999,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   image: {
     width: "100%",
@@ -126,9 +132,9 @@ const styles = StyleSheet.create({
   CategoryText: {
     color: "#545567",
     fontWeight: "600",
-    textAlign: 'center',
+    textAlign: "center",
     padding: 12,
-    fontFamily: 'Avenir',
+    fontFamily: "Avenir",
   },
 });
 

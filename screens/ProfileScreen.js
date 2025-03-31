@@ -220,7 +220,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     gap: 15,
-    boxShadow: "rgba(180, 182, 184, 0.402) 0px 4px 5px",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
     marginBottom: 20,
     padding: 15,
     borderRadius: 20,

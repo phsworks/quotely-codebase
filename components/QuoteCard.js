@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   Pressable,
+  Share,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Feather from "@expo/vector-icons/Feather";
@@ -164,8 +165,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     borderRadius: 50,
-    boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-    elevation: 4,
     paddingTop: 10,
     opacity: 0.8,
   },
@@ -175,7 +174,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     maxWidth: 160,
     gap: 5,
-
   },
   quoteSection: {
     width: 285,
@@ -198,7 +196,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     flexDirection: "row",
     gap: 60,
-
   },
   cardBottom: {
     justifyContent: "center",

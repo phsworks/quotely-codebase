@@ -2,7 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Feather from "@expo/vector-icons/Feather";
-import QuoteMainScreen from "./screens/QuotesMainScreen";
+import QuoteScreen from "./screens/QuotesMainScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import QuoteCategoriesScreen from "./screens/QuoteCategoriesScreen";
 import FavoritesScreen from "./screens/FavoritesScreen";
@@ -16,9 +16,7 @@ import { FavoritesQuotesProvider } from "./context/FavoritesContext";
 import QuoteDetailsScreen from "./screens/QuoteDetailsScreen";
 import PrivacyScreen from "./screens/PrivacyScreen";
 import InfoScreen from "./screens/InfoScreen";
-
-
-
+import { MobileAds } from "react-native-google-mobile-ads";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -43,7 +41,7 @@ function QuotelyOverview({ session }) {
           ),
         }}
         name="Quotes"
-        component={QuoteMainScreen}
+        component={QuoteScreen}
       />
       <BottomTabs.Screen
         options={{
@@ -68,7 +66,6 @@ function QuotelyOverview({ session }) {
           tabBarIcon: ({ color, size }) => (
             <Feather name="user" size={size} color={color} />
           ),
-
         }}
         name="Profile"
         component={ProfileScreen}
@@ -135,9 +132,6 @@ function AppStack({ session }) {
 export default function App() {
   const [session, setSession] = useState(null);
 
-  function toggleColorScheme() {
-    setColorScheme((prevScheme) => (prevScheme === "dark" ? "light" : "dark"));
-  }
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -150,6 +144,16 @@ export default function App() {
       setSession(session);
     });
 
+    MobileAds()
+      .initialize()
+      .then(() => {
+        console.log(
+          "🔍 Initializing AdMob with App ID:",
+          "ca-app-pub-3363401404948517~5371067554"
+        );
+
+      });
+
     return () => {
       subscription.unsubscribe();
     };
@@ -158,13 +162,7 @@ export default function App() {
   return (
     <FavoritesQuotesProvider>
       <NavigationContainer>
-        {session ? (
-          <AppStack
-            session={session}
-          />
-        ) : (
-          <AuthStack />
-        )}
+        {session ? <AppStack session={session} /> : <AuthStack />}
       </NavigationContainer>
     </FavoritesQuotesProvider>
   );

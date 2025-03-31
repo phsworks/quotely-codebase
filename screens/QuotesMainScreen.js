@@ -7,19 +7,18 @@ import {
   TextInput,
   ActivityIndicator,
   Button,
-  Platform,
 } from "react-native";
 import { supabase } from "../supabase/configQuotes";
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import QuoteCard from "../components/QuoteCard";
 
-// import {
-//   InterstitialAd,
-//   AdEventType,
-//   TestIds,
-// } from "react-native-google-mobile-ads";
+import {
+  InterstitialAd,
+  AdEventType,
+  TestIds,
+} from "react-native-google-mobile-ads";
 
-// Debounce function defined outside component to avoid recreation
+// Debounce helper
 const debounce = (func, wait) => {
   let timeout;
   return function executedFunction(...args) {
@@ -46,83 +45,78 @@ function QuoteScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  // const [adLoaded, setAdLoaded] = useState(false);
-  // const [adError, setAdError] = useState(null);
+  const [adLoaded, setAdLoaded] = useState(false);
+  const [adError, setAdError] = useState(null);
 
-  // // Create interstitial ad with proper error handling
-  // useEffect(() => {
-  //   let isMounted = true;
-  //   let adEventListener = null;
+  const swipeCount = useRef(0);
+  const interstitialRef = useRef(null);
 
-  //   try {
-  //     // Create the interstitial ad
-  //     const interstitial = InterstitialAd.createForAdRequest(
-  //       TestIds.INTERSTITIAL, // Use test ID for testing
-  //       {
-  //         requestNonPersonalizedAdsOnly: true,
-  //         keywords: ["quotes", "inspiration", "motivation"],
-  //       }
-  //     );
 
-  //     // Set up event listener
-  //     adEventListener = interstitial.onAdEvent((type, error) => {
-  //       if (!isMounted) return;
 
-  //       if (type === AdEventType.LOADED) {
-  //         setAdLoaded(true);
-  //       } else if (type === AdEventType.ERROR) {
-  //         console.warn("Ad error:", error);
-  //         setAdError(error?.message || "Unknown ad error");
-  //       } else if (type === AdEventType.CLOSED) {
-  //         // Reload ad when closed
-  //         interstitial.load();
-  //       }
-  //     });
 
-  //     // Load the ad
-  //     interstitial.load();
+  // Setup ad logic
+  useEffect(() => {
+    const interstitial = InterstitialAd.createForAdRequest(
+      TestIds.INTERSTITIAL,
+      {
+        requestNonPersonalizedAdsOnly: true,
+        keywords: ["quotes", "inspiration", "motivation"],
+      }
+    );
 
-  //     // Function to show ad
-  //     window.showAd = () => {
-  //       if (adLoaded && interstitial) {
-  //         interstitial.show();
-  //         setAdLoaded(false);
-  //       } else {
-  //         console.log("Ad not ready yet");
-  //       }
-  //     };
+    interstitialRef.current = interstitial;
 
-  //     // Clean up
-  //     return () => {
-  //       isMounted = false;
-  //       if (adEventListener) {
-  //         adEventListener();
-  //       }
-  //       delete window.showAd;
-  //     };
-  //   } catch (err) {
-  //     console.error("Failed to initialize ad:", err);
-  //     setAdError(err.message);
-  //     return () => {
-  //       isMounted = false;
-  //     };
-  //   }
-  // }, []);
+    // 👇 Place the updated LOADED event listener here
+    const unsubLoad = interstitial.addAdEventListener(
+      AdEventType.LOADED,
+      () => {
+        console.log("Ad loaded");
+        setAdLoaded(true);
 
+        // 👉 Check if user already hit 10 swipes while ad was loading
+        if (swipeCount.current >= 10 && interstitialRef.current) {
+          interstitialRef.current.show();
+          setAdLoaded(false);
+          swipeCount.current = 0;
+        }
+      }
+    );
+
+    const unsubError = interstitial.addAdEventListener(
+      AdEventType.ERROR,
+      (error) => {
+        console.warn("Ad error:", error);
+        setAdError(error?.message || "Unknown ad error");
+      }
+    );
+
+    const unsubClose = interstitial.addAdEventListener(
+      AdEventType.CLOSED,
+      () => {
+        interstitial.load(); // reload after close
+      }
+    );
+
+    interstitial.load();
+
+    return () => {
+      unsubLoad();
+      unsubError();
+      unsubClose();
+    };
+  }, []);
+
+  // Get quotes from Supabase
   useEffect(() => {
     async function getQuotes() {
       try {
         setLoading(true);
-        // Get quotes ordered by id to ensure consistent ordering
         const { data, error } = await supabase
-          .from("famous-quotes")
-          .select("*");
+        .from("famous-quotes")
+        .select("*");
 
-        if (error) {
-          throw error;
-        }
+        if (error) throw error;
 
-        // Filter out quotes with missing author images or author name
         const validQuotes = data.filter(
           (quote) => quote && quote.author_imageURL && quote.author_name
         );
@@ -131,7 +125,6 @@ function QuoteScreen() {
           throw new Error("No valid quotes found with author images");
         }
 
-        // Shuffle the valid quotes array so the author info remains connected to their quote
         const shuffledQuotes = shuffleArray(validQuotes);
         setQuotes(shuffledQuotes);
       } catch (error) {
@@ -145,33 +138,49 @@ function QuoteScreen() {
     getQuotes();
   }, []);
 
-  // Create memoized debounced search function
+
+  const handleSwipe = () => {
+    swipeCount.current += 1;
+    console.log("Swipe count:", swipeCount.current);
+
+    if (swipeCount.current >= 10) {
+      if (adLoaded && interstitialRef.current) {
+        console.log("Showing ad...");
+        interstitialRef.current.show();
+        setAdLoaded(false); // wait for it to reload after close
+        swipeCount.current = 0;
+      } else {
+        console.log("Ad not ready yet, will show when loaded");
+        // We DON'T reset swipeCount here
+        // We wait for ad to load and show it on the NEXT swipe
+      }
+    }
+  };
+
+
   const handleSearchChange = useMemo(() => {
     return debounce((text) => {
       setSearchQuery(text);
     }, 300);
   }, []);
 
-  // Filter quotes based on search query
   const filteredQuotes = useMemo(() => {
     if (!searchQuery.trim()) return quotes;
 
     return quotes.filter((quote) =>
       quote.author_name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }, [quotes, searchQuery]);
+  );
+}, [quotes, searchQuery]);
 
-  // Display loading indicator while fetching quotes
-  if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
+if (loading) {
+  return (
+    <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#8EEAEE" />
         <Text style={styles.loadingText}>Loading quotes...</Text>
       </View>
     );
   }
 
-  // Display error message if there was an error fetching quotes
   if (error) {
     return (
       <View style={styles.mainContainer}>
@@ -193,16 +202,6 @@ function QuoteScreen() {
           onChangeText={handleSearchChange}
         />
       </View>
-      <Button
-        title="Show Ad"
-        onPress={() => {
-          if (window.showAd) {
-            window.showAd();
-          } else {
-            console.log("Ad functionality not available");
-          }
-        }}
-      />
 
       {filteredQuotes.length === 0 ? (
         <View style={styles.noResultsContainer}>
@@ -226,6 +225,7 @@ function QuoteScreen() {
                 <QuoteCard index={index} item={item} />
               </View>
             )}
+            onMomentumScrollEnd={handleSwipe}
           />
         </View>
       )}
