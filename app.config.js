@@ -10,7 +10,7 @@ module.exports = ({ config }) => {
     newArchEnabled: false,
     jsEngine: "hermes",
     splash: {
-      image: "./assets/IconQuotely.png",
+      image: "./assets/Quotely-logo.png",
       resizeMode: "contain",
       backgroundColor: "#ffffff",
     },
