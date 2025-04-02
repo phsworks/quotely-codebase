@@ -1,15 +1,16 @@
-module.exports = {
-  expo: {
+module.exports = ({ config }) => {
+  return {
+    ...config,
     name: "Quotely",
     slug: "quotely-codebase",
     version: "1.0.0",
     orientation: "portrait",
-    icon: "./assets/Quotely-favicon.png",
+    icon: "./assets/IconQuotely.png",
     userInterfaceStyle: "light",
     newArchEnabled: false,
     jsEngine: "hermes",
     splash: {
-      image: "./assets/Quotely-favicon.png",
+      image: "./assets/IconQuotely.png",
       resizeMode: "contain",
       backgroundColor: "#ffffff",
     },
@@ -23,21 +24,15 @@ module.exports = {
         NSPhotoLibraryUsageDescription:
           "Allow Quotely to access your photos to set profile picture",
         SKAdNetworkItems: [
-          {
-            SKAdNetworkIdentifier: "cstr6suwn9.skadnetwork",
-          },
-          {
-            SKAdNetworkIdentifier: "4fzdc2evr5.skadnetwork",
-          },
-          {
-            SKAdNetworkIdentifier: "4pfyvq9l8r.skadnetwork",
-          },
+          { SKAdNetworkIdentifier: "cstr6suwn9.skadnetwork" },
+          { SKAdNetworkIdentifier: "4fzdc2evr5.skadnetwork" },
+          { SKAdNetworkIdentifier: "4pfyvq9l8r.skadnetwork" },
         ],
       },
     },
     android: {
       adaptiveIcon: {
-        foregroundImage: "./assets/adaptive-icon.png",
+        foregroundImage: "./assets/icon.png",
         backgroundColor: "#ffffff",
       },
       package: "com.phsdevelopment.quotely",
@@ -57,22 +52,18 @@ module.exports = {
         "react-native-google-mobile-ads",
         {
           ios: {
-            googleMobileAdsAppId: "ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy",
-          },
-          android: {
-            googleMobileAdsAppId: "ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy",
+            googleMobileAdsAppId: "ca-app-pub-3363401404948517~5371067554",
           },
         },
       ],
     ],
-    web: {
-      favicon: "./assets/Quotely-favicon.png",
-    },
     assetBundlePatterns: ["**/*"],
     extra: {
       eas: {
         projectId: "0c0c7f5f-1396-4ed9-9365-d26bbff502a2",
       },
+      supabaseUsersUrl: process.env.SUPABASE_USERS_URL,
+      supabaseUsersKey: process.env.SUPABASE_USERS_KEY,
     },
-  },
+  };
 };

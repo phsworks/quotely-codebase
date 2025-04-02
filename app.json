@@ -4,7 +4,7 @@
     "slug": "quotely-codebase",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/QuotelyAppIcon.png",
+    "icon": "./assets/IconQuotely.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": false,
     "jsEngine": "hermes",
@@ -20,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/IconQuotely.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.quotelycodebase"
@@ -35,9 +35,6 @@
         }
       ]
     ],
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
     "assetBundlePatterns": [
       "**/*"
     ],

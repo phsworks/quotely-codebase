@@ -1,11 +1,25 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createClient } from "@supabase/supabase-js";
+import Constants from "expo-constants";
 
-const supabaseUrl = "https://vdvfnkocwiafzsbzsrzy.supabase.co";
-const supabaseAnonKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZkdmZua29jd2lhZnpzYnpzcnp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDExNzEzNDUsImV4cCI6MjA1Njc0NzM0NX0.DmUorixmjBHdKZ_jpgM24Q5DuCU18a5EMWRMGcQFZgE";
+const supabaseUsersUrl =
+  process.env.SUPABASE_USERS_URL ||
+  Constants.expoConfig?.extra?.supabaseUsersUrl ||
+  Constants.manifest?.extra?.supabaseUsersUrl;
+const supabaseUsersKey =
+  process.env.SUPABASE_USERS_KEY ||
+  Constants.expoConfig?.extra?.supabaseUsersKey ||
+  Constants.manifest?.extra?.supabaseUsersKey;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+if (!supabaseUsersUrl || !supabaseUsersKey) {
+  console.warn("Missing Supabase environment variables!");
+  console.warn(
+    "Available env vars:",
+    Object.keys(process.env).filter((key) => key.includes("SUPABASE"))
+  );
+}
+
+export const supabase = createClient(supabaseUsersUrl, supabaseUsersKey, {
   auth: {
     storage: AsyncStorage,
     autoRefreshToken: true,

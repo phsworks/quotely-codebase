@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import GoBack from "../components/GoBack";
-import PHS from '../assets/PHS.png'
 import logo from "../assets/Quotely-logo.png";
 
 

@@ -69,7 +69,7 @@ function QuoteCategoriesScreen({ navigation }) {
                   style={styles.image}
                   source={{ uri: item.category_image }}
                   />
-                <Text style={styles.CategoryText}>{item.quote_category} {item.quotes.length}</Text>
+                <Text style={styles.CategoryText}>{item.quote_category} - {item.quotes.length}</Text>
               </View>
             </Pressable>
           )}
@@ -94,14 +94,14 @@ const styles = StyleSheet.create({
     width: "80vw",
   },
   quoteCategory: {
-    backgroundColor: "white",
+    backgroundColor: "#f1f1f1",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 1,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
+    shadowOpacity: 0.1,
+    shadowRadius: 1.00,
 
     elevation: 2,
     borderRadius: 20,

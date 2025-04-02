@@ -63,9 +63,7 @@ function AuthScreen() {
       if (profileError) {
         Alert.alert(profileError.message);
       } else {
-        Alert.alert(
-          "Sign up successful!"
-        );
+        Alert.alert("Sign up successful!");
       }
     }
     setLoading(false);
@@ -77,14 +75,14 @@ function AuthScreen() {
         <Image style={styles.logo} source={logo} />
         <View style={styles.toggles}>
           <TouchableOpacity onPress={() => setIsSignUp(true)}>
-            <Text style={[styles.toggle, isSignUp && styles.toggleActive]}>
-              Sign Up
-            </Text>
+            <View style={isSignUp && styles.toggleActive}>
+              <Text style={styles.toggle}>Sign Up</Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setIsSignUp(false)}>
-            <Text style={[styles.toggle, !isSignUp && styles.toggleActive]}>
-              Sign In
-            </Text>
+            <View style={!isSignUp && styles.toggleActive}>
+              <Text style={styles.toggle}>Sign In</Text>
+            </View>
           </TouchableOpacity>
         </View>
       </View>
@@ -169,6 +167,7 @@ const styles = StyleSheet.create({
   toggleActive: {
     borderBottomWidth: 2,
     borderBottomColor: "#8EEAEE",
+    borderStyle: "solid",
   },
   loginCenter: {
     height: "30%",
@@ -179,7 +178,7 @@ const styles = StyleSheet.create({
   },
   loginBottom: {
     height: "20%",
-    paddingTop: 20,
+    paddingTop: 70,
     gap: 10,
   },
   signButton: {

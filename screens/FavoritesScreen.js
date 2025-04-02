@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   View,
   Text,
@@ -6,97 +6,95 @@ import {
   FlatList,
   Image,
   Pressable,
-  Share,
 } from "react-native";
 import FavoritesQuotesContext from "../context/FavoritesContext";
-import { useContext } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
-import GoBackk from "../components/GoBack";
+
+// Predefined gradient colors for quote cards
+const GRADIENT_COLORS = [
+  ["#ff5833c8", "#ffc400c2"],
+  ["#33ff58b9", "#00c5ccb4"],
+  ["#fc5677c0", "#7e93ffb5"],
+  ["#1f4037b6", "#99f2c8bb"],
+  ["#d9a7c7c2", "#f7b67599"],
+  ["#ff9966c3", "#ff5e61b7"],
+  ["#297fb9c2", "#6dd4fabc"],
+];
+
+// Quote card component
+const QuoteCard = ({ item, index, onPress }) => {
+  const gradientColors = GRADIENT_COLORS[index % GRADIENT_COLORS.length];
+
+  return (
+    <Pressable onPress={onPress}>
+      <View style={styles.outerContainer}>
+        <LinearGradient
+          colors={gradientColors}
+          style={styles.quoteContainer}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        >
+          <View style={styles.quoteSection}>
+            <Text style={styles.quoteText}>{item.quote}</Text>
+          </View>
+          <View style={styles.cardBottom}>
+            <Image
+              source={{ uri: item.author_imageURL }}
+              style={styles.image}
+            />
+          </View>
+        </LinearGradient>
+      </View>
+    </Pressable>
+  );
+};
 
 function FavoritesScreen() {
-  const { favoriteQuotes, addFavoriteQuote, removeFavoriteQuote } = useContext(
-    FavoritesQuotesContext
-  );
-
+  const { favoriteQuotes } = useContext(FavoritesQuotesContext);
   const navigation = useNavigation();
+  const totalFavoriteQuotes = favoriteQuotes.length;
 
-  const getGradientColors = (index) => {
-    const gradients = [
-      ["#ff5833c8", "#ffc400c2"],
-      ["#33ff58b9", "#00c5ccb4"],
-      ["#fc5677c0", "#7e93ffb5"],
-      ["#1f4037b6", "#99f2c8bb"],
-      ["#d9a7c7c2", "#f7b67599"],
-      ["#ff9966c3", "#ff5e61b7"],
-      ["#297fb9c2", "#6dd4fabc"],
-    ];
-    return gradients[index % gradients.length];
+  const handleQuotePress = (item, index) => {
+    navigation.navigate("QuoteDetails", {
+      item: item,
+      index: index,
+    });
   };
-  const TotalFavoriteQuotes = favoriteQuotes.length;
+
+  if (favoriteQuotes.length === 0) {
+    return (
+      <View style={styles.noFavoritesContainer}>
+        <Text style={styles.noFavoritesText}>No favorite quotes yet</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
-      {favoriteQuotes.length === 0 ? (
-        <View style={styles.noFavoritesContainer}>
-          <Text style={{ fontSize: 20, textAlign: "center" }}>
-            {" "}
-            No favorites yet...{" "}
+      {totalFavoriteQuotes > 1 && (
+        <View style={styles.totalFavoriteQuotes}>
+          <Text style={styles.totalCountText}>
+            {totalFavoriteQuotes} Favorite Quotes
           </Text>
         </View>
-      ) : (
-        <View style={styles.favoriteQuoteContainer}>
-          <View style={styles.totalFavoriteQuotes}>
-            <Text
-              style={{
-                textAlign: "center",
-                color: "#74d4da",
-                fontFamily: "Avenir",
-                fontWeight: 600,
-              }}
-            >
-              {TotalFavoriteQuotes} Favorite Quotes
-            </Text>
-          </View>
-          <FlatList
-            data={favoriteQuotes}
-            keyExtractor={(item, index) => index.toString()}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.contentContainer}
-            renderItem={({ item, index }) => (
-              <Pressable
-                onPress={() => {
-                  navigation.navigate("QuoteDetails", {
-                    item: item,
-                    index: index,
-                  });
-                }}
-              >
-                <View style={styles.outerContainer}>
-                  <LinearGradient
-                    colors={getGradientColors(index)}
-                    style={styles.quoteContainer}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
-                  >
-                    <View style={styles.quoteSection}>
-                      <Text style={styles.quoteText}>{item.quote}</Text>
-                    </View>
-                    <View style={styles.cardBottom}>
-                      <Image
-                        source={{ uri: item.author_imageURL }}
-                        style={styles.image}
-                      />
-                    </View>
-                  </LinearGradient>
-                </View>
-              </Pressable>
-            )}
-            numColumns={2}
-            columnWrapperStyle={styles.columnWrapper}
-          />
-        </View>
       )}
+
+      <FlatList
+        data={favoriteQuotes}
+        keyExtractor={(item, index) => index.toString()}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.contentContainer}
+        renderItem={({ item, index }) => (
+          <QuoteCard
+            item={item}
+            index={index}
+            onPress={() => handleQuotePress(item, index)}
+          />
+        )}
+        numColumns={2}
+        columnWrapperStyle={styles.columnWrapper}
+      />
     </View>
   );
 }
@@ -106,7 +104,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    flexWrap: "wrap",
     paddingTop: 60,
     paddingHorizontal: 10,
   },
@@ -114,16 +111,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: 150,
   },
-  favoriteQuoteContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 5,
+  noFavoritesText: {
+    fontFamily: "Avenir",
+    fontSize: 16,
+    color: "#36363c",
   },
   columnWrapper: {
     justifyContent: "space-between",
-    alignItems: "space-around",
     gap: 8,
   },
   contentContainer: {
@@ -176,6 +171,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "5%",
     justifyContent: "center",
+  },
+  totalCountText: {
+    textAlign: "center",
+    color: "#74d4da",
+    fontFamily: "Avenir",
+    fontWeight: "600",
+    fontSize: 15,
   },
 });
 

@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   screenTitle: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "600",
     color: "#4a5a5b",
     fontFamily: 'Avenir',

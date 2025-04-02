@@ -143,7 +143,7 @@ function QuoteScreen() {
     swipeCount.current += 1;
     console.log("Swipe count:", swipeCount.current);
 
-    if (swipeCount.current >= 10) {
+    if (swipeCount.current >= 12) {
       if (adLoaded && interstitialRef.current) {
         console.log("Showing ad...");
         interstitialRef.current.show();
