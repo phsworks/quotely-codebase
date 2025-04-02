@@ -6,7 +6,7 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal",
+      "distribution": "app-store",
       "env": {
         "SUPABASE_USERS_URL": "https://vdvfnkocwiafzsbzsrzy.supabase.co",
         "SUPABASE_USERS_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZkdmZua29jd2lhZnpzYnpzcnp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDExNzEzNDUsImV4cCI6MjA1Njc0NzM0NX0.DmUorixmjBHdKZ_jpgM24Q5DuCU18a5EMWRMGcQFZgE"
@@ -18,7 +18,7 @@
     "preview": {
       "distribution": "internal",
       "ios": {
-        "simulator": true,
+        "simulator": false,
         "resourceClass": "m-medium"
       }
     },

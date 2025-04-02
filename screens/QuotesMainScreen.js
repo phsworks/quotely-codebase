@@ -6,28 +6,26 @@ import {
   Dimensions,
   TextInput,
   ActivityIndicator,
-  Button,
+  Platform,
 } from "react-native";
 import { supabase } from "../supabase/configQuotes";
 import { useState, useEffect, useMemo, useRef } from "react";
 import QuoteCard from "../components/QuoteCard";
 
-import {
-  InterstitialAd,
-  AdEventType,
-  TestIds,
-} from "react-native-google-mobile-ads";
+import { InterstitialAd, AdEventType } from "react-native-google-mobile-ads";
 
-// Debounce helper
+// ✅ Use your **real production Ad Unit ID**
+const INTERSTITIAL_UNIT_ID = Platform.select({
+  ios: "ca-app-pub-3363401404948517/5371067554", // ✅ your real interstitial ad unit
+  android: "ca-app-pub-3363401404948517/5371067554", // duplicate for Android if same
+});
+
+// 🔁 Debounce helper
 const debounce = (func, wait) => {
   let timeout;
   return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
     clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
+    timeout = setTimeout(() => func(...args), wait);
   };
 };
 
@@ -51,13 +49,10 @@ function QuoteScreen() {
   const swipeCount = useRef(0);
   const interstitialRef = useRef(null);
 
-
-
-
-  // Setup ad logic
+  // ✅ Ad logic setup
   useEffect(() => {
     const interstitial = InterstitialAd.createForAdRequest(
-      TestIds.INTERSTITIAL,
+      INTERSTITIAL_UNIT_ID,
       {
         requestNonPersonalizedAdsOnly: true,
         keywords: ["quotes", "inspiration", "motivation"],
@@ -66,18 +61,14 @@ function QuoteScreen() {
 
     interstitialRef.current = interstitial;
 
-    // 👇 Place the updated LOADED event listener here
     const unsubLoad = interstitial.addAdEventListener(
       AdEventType.LOADED,
       () => {
-        console.log("Ad loaded");
         setAdLoaded(true);
-
-        // 👉 Check if user already hit 10 swipes while ad was loading
         if (swipeCount.current >= 10 && interstitialRef.current) {
           interstitialRef.current.show();
-          setAdLoaded(false);
           swipeCount.current = 0;
+          setAdLoaded(false);
         }
       }
     );
@@ -93,7 +84,7 @@ function QuoteScreen() {
     const unsubClose = interstitial.addAdEventListener(
       AdEventType.CLOSED,
       () => {
-        interstitial.load(); // reload after close
+        interstitial.load(); // reload on close
       }
     );
 
@@ -106,14 +97,14 @@ function QuoteScreen() {
     };
   }, []);
 
-  // Get quotes from Supabase
+  // ✅ Fetch quotes from Supabase
   useEffect(() => {
     async function getQuotes() {
       try {
         setLoading(true);
         const { data, error } = await supabase
-        .from("famous-quotes")
-        .select("*");
+          .from("famous-quotes")
+          .select("*");
 
         if (error) throw error;
 
@@ -125,11 +116,10 @@ function QuoteScreen() {
           throw new Error("No valid quotes found with author images");
         }
 
-        const shuffledQuotes = shuffleArray(validQuotes);
-        setQuotes(shuffledQuotes);
+        setQuotes(shuffleArray(validQuotes));
       } catch (error) {
-        console.error("Error fetching quotes:", error.message);
         setError(error.message);
+        console.error("Error fetching quotes:", error.message);
       } finally {
         setLoading(false);
       }
@@ -138,25 +128,17 @@ function QuoteScreen() {
     getQuotes();
   }, []);
 
-
   const handleSwipe = () => {
     swipeCount.current += 1;
-    console.log("Swipe count:", swipeCount.current);
 
     if (swipeCount.current >= 12) {
       if (adLoaded && interstitialRef.current) {
-        console.log("Showing ad...");
         interstitialRef.current.show();
-        setAdLoaded(false); // wait for it to reload after close
         swipeCount.current = 0;
-      } else {
-        console.log("Ad not ready yet, will show when loaded");
-        // We DON'T reset swipeCount here
-        // We wait for ad to load and show it on the NEXT swipe
+        setAdLoaded(false);
       }
     }
   };
-
 
   const handleSearchChange = useMemo(() => {
     return debounce((text) => {
@@ -169,12 +151,12 @@ function QuoteScreen() {
 
     return quotes.filter((quote) =>
       quote.author_name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-}, [quotes, searchQuery]);
+    );
+  }, [quotes, searchQuery]);
 
-if (loading) {
-  return (
-    <View style={styles.loadingContainer}>
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#8EEAEE" />
         <Text style={styles.loadingText}>Loading quotes...</Text>
       </View>
