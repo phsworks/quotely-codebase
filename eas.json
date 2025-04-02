@@ -5,8 +5,9 @@
   },
   "build": {
     "development": {
+      "autoIncrement": true,
       "developmentClient": true,
-      "distribution": "app-store",
+      "distribution": "store",
       "env": {
         "SUPABASE_USERS_URL": "https://vdvfnkocwiafzsbzsrzy.supabase.co",
         "SUPABASE_USERS_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZkdmZua29jd2lhZnpzYnpzcnp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDExNzEzNDUsImV4cCI6MjA1Njc0NzM0NX0.DmUorixmjBHdKZ_jpgM24Q5DuCU18a5EMWRMGcQFZgE"
@@ -37,9 +38,9 @@
   "submit": {
     "production": {
       "ios": {
-        "appleId": "YOUR_APPLE_ID",
-        "ascAppId": "YOUR_APP_STORE_CONNECT_APP_ID",
-        "appleTeamId": "YOUR_APPLE_TEAM_ID"
+        "appleId": "piethein@schouten.nl",
+        "ascAppId": "6744104889",
+        "appleTeamId": "3LWZJ3B25L"
       }
     }
   }
