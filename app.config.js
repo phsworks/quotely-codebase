@@ -5,12 +5,12 @@ module.exports = ({ config }) => {
     slug: "quotely-codebase",
     version: "1.0.0",
     orientation: "portrait",
-    icon: "./assets/IconQuotely.png",
+    icon: "./assets/Icon.png",
     userInterfaceStyle: "light",
     newArchEnabled: false,
     jsEngine: "hermes",
     splash: {
-      image: "./assets/Quotely-logo.png",
+      image: "./assets/Splash.png",
       resizeMode: "contain",
       backgroundColor: "#ffffff",
     },
@@ -32,7 +32,7 @@ module.exports = ({ config }) => {
     },
     android: {
       adaptiveIcon: {
-        foregroundImage: "./assets/icon.png",
+        foregroundImage: "./assets/Icon.png",
         backgroundColor: "#ffffff",
       },
       package: "com.phsdevelopment.quotely",
