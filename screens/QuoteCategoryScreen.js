@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginLeft: 20,
     flexDirection: "row",
-    marginTop: "25%",
+    marginTop: "20%",
   },
   pageContainer: {
     width: Dimensions.get("window").width,

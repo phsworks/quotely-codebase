@@ -11,7 +11,7 @@ import {
 import { useState, useEffect } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
-import GoBack from "../components/GoBack";
+import InAppReview from "react-native-in-app-review";
 
 function MenuScreen() {
   const navigation = useNavigation();
@@ -43,6 +43,33 @@ function MenuScreen() {
     Linking.openURL(mailtoLink).catch(() =>
       Alert.alert("Error", "Could not open mail app")
     );
+  };
+  const feedbackMail = () => {
+    const email = "support@phsdevelopment.com";
+    const subject = "Feedback for Quotely";
+    const body = `Feedback: `;
+
+    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+
+    Linking.openURL(mailtoLink).catch(() =>
+      Alert.alert("Error", "Could not open mail app")
+    );
+  };
+
+  const requestAppReview = () => {
+    if (InAppReview.isAvailable()) {
+      InAppReview.RequestInAppReview()
+        .then((hasFlowFinishedSuccessfully) => {
+          console.log("Review flow gestart?", hasFlowFinishedSuccessfully);
+        })
+        .catch((error) => {
+          console.warn("Fout bij review flow:", error);
+        });
+    } else {
+      console.log("InAppReview is niet beschikbaar op dit toestel.");
+    }
   };
 
   const shareApp = async () => {
@@ -101,7 +128,7 @@ function MenuScreen() {
               <Feather name="chevron-right" size={24} color="#acacb6" />
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.settingsTile}>
+            <TouchableOpacity onPress={requestAppReview} style={styles.settingsTile}>
               <View style={styles.tileLeft}>
                 <Feather name="star" size={24} color="#8EEAEE" />
                 <Text style={styles.userSettings}>Rate us in the Appstore</Text>
@@ -118,7 +145,7 @@ function MenuScreen() {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={openEmailBug}
+              onPress={feedbackMail}
               style={styles.settingsTile}
             >
               <View style={styles.tileLeft}>
