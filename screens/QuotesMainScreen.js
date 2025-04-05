@@ -13,12 +13,12 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import QuoteCard from "../components/QuoteCard";
 import Constants from "expo-constants";
 
-// import { InterstitialAd, AdEventType } from "react-native-google-mobile-ads";
+import { InterstitialAd, AdEventType } from "react-native-google-mobile-ads";
 
-// const INTERSTITIAL_UNIT_ID = Platform.select({
-//   ios: "ca-app-pub-3363401404948517/5371067554",
-//   android: "ca-app-pub-3363401404948517/5371067554",
-// });
+const INTERSTITIAL_UNIT_ID = Platform.select({
+  ios: "ca-app-pub-3363401404948517/5371067554",
+  android: "ca-app-pub-3363401404948517/5371067554",
+});
 
 // Debounce helper
 const debounce = (func, wait) => {
@@ -52,56 +52,56 @@ function QuoteScreen() {
   const isExpoGo = Constants.appOwnership === "expo";
 
   // Ad logic setup
-  // useEffect(() => {
-  //   if (isExpoGo) {
-  //     return;
-  //   }
+  useEffect(() => {
+    if (isExpoGo) {
+      return;
+    }
 
-    // const interstitial = InterstitialAd.createForAdRequest(
-    //   INTERSTITIAL_UNIT_ID,
-    //   {
-    //     requestNonPersonalizedAdsOnly: true,
-    //     keywords: ["quotes", "inspiration", "motivation"],
-    //   }
-    // );
+    const interstitial = InterstitialAd.createForAdRequest(
+      INTERSTITIAL_UNIT_ID,
+      {
+        requestNonPersonalizedAdsOnly: true,
+        keywords: ["quotes", "inspiration", "motivation"],
+      }
+    );
 
-    // interstitialRef.current = interstitial;
+    interstitialRef.current = interstitial;
 
-    // const unsubLoad = interstitial.addAdEventListener(
-    //   AdEventType.LOADED,
-    //   () => {
-    //     setAdLoaded(true);
-    //     if (swipeCount.current >= 10 && interstitialRef.current) {
-    //       interstitialRef.current.show();
-    //       swipeCount.current = 0;
-    //       setAdLoaded(false);
-    //     }
-    //   }
-    // );
+    const unsubLoad = interstitial.addAdEventListener(
+      AdEventType.LOADED,
+      () => {
+        setAdLoaded(true);
+        if (swipeCount.current >= 10 && interstitialRef.current) {
+          interstitialRef.current.show();
+          swipeCount.current = 0;
+          setAdLoaded(false);
+        }
+      }
+    );
 
-  //   const unsubError = interstitial.addAdEventListener(
-  //     AdEventType.ERROR,
-  //     (error) => {
-  //       console.warn("Ad error:", error);
-  //       setAdError(error?.message || "Unknown ad error");
-  //     }
-  //   );
+    const unsubError = interstitial.addAdEventListener(
+      AdEventType.ERROR,
+      (error) => {
+        console.warn("Ad error:", error);
+        setAdError(error?.message || "Unknown ad error");
+      }
+    );
 
-  //   const unsubClose = interstitial.addAdEventListener(
-  //     AdEventType.CLOSED,
-  //     () => {
-  //       interstitial.load(); // reload on close
-  //     }
-  //   );
+    const unsubClose = interstitial.addAdEventListener(
+      AdEventType.CLOSED,
+      () => {
+        interstitial.load(); // reload on close
+      }
+    );
 
-  //   interstitial.load();
+    interstitial.load();
 
-  //   return () => {
-  //     unsubLoad();
-  //     unsubError();
-  //     unsubClose();
-  //   };
-  // }, []);
+    return () => {
+      unsubLoad();
+      unsubError();
+      unsubClose();
+    };
+  }, []);
 
   // Fetch quotes from Supabase
   useEffect(() => {
