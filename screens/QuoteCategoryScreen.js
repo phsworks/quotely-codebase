@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import QuoteCard from "../components/QuoteCard";
 import Feather from "@expo/vector-icons/Feather";
-import GoBack from "../components/GoBack";
 
 function QuoteCategoryScreen({ navigation, route }) {
   const { name, quotes } = route.params;
@@ -58,7 +57,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginLeft: 20,
     flexDirection: "row",
-    marginTop: "22%",
+    marginTop: "25%",
   },
   pageContainer: {
     width: Dimensions.get("window").width,

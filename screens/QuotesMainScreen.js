@@ -11,16 +11,16 @@ import {
 import { supabase } from "../supabase/configQuotes";
 import { useState, useEffect, useMemo, useRef } from "react";
 import QuoteCard from "../components/QuoteCard";
+import Constants from "expo-constants";
 
-import { InterstitialAd, AdEventType } from "react-native-google-mobile-ads";
+// import { InterstitialAd, AdEventType } from "react-native-google-mobile-ads";
 
-// ✅ Use your **real production Ad Unit ID**
-const INTERSTITIAL_UNIT_ID = Platform.select({
-  ios: "ca-app-pub-3363401404948517/5371067554", // ✅ your real interstitial ad unit
-  android: "ca-app-pub-3363401404948517/5371067554", // duplicate for Android if same
-});
+// const INTERSTITIAL_UNIT_ID = Platform.select({
+//   ios: "ca-app-pub-3363401404948517/5371067554",
+//   android: "ca-app-pub-3363401404948517/5371067554",
+// });
 
-// 🔁 Debounce helper
+// Debounce helper
 const debounce = (func, wait) => {
   let timeout;
   return function executedFunction(...args) {
@@ -49,55 +49,61 @@ function QuoteScreen() {
   const swipeCount = useRef(0);
   const interstitialRef = useRef(null);
 
-  // ✅ Ad logic setup
-  useEffect(() => {
-    const interstitial = InterstitialAd.createForAdRequest(
-      INTERSTITIAL_UNIT_ID,
-      {
-        requestNonPersonalizedAdsOnly: true,
-        keywords: ["quotes", "inspiration", "motivation"],
-      }
-    );
+  const isExpoGo = Constants.appOwnership === "expo";
 
-    interstitialRef.current = interstitial;
+  // Ad logic setup
+  // useEffect(() => {
+  //   if (isExpoGo) {
+  //     return;
+  //   }
 
-    const unsubLoad = interstitial.addAdEventListener(
-      AdEventType.LOADED,
-      () => {
-        setAdLoaded(true);
-        if (swipeCount.current >= 10 && interstitialRef.current) {
-          interstitialRef.current.show();
-          swipeCount.current = 0;
-          setAdLoaded(false);
-        }
-      }
-    );
+    // const interstitial = InterstitialAd.createForAdRequest(
+    //   INTERSTITIAL_UNIT_ID,
+    //   {
+    //     requestNonPersonalizedAdsOnly: true,
+    //     keywords: ["quotes", "inspiration", "motivation"],
+    //   }
+    // );
 
-    const unsubError = interstitial.addAdEventListener(
-      AdEventType.ERROR,
-      (error) => {
-        console.warn("Ad error:", error);
-        setAdError(error?.message || "Unknown ad error");
-      }
-    );
+    // interstitialRef.current = interstitial;
 
-    const unsubClose = interstitial.addAdEventListener(
-      AdEventType.CLOSED,
-      () => {
-        interstitial.load(); // reload on close
-      }
-    );
+    // const unsubLoad = interstitial.addAdEventListener(
+    //   AdEventType.LOADED,
+    //   () => {
+    //     setAdLoaded(true);
+    //     if (swipeCount.current >= 10 && interstitialRef.current) {
+    //       interstitialRef.current.show();
+    //       swipeCount.current = 0;
+    //       setAdLoaded(false);
+    //     }
+    //   }
+    // );
 
-    interstitial.load();
+  //   const unsubError = interstitial.addAdEventListener(
+  //     AdEventType.ERROR,
+  //     (error) => {
+  //       console.warn("Ad error:", error);
+  //       setAdError(error?.message || "Unknown ad error");
+  //     }
+  //   );
 
-    return () => {
-      unsubLoad();
-      unsubError();
-      unsubClose();
-    };
-  }, []);
+  //   const unsubClose = interstitial.addAdEventListener(
+  //     AdEventType.CLOSED,
+  //     () => {
+  //       interstitial.load(); // reload on close
+  //     }
+  //   );
 
-  // ✅ Fetch quotes from Supabase
+  //   interstitial.load();
+
+  //   return () => {
+  //     unsubLoad();
+  //     unsubError();
+  //     unsubClose();
+  //   };
+  // }, []);
+
+  // Fetch quotes from Supabase
   useEffect(() => {
     async function getQuotes() {
       try {
@@ -131,7 +137,7 @@ function QuoteScreen() {
   const handleSwipe = () => {
     swipeCount.current += 1;
 
-    if (swipeCount.current >= 12) {
+    if (swipeCount.current >= 12 && !isExpoGo) {
       if (adLoaded && interstitialRef.current) {
         interstitialRef.current.show();
         swipeCount.current = 0;

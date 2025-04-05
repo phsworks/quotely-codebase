@@ -1,12 +1,9 @@
-import { View, Text, StyleSheet, Touchable, TouchableOpacity } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
-import Feather from "@expo/vector-icons/Feather";
+import { View, StyleSheet, } from 'react-native';
 import QuoteCard from '../components/QuoteCard';
 import GoBack from '../components/GoBack';
 
 function QuoteDetailsScreen(props) {
   const { item, index } = props.route.params;
-  const navigation = useNavigation();
 
 
   return (

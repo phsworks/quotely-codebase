@@ -3,25 +3,20 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Feather from "@expo/vector-icons/Feather";
 import QuoteScreen from "./screens/QuotesMainScreen";
-import ProfileScreen from "./screens/ProfileScreen";
 import QuoteCategoriesScreen from "./screens/QuoteCategoriesScreen";
 import FavoritesScreen from "./screens/FavoritesScreen";
 import QuoteCategoryScreen from "./screens/QuoteCategoryScreen";
-import { useState, useEffect } from "react";
-import LandingScreen from "./screens/LandingScreen";
-import AuthScreen from "./screens/AuthScreen";
-import { supabase } from "./supabase/configUsers";
-import SettingsScreen from "./screens/SettingsScreen";
+import { useEffect } from "react";
+import MenuScreen from "./screens/MenuScreen";
 import { FavoritesQuotesProvider } from "./context/FavoritesContext";
 import QuoteDetailsScreen from "./screens/QuoteDetailsScreen";
-import PrivacyScreen from "./screens/PrivacyScreen";
 import InfoScreen from "./screens/InfoScreen";
-import { MobileAds } from "react-native-google-mobile-ads";
+// import { MobileAds } from "react-native-google-mobile-ads";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
-function QuotelyOverview({ session }) {
+function QuotelyOverview() {
   return (
     <BottomTabs.Navigator
       screenOptions={{
@@ -29,6 +24,10 @@ function QuotelyOverview({ session }) {
         tabBarActiveTintColor: "#8EEAEE",
         tabBarInactiveTintColor: "#676879",
         tabBarShowLabel: true,
+        tabBarLabelStyle: {
+          fontFamily: "Avenir",
+          fontWeight: "600",
+        },
         tabBarStyle: {
           paddingTop: 5,
         },
@@ -64,35 +63,18 @@ function QuotelyOverview({ session }) {
       <BottomTabs.Screen
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Feather name="user" size={size} color={color} />
-          ),
+            <Feather name="menu" size={size} color={color} />
+          )
+
         }}
-        name="Profile"
-        component={ProfileScreen}
-        initialParams={{ session }}
+        name="Menu"
+        component={MenuScreen}
       />
     </BottomTabs.Navigator>
   );
 }
 
-function AuthStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="LandingScreen"
-        component={LandingScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Auth"
-        component={AuthScreen}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
-  );
-}
-
-function AppStack({ session }) {
+function AppStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -106,18 +88,8 @@ function AppStack({ session }) {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
         name="QuoteDetails"
         component={QuoteDetailsScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Privacy"
-        component={PrivacyScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -130,39 +102,14 @@ function AppStack({ session }) {
 }
 
 export default function App() {
-  const [session, setSession] = useState(null);
-
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-
-    MobileAds()
-      .initialize()
-      .then(() => {
-        console.log(
-          "🔍 Initializing AdMob with App ID:",
-          "ca-app-pub-3363401404948517~5371067554"
-        );
-
-      });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
+  // useEffect(() => {
+  //   MobileAds().initialize();
+  // }, []);
 
   return (
     <FavoritesQuotesProvider>
       <NavigationContainer>
-        {session ? <AppStack session={session} /> : <AuthStack />}
+        <AppStack />
       </NavigationContainer>
     </FavoritesQuotesProvider>
   );

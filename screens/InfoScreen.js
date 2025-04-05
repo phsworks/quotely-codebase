@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import GoBack from "../components/GoBack";
 import logo from "../assets/Quotely-logo.png";
 

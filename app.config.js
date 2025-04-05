@@ -62,8 +62,6 @@ module.exports = ({ config }) => {
       eas: {
         projectId: "0c0c7f5f-1396-4ed9-9365-d26bbff502a2",
       },
-      supabaseUsersUrl: process.env.SUPABASE_USERS_URL,
-      supabaseUsersKey: process.env.SUPABASE_USERS_KEY,
     },
   };
 };
