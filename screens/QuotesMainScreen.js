@@ -90,7 +90,7 @@ function QuoteScreen() {
     const unsubClose = interstitial.addAdEventListener(
       AdEventType.CLOSED,
       () => {
-        interstitial.load(); // reload on close
+        interstitial.load();
       }
     );
 
