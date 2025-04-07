@@ -1,0 +1,14 @@
+workflows:
+  build:
+    name: Build with Pods
+    actions:
+      - name: Install Pods
+        script: |
+          cd ios
+          pod install
+      - name: Build App
+        build:
+          project: ios/Quotely.xcworkspace
+          scheme: Quotely
+          configuration: Release
+          destination: "platform=iOS Simulator,name=iPhone 14"
