@@ -11,16 +11,18 @@ function InfoScreen() {
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.title}>About Quotely</Text>
-        <Text style={styles.paragraph}>Version: 1.0.0</Text>
+        <Text style={styles.paragraph}>Version: 1.0.3</Text>
         <Text style={styles.paragraph}>Developed By: PHS Development</Text>
         <Text style={styles.paragraph}>Website: www.phsdevelopment.nl</Text>
         <Text style={styles.paragraph}>
           Contact: support@phsdevelopment.com
         </Text>
-        <Text style={styles.paragraph}>Last Updated: March 2025</Text>
         <Text style={styles.paragraph}>Sources: WikiQuote - Wikimedia </Text>
 
-        <Image style={{ width: "90%", height: "20%", marginTop: 50, }} source={logo} />
+        <Image
+          style={{ width: "90%", height: "20%", marginTop: 50 }}
+          source={logo}
+        />
       </View>
     </>
   );

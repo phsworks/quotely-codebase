@@ -11,7 +11,6 @@ import {
 import { supabase } from "../supabase/configQuotes";
 import { useState, useEffect, useMemo, useRef } from "react";
 import QuoteCard from "../components/QuoteCard";
-import Constants from "expo-constants";
 
 import { InterstitialAd, AdEventType } from "react-native-google-mobile-ads";
 
@@ -49,14 +48,8 @@ function QuoteScreen() {
   const swipeCount = useRef(0);
   const interstitialRef = useRef(null);
 
-  const isExpoGo = Constants.appOwnership === "expo";
-
   // Ad logic setup
   useEffect(() => {
-    if (isExpoGo) {
-      return;
-    }
-
     const interstitial = InterstitialAd.createForAdRequest(
       INTERSTITIAL_UNIT_ID,
       {
@@ -137,7 +130,7 @@ function QuoteScreen() {
   const handleSwipe = () => {
     swipeCount.current += 1;
 
-    if (swipeCount.current >= 12 && !isExpoGo) {
+    if (swipeCount.current >= 12) {
       if (adLoaded && interstitialRef.current) {
         interstitialRef.current.show();
         swipeCount.current = 0;

@@ -69,7 +69,7 @@ function QuoteCategoriesScreen({ navigation }) {
                   style={styles.image}
                   source={{ uri: item.category_image }}
                   />
-                <Text style={styles.CategoryText}>{item.quote_category} - {item.quotes.length}</Text>
+                <Text style={styles.CategoryText}>{item.quote_category}</Text>
               </View>
             </Pressable>
           )}
