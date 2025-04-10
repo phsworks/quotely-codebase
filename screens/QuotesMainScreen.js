@@ -15,8 +15,7 @@ import QuoteCard from "../components/QuoteCard";
 import { InterstitialAd, AdEventType } from "react-native-google-mobile-ads";
 
 const INTERSTITIAL_UNIT_ID = Platform.select({
-  ios: "ca-app-pub-3363401404948517/5371067554",
-  android: "ca-app-pub-3363401404948517/5371067554",
+  ios: "ca-app-pub-3940256099942544/4411468910",
 });
 
 // Debounce helper

@@ -19,6 +19,9 @@ module.exports = ({ config }) => {
       bundleIdentifier: "com.phsdevelopment.quotely",
       buildNumber: "1",
       deploymentTarget: "15.1",
+      config: {
+        googleMobileAdsAppId: "ca-app-pub-3363401404948517~5371067554",
+      },
       infoPlist: {
         UIBackgroundModes: ["fetch", "remote-notification"],
         NSPhotoLibraryUsageDescription:
