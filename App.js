@@ -6,7 +6,7 @@ import QuoteScreen from "./screens/QuotesMainScreen";
 import QuoteCategoriesScreen from "./screens/QuoteCategoriesScreen";
 import FavoritesScreen from "./screens/FavoritesScreen";
 import QuoteCategoryScreen from "./screens/QuoteCategoryScreen";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import MenuScreen from "./screens/MenuScreen";
 import { FavoritesQuotesProvider } from "./context/FavoritesContext";
 import QuoteDetailsScreen from "./screens/QuoteDetailsScreen";
@@ -64,8 +64,7 @@ function QuotelyOverview() {
         options={{
           tabBarIcon: ({ color, size }) => (
             <Feather name="menu" size={size} color={color} />
-          )
-
+          ),
         }}
         name="Menu"
         component={MenuScreen}
@@ -102,9 +101,41 @@ function AppStack() {
 }
 
 export default function App() {
+  const [adsInitialized, setAdsInitialized] = useState(false);
+  const [adsError, setAdsError] = useState(null);
+
   useEffect(() => {
-    MobileAds().initialize();
+    async function initializeAds() {
+      try {
+        // Initialize the Mobile Ads SDK with more configuration options
+        await MobileAds()
+          .initialize()
+          .then(() => {
+            console.log("MobileAds initialized successfully");
+            setAdsInitialized(true);
+          })
+          .catch((error) => {
+            console.error("MobileAds initialization error:", error);
+            setAdsError(error?.message || "Unknown error initializing ads");
+          });
+      } catch (err) {
+        console.error("Failed to initialize ads:", err);
+        setAdsError(err?.message || "Unknown error initializing ads");
+      }
+    }
+
+    initializeAds();
   }, []);
+
+  // For debugging purposes
+  useEffect(() => {
+    if (__DEV__) {
+      console.log("Ads initialized:", adsInitialized);
+      if (adsError) {
+        console.warn("Ads initialization error:", adsError);
+      }
+    }
+  }, [adsInitialized, adsError]);
 
   return (
     <FavoritesQuotesProvider>

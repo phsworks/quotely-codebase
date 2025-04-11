@@ -14,9 +14,18 @@ import QuoteCard from "../components/QuoteCard";
 
 import { InterstitialAd, AdEventType } from "react-native-google-mobile-ads";
 
-const INTERSTITIAL_UNIT_ID = Platform.select({
-  ios: "ca-app-pub-3940256099942544/4411468910",
-});
+// Production ad unit IDs
+const PRODUCTION_INTERSTITIAL_UNIT_ID = {
+  ios: "ca-app-pub-3363401404948517/3015333117",
+  android: "ca-app-pub-3363401404948517/9389169738",
+};
+
+// Get the correct ad unit ID based on platform
+const getAdUnitId = () => {
+  return Platform.OS === "ios" 
+    ? PRODUCTION_INTERSTITIAL_UNIT_ID.ios 
+    : PRODUCTION_INTERSTITIAL_UNIT_ID.android;
+};
 
 // Debounce helper
 const debounce = (func, wait) => {
@@ -42,58 +51,63 @@ function QuoteScreen() {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [adLoaded, setAdLoaded] = useState(false);
-  const [adError, setAdError] = useState(null);
 
   const swipeCount = useRef(0);
   const interstitialRef = useRef(null);
+  const adUnitId = getAdUnitId();
 
   // Ad logic setup
   useEffect(() => {
-    const interstitial = InterstitialAd.createForAdRequest(
-      INTERSTITIAL_UNIT_ID,
-      {
-        requestNonPersonalizedAdsOnly: true,
-        keywords: ["quotes", "inspiration", "motivation"],
-      }
-    );
+    const loadInterstitial = () => {
+      try {
+        const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
+          requestNonPersonalizedAdsOnly: true,
+          keywords: ["quotes", "inspiration", "motivation"],
+        });
 
-    interstitialRef.current = interstitial;
+        interstitialRef.current = interstitial;
 
-    const unsubLoad = interstitial.addAdEventListener(
-      AdEventType.LOADED,
-      () => {
-        setAdLoaded(true);
-        if (swipeCount.current >= 10 && interstitialRef.current) {
-          interstitialRef.current.show();
-          swipeCount.current = 0;
-          setAdLoaded(false);
-        }
-      }
-    );
+        const unsubLoad = interstitial.addAdEventListener(
+          AdEventType.LOADED,
+          () => {
+            setAdLoaded(true);
+          }
+        );
 
-    const unsubError = interstitial.addAdEventListener(
-      AdEventType.ERROR,
-      (error) => {
-        console.warn("Ad error:", error);
-        setAdError(error?.message || "Unknown ad error");
-      }
-    );
+        const unsubError = interstitial.addAdEventListener(
+          AdEventType.ERROR,
+          () => {
+            setAdLoaded(false);
+            // Retry loading after error (with a delay)
+            setTimeout(() => {
+              interstitial.load();
+            }, 60000); // retry after 1 minute
+          }
+        );
 
-    const unsubClose = interstitial.addAdEventListener(
-      AdEventType.CLOSED,
-      () => {
+        const unsubClosed = interstitial.addAdEventListener(
+          AdEventType.CLOSED,
+          () => {
+            setAdLoaded(false);
+            // Load a new ad when the current one is closed
+            interstitial.load();
+          }
+        );
+
         interstitial.load();
+
+        return () => {
+          unsubLoad();
+          unsubError();
+          unsubClosed();
+        };
+      } catch (err) {
+        console.error("Failed to set up ad:", err);
       }
-    );
-
-    interstitial.load();
-
-    return () => {
-      unsubLoad();
-      unsubError();
-      unsubClose();
     };
-  }, []);
+
+    loadInterstitial();
+  }, [adUnitId]);
 
   // Fetch quotes from Supabase
   useEffect(() => {
@@ -126,16 +140,29 @@ function QuoteScreen() {
     getQuotes();
   }, []);
 
-  const handleSwipe = () => {
-    swipeCount.current += 1;
+  const showAdIfAvailable = () => {
+    // Consistent threshold of 10 swipes
+    const SWIPE_THRESHOLD = 10;
 
-    if (swipeCount.current >= 12) {
+    if (swipeCount.current >= SWIPE_THRESHOLD) {
       if (adLoaded && interstitialRef.current) {
-        interstitialRef.current.show();
-        swipeCount.current = 0;
-        setAdLoaded(false);
+        try {
+          interstitialRef.current.show();
+          swipeCount.current = 0;
+        } catch (err) {
+          // Reset and try to load a new ad
+          setAdLoaded(false);
+          if (interstitialRef.current) {
+            interstitialRef.current.load();
+          }
+        }
       }
     }
+  };
+
+  const handleSwipe = () => {
+    swipeCount.current += 1;
+    showAdIfAvailable();
   };
 
   const handleSearchChange = useMemo(() => {

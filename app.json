@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "Quotely",
+    "slug": "quotely-codebase",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/Icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/Splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "bundleIdentifier": "com.phsdevelopment.quotely",
+      "supportsTablet": false,
+      "buildNumber": "1"
+    },
+    "android": {
+      "package": "com.phsdevelopment.quotely",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/Icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "plugins": [
+      [
+        "react-native-google-mobile-ads",
+        {
+          "iosAppId": "ca-app-pub-3363401404948517~5371067554"
+        }
+      ]
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "0c0c7f5f-1396-4ed9-9365-d26bbff502a2"
+      }
+    }
+  }
+}

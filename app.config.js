@@ -51,14 +51,6 @@ module.exports = ({ config }) => {
           },
         },
       ],
-      [
-        "react-native-google-mobile-ads",
-        {
-          ios: {
-            iosAppId: "ca-app-pub-3363401404948517~5371067554",
-          },
-        },
-      ],
     ],
     assetBundlePatterns: ["**/*"],
     extra: {
