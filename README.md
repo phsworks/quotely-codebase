@@ -5,7 +5,7 @@ Quotely is a mobile app for discovering and saving powerful quotes from some of 
 ## Features
 
 - Discover quotes by searching for authors
-- Explore curated categories like Technology, Politics, Philosophy, and more
+- Explore quotes from different categories like Technology, Politics, Philosophy, and more
 - Save your favorite quotes in a personal collection
 - View quotes in an elegant, minimal UI designed for easy reading and navigation
 - Share quotes directly from the app
@@ -15,7 +15,7 @@ Quotely is a mobile app for discovering and saving powerful quotes from some of 
 ## Tech Stack
 
 - **Frontend**: React Native (using Expo)
-- **Backend**: Supabase (authentication, data storage)
+- **Backend**: Supabase (data storage)
 - **CI/CD**: Xcode Cloud, EAS
 - **Ads Integration**: react-native-google-mobile-ads
 - **Deployment**: App Store (iOS)
@@ -27,7 +27,7 @@ Quotely is live on the [App Store](https://apps.apple.com/us/app/quotely-daily-w
 ## Author
 
 Developed by Piet-Hein Schouten  
-Website: [phsdevelopment.com](https://phsdevelopment.com)
+Website: [phsdevelopment.nl](https://www.phsdevelopment.nl/)
 
 ## License
 
