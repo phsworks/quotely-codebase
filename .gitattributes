@@ -1,0 +1,13 @@
+# Verminder impact van native files op taalstatistieken
+android/** linguist-vendored
+ios/** linguist-vendored
+*.pbxproj linguist-generated
+*.xc* linguist-generated
+*.kt linguist-generated
+*.java linguist-generated
+*.m linguist-generated
+*.mm linguist-generated
+
+# Forceer juiste taal voor je eigen code
+*.js linguist-language=JavaScript
+*.jsx linguist-language=JavaScript

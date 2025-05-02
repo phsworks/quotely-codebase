@@ -1,5 +1,3 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
-
 # dependencies
 node_modules/
 
@@ -36,3 +34,26 @@ config.js
 # typescript
 *.tsbuildinfo
 .qodo
+
+# iOS (Xcode)
+ios/Pods/
+ios/DerivedData/
+*.xcuserstate
+*.xcworkspace
+*.xcodeproj/project.xcworkspace/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcuserdatad/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+# Android
+android/.gradle/
+android/app/build/
+android/.idea/
+*.iml
+
+# EAS build stuff
+eas-build-pre-install.sh
+
