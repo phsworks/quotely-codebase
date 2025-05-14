@@ -11,9 +11,9 @@ function InfoScreen() {
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.title}>About Quotely</Text>
-        <Text style={styles.paragraph}>Version: 1.0.4</Text>
+        <Text style={styles.paragraph}>Version: 1.0.5</Text>
         <Text style={styles.paragraph}>Developed By: PHS Development</Text>
-        <Text style={styles.paragraph}>Website: www.phsdevelopment.nl</Text>
+        <Text style={styles.paragraph}>Website: www.phsdevelopment.com</Text>
         <Text style={styles.paragraph}>
           Contact: support@phsdevelopment.com
         </Text>

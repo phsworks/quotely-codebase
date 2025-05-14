@@ -36,7 +36,7 @@ function QuoteCard({ item, index }) {
 
   const getGradientColors = (index) => {
     const gradients = [
-      ["#ff5833ed", "#ffc400ff"],
+      ["#ff6f5ced", "#e8b407ff"],
       ["#33ff58ff", "#00c5ccff"],
       ["#fc5677ff", "#7e93ffff"],
       ["#1f4037ff", "#99f2c8ff"],
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     borderRadius: 50,
     paddingTop: 10,
-    opacity: 0.8,
+    opacity: 0.9,
   },
   quoteInfo: {
     flexDirection: "column",
@@ -202,6 +202,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 80,
     marginTop: 20,
+    
   },
   buttons: {
     borderRadius: 50,

@@ -22,8 +22,8 @@ const PRODUCTION_INTERSTITIAL_UNIT_ID = {
 
 // Get the correct ad unit ID based on platform
 const getAdUnitId = () => {
-  return Platform.OS === "ios" 
-    ? PRODUCTION_INTERSTITIAL_UNIT_ID.ios 
+  return Platform.OS === "ios"
+    ? PRODUCTION_INTERSTITIAL_UNIT_ID.ios
     : PRODUCTION_INTERSTITIAL_UNIT_ID.android;
 };
 
@@ -202,6 +202,7 @@ function QuoteScreen() {
         <TextInput
           style={styles.searchBar}
           placeholder="Search for authors..."
+          placeholderTextColor="#737373"
           clearButtonMode="always"
           autoCapitalize="none"
           autoCorrect={false}
@@ -274,6 +275,13 @@ const styles = StyleSheet.create({
     color: "#8EEAEE",
     fontWeight: "600",
     fontSize: 18,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
   },
   quoteContainer: {
     flex: 1,
@@ -283,6 +291,13 @@ const styles = StyleSheet.create({
     height: "auto",
     justifyContent: "center",
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.40,
+    shadowRadius: 5,
   },
   noResultsContainer: {
     flex: 1,
