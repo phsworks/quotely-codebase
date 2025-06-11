@@ -9,11 +9,6 @@ module.exports = ({ config }) => {
     userInterfaceStyle: "light",
     newArchEnabled: false,
     jsEngine: "hermes",
-    splash: {
-      image: "./assets/Splash.png",
-      resizeMode: "contain",
-      backgroundColor: "#ffffff",
-    },
     ios: {
       supportsTablet: false,
       bundleIdentifier: "com.phsdevelopment.quotely",
