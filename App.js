@@ -11,7 +11,7 @@ import MenuScreen from "./screens/MenuScreen";
 import { FavoritesQuotesProvider } from "./context/FavoritesContext";
 import QuoteDetailsScreen from "./screens/QuoteDetailsScreen";
 import InfoScreen from "./screens/InfoScreen";
-// import { MobileAds } from "react-native-google-mobile-ads";
+import { MobileAds } from "react-native-google-mobile-ads";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
