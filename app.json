@@ -6,11 +6,6 @@
     "orientation": "portrait",
     "icon": "./assets/Icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": null,
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
       "bundleIdentifier": "com.phsdevelopment.quotely",
       "supportsTablet": false,
