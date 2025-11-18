@@ -57,3 +57,8 @@ android/.idea/
 # EAS build stuff
 eas-build-pre-install.sh
 
+
+# Expo
+.expo
+dist/
+web-build/
