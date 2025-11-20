@@ -3,7 +3,7 @@ module.exports = ({ config }) => {
     ...config,
     name: "Quotely",
     slug: "quotely-codebase",
-    version: "1.0.0",
+    version: "1.0.5",
     orientation: "portrait",
     icon: "./assets/Icon.png",
     userInterfaceStyle: "light",
@@ -12,7 +12,7 @@ module.exports = ({ config }) => {
     ios: {
       supportsTablet: false,
       bundleIdentifier: "com.phsdevelopment.quotely",
-      buildNumber: "1",
+      buildNumber: "5",
       deploymentTarget: "15.1",
       config: {
         googleMobileAdsAppId: "ca-app-pub-3363401404948517~5371067554",

@@ -2,14 +2,14 @@
   "expo": {
     "name": "Quotely",
     "slug": "quotely-codebase",
-    "version": "1.0.0",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/Icon.png",
     "userInterfaceStyle": "light",
     "ios": {
       "bundleIdentifier": "com.phsdevelopment.quotely",
       "supportsTablet": false,
-      "buildNumber": "1"
+      "buildNumber": "5"
     },
     "android": {
       "package": "com.phsdevelopment.quotely",

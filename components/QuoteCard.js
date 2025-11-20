@@ -1,3 +1,4 @@
+import React, { useContext, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -7,16 +8,16 @@ import {
   Pressable,
   Share,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+
+import LinearGradient from "react-native-linear-gradient";
 import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { useContext, useRef, useEffect, useState } from "react";
+
 import { captureRef } from "react-native-view-shot";
+import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import FavoritesQuotesContext from "../context/FavoritesContext";
-import * as MediaLibrary from "expo-media-library";
 
 function QuoteCard({ item, index }) {
-  const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
   const [buttonsVisible, setButtonsVisible] = useState(true);
   const imageRef = useRef();
 
@@ -36,40 +37,31 @@ function QuoteCard({ item, index }) {
 
   const getGradientColors = (index) => {
     const gradients = [
-      ["#ff6f5ced", "#e8b407ff"],
-      ["#33ff58ff", "#00c5ccff"],
-      ["#fc5677ff", "#7e93ffff"],
-      ["#1f4037ff", "#99f2c8ff"],
-      ["#d9a7c7ff", "#f7b675ff"],
-      ["#297fb9ff", "#6dd4faff"],
+      ["#ff6f5c", "#e8b407"],
+      ["#33ff58", "#00c5cc"],
+      ["#fc5677", "#7e93ff"],
+      ["#1f4037", "#99f2c8"],
+      ["#d9a7c7", "#f7b675"],
+      ["#297fb9", "#6dd4fa"],
     ];
     return gradients[index % gradients.length];
   };
 
-  useEffect(() => {
-    if (permissionResponse?.granted) {
-      requestPermission();
-    }
-  }, []);
-
   async function shareQuote() {
     try {
-      // Hide buttons before capturing
       setButtonsVisible(false);
 
-      await new Promise((resolve) => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 10));
 
-      // Capture the view
       const uri = await captureRef(imageRef.current, {
         format: "png",
         quality: 1.0,
       });
 
-      // Share the image
       await Share.share({
         url: uri,
         title: "Quote alert",
-        message: "Check out this Quote from Quotely!",
+        message: "Check out this quote from Quotely!",
       });
     } catch (error) {
       console.error("Error sharing quote:", error);
@@ -79,77 +71,50 @@ function QuoteCard({ item, index }) {
   }
 
   return (
-    <>
-      <View ref={imageRef} style={styles.outerContainer}>
-        <LinearGradient
-          colors={getGradientColors(index)}
-          style={styles.quoteContainer}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-        >
-          <View style={styles.cardTop}>
-            <Image
-              source={{ uri: item.author_imageURL }}
-              style={styles.image}
-            />
-            <View style={styles.quoteInfo}>
-              <Text
-                style={{
-                  fontWeight: 700,
-                  fontSize: 18,
-                  color: "#000000",
-                  fontFamily: "Avenir",
-                }}
-              >
-                {item.quote_category}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: "#000000",
-                  fontFamily: "Avenir",
-                }}
-                adjustsFontSizeToFit
-              >
-                {item.author_name}
-              </Text>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: 700,
-                    color: "#000000",
-                    fontFamily: "Avenir",
-                  }}
-                >
-                  {item.author_nationality} {item.author_occupation}
-                </Text>
-            </View>
+    <View ref={imageRef} style={styles.outerContainer}>
+      <LinearGradient
+        colors={getGradientColors(index)}
+        style={styles.quoteContainer}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
+        <View style={styles.cardTop}>
+          <Image source={{ uri: item.author_imageURL }} style={styles.image} />
+
+          <View style={styles.quoteInfo}>
+            <Text style={styles.categoryText}>{item.quote_category}</Text>
+            <Text style={styles.authorText}>{item.author_name}</Text>
+            <Text style={styles.authorSubText}>
+              {item.author_nationality} {item.author_occupation}
+            </Text>
           </View>
-          <View style={styles.quoteSection}>
-            <Text style={styles.quoteText}>{item.quote}</Text>
-          </View>
-          <View style={styles.cardBottom}>
-            <Pressable
-              style={buttonsVisible ? styles.buttons : styles.buttonsInvisible}
-              onPress={shareQuote}
-            >
-              <Feather name="share" size={24} color="#e4ffff" />
-            </Pressable>
-            <TouchableOpacity
-              style={buttonsVisible ? styles.buttons : styles.buttonsInvisible}
-              onPress={() => toggleFavorite(item)}
-            >
-              {!isFavorite(item) ? (
-                <Feather name="heart" size={24} color="#e4ffff" />
-              ) : (
-                <AntDesign name="heart" size={24} color="#e4ffff" />
-              )}
-            </TouchableOpacity>
-          </View>
-        </LinearGradient>
-      </View>
-    </>
+        </View>
+
+        <View style={styles.quoteSection}>
+          <Text style={styles.quoteText}>{item.quote}</Text>
+        </View>
+
+        <View style={styles.cardBottom}>
+          <Pressable
+            style={buttonsVisible ? styles.buttons : styles.buttonsInvisible}
+            onPress={shareQuote}
+          >
+            <Feather name="share" size={24} color="#e4ffff" />
+          </Pressable>
+
+          <TouchableOpacity
+            style={buttonsVisible ? styles.buttons : styles.buttonsInvisible}
+            onPress={() => toggleFavorite(item)}
+          >
+            {!isFavorite(item) ? (
+              <Feather name="heart" size={24} color="#e4ffff" />
+            ) : (
+              <AntDesign name="heart" size={24} color="#e4ffff" />
+            )}
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
+    </View>
   );
 }
 
@@ -185,6 +150,24 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontFamily: "Avenir",
   },
+  categoryText: {
+    fontWeight: "700",
+    fontSize: 18,
+    color: "#000000",
+    fontFamily: "Avenir",
+  },
+  authorText: {
+    fontSize: 11,
+    fontWeight: "700",
+    color: "#000000",
+    fontFamily: "Avenir",
+  },
+  authorSubText: {
+    fontSize: 11,
+    fontWeight: "700",
+    color: "#000000",
+    fontFamily: "Avenir",
+  },
   image: {
     width: 100,
     height: 100,
@@ -202,14 +185,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 80,
     marginTop: 20,
-    
   },
   buttons: {
     borderRadius: 50,
     padding: 25,
     borderWidth: 0.5,
     borderColor: "#e4ffff",
-    boxShadow: "0 15px 20px 5px rgba(158, 158, 158, 0.293)",
     elevation: 4,
     opacity: 0.8,
   },
