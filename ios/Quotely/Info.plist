@@ -1,6 +1,6 @@
-<?xml version="1.0.5" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="5.0">
+<plist version="1.0">
   <dict>
     <key>CADisableMinimumFrameDurationOnPhone</key>
     <true/>
@@ -19,32 +19,27 @@
     <key>CFBundlePackageType</key>
     <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.0.0</string>
+    <string>1.0.6</string>
     <key>CFBundleSignature</key>
     <string>????</string>
-    <key>CFBundleURLTypes</key>
+
+    <key>UIDeviceFamily</key>
     <array>
-      <dict>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>com.phsdevelopment.quotely</string>
-        </array>
-      </dict>
-      <dict>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>exp+quotely-codebase</string>
-        </array>
-      </dict>
+      <integer>1</integer>
     </array>
+
     <key>CFBundleVersion</key>
-    <string>1</string>
+    <string>6</string>
+
     <key>GADApplicationIdentifier</key>
     <string>ca-app-pub-3363401404948517~5371067554</string>
+
     <key>LSMinimumSystemVersion</key>
     <string>12.0</string>
+
     <key>LSRequiresIPhoneOS</key>
     <true/>
+
     <key>NSAppTransportSecurity</key>
     <dict>
       <key>NSAllowsArbitraryLoads</key>
@@ -52,6 +47,7 @@
       <key>NSAllowsLocalNetworking</key>
       <true/>
     </dict>
+
     <key>NSCameraUsageDescription</key>
     <string>Allow $(PRODUCT_NAME) to access your camera</string>
     <key>NSMicrophoneUsageDescription</key>
@@ -60,6 +56,7 @@
     <string>Allow $(PRODUCT_NAME) to save photos</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Allow Quotely to access your photos to set profile picture</string>
+
     <key>SKAdNetworkItems</key>
     <array>
       <dict>
@@ -75,28 +72,36 @@
         <string>4pfyvq9l8r.skadnetwork</string>
       </dict>
     </array>
+
     <key>UIBackgroundModes</key>
     <array>
       <string>fetch</string>
       <string>remote-notification</string>
     </array>
+
     <key>UILaunchStoryboardName</key>
     <string>SplashScreen</string>
+
     <key>UIRequiredDeviceCapabilities</key>
     <array>
       <string>arm64</string>
     </array>
+
     <key>UIRequiresFullScreen</key>
-    <false/>
+    <true/>
+
     <key>UIStatusBarStyle</key>
     <string>UIStatusBarStyleDefault</string>
+
     <key>UISupportedInterfaceOrientations</key>
     <array>
       <string>UIInterfaceOrientationPortrait</string>
       <string>UIInterfaceOrientationPortraitUpsideDown</string>
     </array>
+
     <key>UIUserInterfaceStyle</key>
     <string>Light</string>
+
     <key>UIViewControllerBasedStatusBarAppearance</key>
     <false/>
   </dict>
